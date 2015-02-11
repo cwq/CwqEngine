@@ -27,8 +27,8 @@ public class CwqEngineGLSurfaceView extends GLSurfaceView {
         setFocusableInTouchMode(true);
         
         preserveEGLContextOnPause(true);
-//      getHolder().setFormat(PixelFormat.TRANSLUCENT);
-//      setEGLConfigChooser(8, 8, 8, 8, 16, 0);
+//        getHolder().setFormat(PixelFormat.TRANSLUCENT);
+//        setEGLConfigChooser(8, 8, 8, 8, 16, 0);
     }
     
     /**

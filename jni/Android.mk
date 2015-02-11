@@ -5,7 +5,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE        := cwqengine
 
 LOCAL_SRC_FILES     := CwqEngineJNI.cpp \
-                       CwqEngine.cpp
+                       CwqEngine.cpp \
+                       CwqEngineJNILoader.cpp
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2
