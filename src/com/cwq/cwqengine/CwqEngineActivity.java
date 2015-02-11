@@ -1,5 +1,7 @@
 package com.cwq.cwqengine;
 
+import java.lang.ref.WeakReference;
+
 import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -51,6 +53,7 @@ public class CwqEngineActivity extends Activity {
         
         //init engine
         mCwqEngine = new CwqEngine();
+        mCwqEngine.setJavaWeakEngine(new WeakReference<CwqEngineActivity>(this));
         mCwqEngine.setAssetManager(getAssets());
         
         //new handle

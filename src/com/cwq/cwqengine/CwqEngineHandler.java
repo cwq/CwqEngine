@@ -34,12 +34,12 @@ public class CwqEngineHandler extends Handler {
      * @param arg1
      * @param arg2
      */
-    private static void postEventFromNative(Object weakThiz, int what, 
+    private static void postEventFromNative(Object weakEngine, int what, 
             int arg1, int arg2) {
-        if (weakThiz == null)
+        if (weakEngine == null)
             return;
         
-        CwqEngineActivity engine = ((WeakReference<CwqEngineActivity>)weakThiz).get();
+        CwqEngineActivity engine = ((WeakReference<CwqEngineActivity>)weakEngine).get();
         if (engine == null && !engine.isEngineOK()) {
             return;
         }

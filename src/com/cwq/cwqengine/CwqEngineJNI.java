@@ -12,6 +12,9 @@ class CwqEngineJNI {
     public final static native long new_CwqEngine();
 
     public final static native void delete_CwqEngine(long ptr);
+    
+    public final static native void CwqEngine_setJavaWeakEngine(long ptr,
+            CwqEngine jengine, Object jWeakEngine);
 
     public final static native void CwqEngine_setAssetManager(long ptr,
             CwqEngine jengine, final AssetManager pAssetManager);

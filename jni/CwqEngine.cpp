@@ -1,4 +1,5 @@
 #include "CwqEngine.h"
+#include <android/asset_manager.h>
 #include <GLES2/gl2.h>
 
 CwqEngine::CwqEngine()
@@ -11,8 +12,19 @@ CwqEngine::~CwqEngine()
 
 }
 
-void CwqEngine::setAssetManager(AAssetManager* assetManager)
+void CwqEngine::setJavaWeakEngine(void* jWeakEngine)
 {
+    mJWeakEngine = jWeakEngine;
+}
+
+void* CwqEngine::getJavaWeakEngine()
+{
+    return mJWeakEngine;
+}
+
+void CwqEngine::setAssetManager(void* assetManager)
+{
+    //AAssetManager
     mAssetManager = assetManager;
 }
 

@@ -1,14 +1,17 @@
 #ifndef CWQENGINE_H
 #define CWQENGINE_H
-#include <android/asset_manager.h>
 
 class CwqEngine
 {
 public:
     CwqEngine();
     ~CwqEngine();
-    void setAssetManager(AAssetManager* assetManager);
     
+    void setJavaWeakEngine(void* jWeakEngine);
+    void* getJavaWeakEngine();
+
+    void setAssetManager(void* assetManager);
+
     void onSurfaceCreated();
     void onSurfaceChanged(int width, int height);
     void onDrawFrame();
@@ -23,7 +26,8 @@ public:
     void onTouchesCancel(int* pIDs, float* pXs, float* pYs, int pNum);
     
 private:
-    AAssetManager* mAssetManager;
+    void* mJWeakEngine;
+    void* mAssetManager;
 };
 
 #endif // !CWQENGINE_H

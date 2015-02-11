@@ -38,6 +38,10 @@ class CwqEngine {
     public CwqEngine() {
         this(CwqEngineJNI.new_CwqEngine(), true);
     }
+    
+    public void setJavaWeakEngine(Object jWeakEngine) {
+        CwqEngineJNI.CwqEngine_setJavaWeakEngine(swigCPtr, this, jWeakEngine);
+    }
 
     public void setAssetManager(final AssetManager pAssetManager) {
         CwqEngineJNI.CwqEngine_setAssetManager(swigCPtr, this, pAssetManager);

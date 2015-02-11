@@ -234,18 +234,32 @@ SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_delete_1CwqEngine(JN
   (void)jenv;
   (void)jcls;
   arg1 = *(CwqEngine **)&jarg1; 
+  (jenv)->DeleteGlobalRef((jobject)(arg1)->getJavaWeakEngine());
   delete arg1;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1setJavaWeakEngine(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jobject jWeakEngine) {
+  CwqEngine *arg1 = (CwqEngine *) 0 ;
+  void *arg2 = (void *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(CwqEngine **)&jarg1; 
+  arg2 = jenv->NewGlobalRef(jWeakEngine);
+  (arg1)->setJavaWeakEngine(arg2);
 }
 
 
 SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1setAssetManager(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jobject assetManager) {
   CwqEngine *arg1 = (CwqEngine *) 0 ;
   AAssetManager *arg2 = (AAssetManager *) 0 ;
-  
+
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
-  arg1 = *(CwqEngine **)&jarg1; 
+  arg1 = *(CwqEngine **)&jarg1;
   arg2 = AAssetManager_fromJava(jenv, assetManager);
   (arg1)->setAssetManager(arg2);
 }
@@ -368,16 +382,16 @@ SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1onTouches
   (void)jcls;
   (void)jarg1_;
   arg1 = *(CwqEngine **)&jarg1; 
-  arg2 = jenv->GetIntArrayElements(ids, NULL);
-  arg3 = jenv->GetFloatArrayElements(xs, NULL);
-  arg4 = jenv->GetFloatArrayElements(ys, NULL);
+  arg2 = (jenv)->GetIntArrayElements(ids, NULL);
+  arg3 = (jenv)->GetFloatArrayElements(xs, NULL);
+  arg4 = (jenv)->GetFloatArrayElements(ys, NULL);
   arg5 = (int)pnum;
 
   (arg1)->onTouchesMove(arg2,arg3,arg4,arg5);
 
-  jenv->ReleaseIntArrayElements(ids, arg2, 0);
-  jenv->ReleaseFloatArrayElements(xs, arg3, 0);
-  jenv->ReleaseFloatArrayElements(ys, arg4, 0);
+  (jenv)->ReleaseIntArrayElements(ids, arg2, 0);
+  (jenv)->ReleaseFloatArrayElements(xs, arg3, 0);
+  (jenv)->ReleaseFloatArrayElements(ys, arg4, 0);
 }
 
 
@@ -392,16 +406,16 @@ SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1onTouches
   (void)jcls;
   (void)jarg1_;
   arg1 = *(CwqEngine **)&jarg1; 
-  arg2 = jenv->GetIntArrayElements(ids, NULL);
-  arg3 = jenv->GetFloatArrayElements(xs, NULL);
-  arg4 = jenv->GetFloatArrayElements(ys, NULL);
+  arg2 = (jenv)->GetIntArrayElements(ids, NULL);
+  arg3 = (jenv)->GetFloatArrayElements(xs, NULL);
+  arg4 = (jenv)->GetFloatArrayElements(ys, NULL);
   arg5 = (int)pnum;
 
   (arg1)->onTouchesCancel(arg2,arg3,arg4,arg5);
 
-  jenv->ReleaseIntArrayElements(ids, arg2, 0);
-  jenv->ReleaseFloatArrayElements(xs, arg3, 0);
-  jenv->ReleaseFloatArrayElements(ys, arg4, 0);
+  (jenv)->ReleaseIntArrayElements(ids, arg2, 0);
+  (jenv)->ReleaseFloatArrayElements(xs, arg3, 0);
+  (jenv)->ReleaseFloatArrayElements(ys, arg4, 0);
 }
 
 
