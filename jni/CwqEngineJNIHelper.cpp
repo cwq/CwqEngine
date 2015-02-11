@@ -14,7 +14,7 @@
 static pthread_key_t current_jni_env;
 
 JavaVM* CwqEngineJNIHelper::mJavaVM = NULL;
-jclass CwqEngineJNIHelper::jHandler = NULL;
+jclass CwqEngineJNIHelper::jHandlerClass = NULL;
 jmethodID CwqEngineJNIHelper::postEventFromNative = NULL;
 
 void CwqEngineJNIHelper::setJavaVM(JavaVM *javaVM)
@@ -68,12 +68,12 @@ JNIEnv* CwqEngineJNIHelper::getEnv()
 
 void CwqEngineJNIHelper::setJHandlerClass(jclass handler)
 {
-    jHandler = handler;
+    jHandlerClass = handler;
 }
 
 jclass CwqEngineJNIHelper::getJHandlerClass()
 {
-    return jHandler;
+    return jHandlerClass;
 }
 
 void CwqEngineJNIHelper::setPostEventFromNativeID(jmethodID jmethodID)
@@ -84,6 +84,15 @@ void CwqEngineJNIHelper::setPostEventFromNativeID(jmethodID jmethodID)
 jmethodID CwqEngineJNIHelper::getPostEventFromNativeID()
 {
     return postEventFromNative;
+}
+
+void CwqEngineJNIHelper::postEventToJava(jobject weak_this, int what, int arg1, int arg2)
+{
+    if(jHandlerClass != NULL && postEventFromNative != NULL && weak_this != NULL)
+    {
+        JNIEnv *env = getEnv();
+        (env)->CallStaticVoidMethod(jHandlerClass, postEventFromNative, weak_this, what, arg1, arg2);
+    }
 }
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM * vm, void * reserved)

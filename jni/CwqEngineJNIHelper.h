@@ -16,13 +16,15 @@ public:
     static void setPostEventFromNativeID(jmethodID jmethodID);
     static jmethodID getPostEventFromNativeID();
 
+    static void postEventToJava(jobject weak_this, int what, int arg1, int arg2);
+
 private:
     static JavaVM* mJavaVM;
 
     static JNIEnv* attachCurrentEnv(JavaVM* jvm);
     static void detachCurrentEnv(void *env);
 
-    static jclass jHandler;
+    static jclass jHandlerClass;
     static jmethodID postEventFromNative;
 };
 
