@@ -35,7 +35,7 @@ public class CwqEngineHandler extends Handler {
      * @param arg2
      */
     private static void postEventFromNative(Object weakEngine, int what, 
-            int arg1, int arg2) {
+            int arg1, int arg2, Object obj) {
         if (weakEngine == null)
             return;
         
@@ -45,7 +45,7 @@ public class CwqEngineHandler extends Handler {
         }
         
         if (engine.mHandler != null) {
-            Message m = engine.mHandler.obtainMessage(what, arg1, arg2);
+            Message m = engine.mHandler.obtainMessage(what, arg1, arg2, obj);
             engine.mHandler.sendMessage(m);
         }
     }

@@ -91,7 +91,7 @@ void CwqEngineJNIHelper::postEventToJava(jobject weak_this, int what, int arg1, 
     if(jHandlerClass != NULL && postEventFromNative != NULL && weak_this != NULL)
     {
         JNIEnv *env = getEnv();
-        (env)->CallStaticVoidMethod(jHandlerClass, postEventFromNative, weak_this, what, arg1, arg2);
+        (env)->CallStaticVoidMethod(jHandlerClass, postEventFromNative, weak_this, what, arg1, arg2, NULL);
     }
 }
 
@@ -118,7 +118,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM * vm, void * reserved)
     (env)->DeleteLocalRef(clazz);
 
     CwqEngineJNIHelper::setPostEventFromNativeID((env)->GetStaticMethodID(CwqEngineJNIHelper::getJHandlerClass(),
-            "postEventFromNative", "(Ljava/lang/Object;III)V"));
+            "postEventFromNative", "(Ljava/lang/Object;IIILjava/lang/Object;)V"));
     CHECK_RET(CwqEngineJNIHelper::getPostEventFromNativeID(), -1, "missing postEventFromNative");
 
     return JNI_VERSION_1_4;
