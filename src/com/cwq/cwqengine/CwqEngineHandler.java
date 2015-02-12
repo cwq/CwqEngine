@@ -7,18 +7,24 @@ import android.os.Message;
 
 public class CwqEngineHandler extends Handler {
     protected WeakReference<CwqEngineActivity> mWeakEngine;
+    protected static final int ENGINE_ERROR = -1000;
     
     public CwqEngineHandler(CwqEngineActivity engine) {
         super();
         mWeakEngine = new WeakReference<CwqEngineActivity>(engine);
     }
     
+    /**
+     * if engine is unavailable, msg.what = ENGINE_ERROR
+     */
     @Override
     public void handleMessage(Message msg) {
         CwqEngineActivity engine = mWeakEngine.get();
-        if (engine == null) {
+        if (engine == null || engine.isEngineOK()) {
+            msg.what = ENGINE_ERROR;
             return;
         }
+        
         switch (msg.what) {
 
         default:
