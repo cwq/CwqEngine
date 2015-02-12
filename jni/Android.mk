@@ -6,7 +6,8 @@ LOCAL_MODULE        := cwqengine
 
 LOCAL_SRC_FILES     := CwqEngineJNI.cpp \
                        CwqEngine.cpp \
-                       CwqEngineJNIHelper.cpp
+                       CwqEngineJNIHelper.cpp \
+                       TestJNI.cpp
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2
