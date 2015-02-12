@@ -20,7 +20,7 @@ public class CwqEngineHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         CwqEngineActivity engine = mWeakEngine.get();
-        if (engine == null || engine.isEngineOK()) {
+        if (engine == null || !engine.isEngineOK()) {
             msg.what = ENGINE_ERROR;
             return;
         }
