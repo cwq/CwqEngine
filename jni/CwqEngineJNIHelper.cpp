@@ -86,12 +86,12 @@ jmethodID CwqEngineJNIHelper::getPostEventFromNativeID()
     return postEventFromNative;
 }
 
-void CwqEngineJNIHelper::postEventToJava(jobject weak_this, int what, int arg1, int arg2)
+void CwqEngineJNIHelper::postEventToJava(jobject weak_this, int what, int arg1, int arg2, jobject obj)
 {
     if(jHandlerClass != NULL && postEventFromNative != NULL && weak_this != NULL)
     {
         JNIEnv *env = getEnv();
-        (env)->CallStaticVoidMethod(jHandlerClass, postEventFromNative, weak_this, what, arg1, arg2, NULL);
+        (env)->CallStaticVoidMethod(jHandlerClass, postEventFromNative, weak_this, what, arg1, arg2, obj);
     }
 }
 

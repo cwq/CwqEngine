@@ -218,7 +218,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 void* postOnThread(void* arg)
 {
     CwqEngine *arg1 = (CwqEngine *)arg;
-    CwqEngineJNIHelper::postEventToJava((jobject)(arg1)->getJavaWeakEngine(), 2, 1, 1);
+    CwqEngineJNIHelper::postEventToJava((jobject)(arg1)->getJavaWeakEngine(), 2, 1, 1, NULL);
 }
 
 #ifdef __cplusplus
@@ -231,7 +231,7 @@ SWIGEXPORT void JNICALL Java_com_cwq_test_TestJNI_clickButton1(JNIEnv *jenv, jcl
     (void)jenv;
     (void)jcls;
     arg1 = *(CwqEngine **)&jarg1;
-    CwqEngineJNIHelper::postEventToJava((jobject)(arg1)->getJavaWeakEngine(), 1, 1, 1);
+    CwqEngineJNIHelper::postEventToJava((jobject)(arg1)->getJavaWeakEngine(), 1, 1, 1, NULL);
 }
 
 
@@ -241,7 +241,7 @@ SWIGEXPORT void JNICALL Java_com_cwq_test_TestJNI_clickButton2(JNIEnv *jenv, jcl
     (void)jenv;
     (void)jcls;
     arg1 = *(CwqEngine **)&jarg1;
-    //CwqEngineJNIHelper::postEventToJava((jobject)(arg1)->getJavaWeakEngine(), 2, 1, 1);
+    //CwqEngineJNIHelper::postEventToJava((jobject)(arg1)->getJavaWeakEngine(), 2, 1, 1, NULL);
     pthread_t ntid;
     pthread_create(&ntid, NULL, postOnThread, arg1);
 }
