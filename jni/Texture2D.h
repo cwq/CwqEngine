@@ -9,7 +9,7 @@ public:
     ~Textur2D();
 
     bool load(const char* filename);
-    bool load(const unsigned char* data, int dataLen);
+    bool load(const unsigned char* fileData, size_t dataLen);
     bool load(Image image);
     void unLoad();
     bool isLoaded();

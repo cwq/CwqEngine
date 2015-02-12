@@ -20,10 +20,10 @@ bool Textur2D::load(const char* filename)
     return load(image);
 }
 
-bool Textur2D::load(const unsigned char* data, int dataLen)
+bool Textur2D::load(const unsigned char* fileData, size_t dataLen)
 {
     Image image;
-    image.initWithFileData(data, dataLen);
+    image.initWithFileData(fileData, dataLen);
     return load(image);
 }
 

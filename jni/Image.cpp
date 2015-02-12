@@ -15,12 +15,12 @@ bool Image::initWithFileName(const char* filename)
     return true;
 }
 
-bool Image::initWithFileData(const unsigned char* data, int dataLen)
+bool Image::initWithFileData(const unsigned char* fileData, size_t dataLen)
 {
     return true;
 }
 
-void Image::setPixels(void *ps, int length)
+void Image::setPixels(void *ps, size_t size)
 {
 
 }

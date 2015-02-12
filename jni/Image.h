@@ -9,9 +9,9 @@ public:
     ~Image();
 
     bool initWithFileName(const char* filename);
-    bool initWithFileData(const unsigned char* data, int dataLen);
+    bool initWithFileData(const unsigned char* fileData, size_t dataLen);
 
-    void setPixels(void *ps, int length);
+    void setPixels(void *ps, size_t size);
     void* getPixels();
 
     int getWidth();
