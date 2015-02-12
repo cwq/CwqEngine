@@ -8,7 +8,7 @@ package com.cwq.cwqengine;
 
 import android.content.res.AssetManager;
 
-class CwqEngine {
+public class CwqEngine {
     private long swigCPtr;
     private boolean swigCMemOwn;
 

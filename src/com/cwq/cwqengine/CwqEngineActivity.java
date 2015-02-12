@@ -13,7 +13,7 @@ public class CwqEngineActivity extends Activity {
     
     private CwqEngineGLSurfaceView mGlSurfaceView;
     
-    private CwqEngine mCwqEngine;
+    protected CwqEngine mCwqEngine;
     
     protected CwqEngineHandler mHandler;
     
