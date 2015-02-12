@@ -1,5 +1,4 @@
 #include "CwqEngine.h"
-#include <android/asset_manager.h>
 #include <GLES2/gl2.h>
 
 CwqEngine::CwqEngine()
