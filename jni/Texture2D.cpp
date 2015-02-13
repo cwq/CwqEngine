@@ -29,6 +29,13 @@ bool Textur2D::load(const unsigned char* fileData, size_t dataLen)
 
 bool Textur2D::load(const Image& image)
 {
+    //null pixels
+    if(image.getPixels() == NULL)
+    {
+        LOGE("Image null pixels!");
+        return false;
+    }
+
     if(mWidth != image.getWidth() || mHeight != image.getHeight()
             || mTextureFormat != image.getFormat())
     {
