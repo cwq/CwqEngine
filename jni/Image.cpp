@@ -1,5 +1,6 @@
 #include "Image.h"
 #include <stdlib.h>
+#include "ImageLoader.h"
 #include "LogHelper.h"
 
 Image::Image()
@@ -14,12 +15,12 @@ Image::~Image()
 
 bool Image::initWithFileName(const char* filename)
 {
-    return true;
+    return ImageLoader::loadImageWithFileName(this, filename);
 }
 
 bool Image::initWithFileData(const unsigned char* fileData, size_t dataLen)
 {
-    return true;
+    return ImageLoader::loadImageWithFileData(this, fileData, dataLen);
 }
 
 bool Image::initWithImageInfo(int pWidth, int pHeight, GLenum format)

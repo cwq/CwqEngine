@@ -9,7 +9,8 @@ LOCAL_SRC_FILES     := CwqEngineJNI.cpp \
                        CwqEngineJNIHelper.cpp \
                        TestJNI.cpp \
                        Image.cpp \
-                       Texture2D.cpp
+                       Texture2D.cpp \
+                       ImageLoader.cpp
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2
