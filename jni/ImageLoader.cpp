@@ -8,7 +8,7 @@ bool ImageLoader::loadImageWithFileName(Image* image, const char* filename)
 {
     FILE *fp = fopen(filename, "r");
     bool result = false;
-    if(!fp)
+    if(fp)
     {
         size_t fileSize;
         fseek(fp, 0, SEEK_END);
