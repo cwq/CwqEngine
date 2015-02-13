@@ -6,6 +6,7 @@
 Image::Image()
 {
     pixels = NULL;
+    pSize = 0;
 }
 
 Image::~Image()
@@ -48,6 +49,7 @@ bool Image::initWithImageInfo(int pWidth, int pHeight, GLenum format)
     {
         return false;
     }
+    pSize = size;
     return true;
 }
 
