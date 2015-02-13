@@ -45,7 +45,7 @@ bool ImageLoader::loadImageWithFileData(Image* image, const unsigned char* fileD
 {
     bool result = false;
     int w, h, n;
-    unsigned char* pixels = stbi_load_from_memory(fileData, dataLen, &w, &h, &n, 0);
+    unsigned char* pixels = stbi_load_from_memory(fileData, dataLen, &w, &h, &n, 4);
     if(pixels)
     {
         if(n != 3 && n != 4)
@@ -55,9 +55,6 @@ bool ImageLoader::loadImageWithFileData(Image* image, const unsigned char* fileD
         else
         {
             GLenum format = GL_RGBA;
-            if(n == 3)
-                format = GL_RGB;
-
             if(image->initWithImageInfo(w, h, format))
             {
                 image->setPixels(pixels);
