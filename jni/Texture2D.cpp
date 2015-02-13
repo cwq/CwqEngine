@@ -3,31 +3,31 @@
 
 #define TEXTURE_ID_INVALID 0
 
-Textur2D::Textur2D()
+Texture2D::Texture2D()
 {
     mTextureID = TEXTURE_ID_INVALID;
 }
 
-Textur2D::~Textur2D()
+Texture2D::~Texture2D()
 {
     mTextureID = TEXTURE_ID_INVALID;
 }
 
-bool Textur2D::load(const char* filename)
+bool Texture2D::load(const char* filename)
 {
     Image image;
     image.initWithFileName(filename);
     return load(image);
 }
 
-bool Textur2D::load(const unsigned char* fileData, size_t dataLen)
+bool Texture2D::load(const unsigned char* fileData, size_t dataLen)
 {
     Image image;
     image.initWithFileData(fileData, dataLen);
     return load(image);
 }
 
-bool Textur2D::load(const Image& image)
+bool Texture2D::load(const Image& image)
 {
     //null pixels
     if(image.getPixels() == NULL)
@@ -69,7 +69,7 @@ bool Textur2D::load(const Image& image)
     }
 }
 
-void Textur2D::unLoad()
+void Texture2D::unLoad()
 {
     if (mTextureID != TEXTURE_ID_INVALID)
     {
@@ -78,33 +78,33 @@ void Textur2D::unLoad()
     }
 }
 
-bool Textur2D::isLoaded() const
+bool Texture2D::isLoaded() const
 {
     return mTextureID != TEXTURE_ID_INVALID;
 }
 
-void Textur2D::bind() const
+void Texture2D::bind() const
 {
     glBindTexture(GL_TEXTURE_2D, mTextureID);
 }
 
-int Textur2D::getWidth() const
+int Texture2D::getWidth() const
 {
     return mWidth;
 }
 
-int Textur2D::getHeight() const
+int Texture2D::getHeight() const
 {
     return mHeight;
 }
 
-void Textur2D::setWidthAndHeight(int pWidth, int pHeight)
+void Texture2D::setWidthAndHeight(int pWidth, int pHeight)
 {
     mWidth = pWidth;
     mHeight = pHeight;
 }
 
-GLuint Textur2D::getTextureID() const
+GLuint Texture2D::getTextureID() const
 {
     return mTextureID;
 }

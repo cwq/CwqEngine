@@ -2,11 +2,11 @@
 #define TEXTURE2D_H
 #include "Image.h"
 
-class Textur2D
+class Texture2D
 {
 public:
-    Textur2D();
-    ~Textur2D();
+    Texture2D();
+    ~Texture2D();
 
     bool load(const char* filename);
     bool load(const unsigned char* fileData, size_t dataLen);
