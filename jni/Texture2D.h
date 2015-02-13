@@ -10,17 +10,17 @@ public:
 
     bool load(const char* filename);
     bool load(const unsigned char* fileData, size_t dataLen);
-    bool load(Image image);
+    bool load(const Image& image);
     void unLoad();
-    bool isLoaded();
+    bool isLoaded() const;
 
-    void bind();
+    void bind() const;
 
-    int getWidth();
-    int getHeight();
+    int getWidth() const;
+    int getHeight() const;
     void setWidthAndHeight(int pWidth, int pHeight);
 
-    GLuint getTextureID();
+    GLuint getTextureID() const;
 
 private:
     int mWidth;

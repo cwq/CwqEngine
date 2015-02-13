@@ -27,7 +27,7 @@ bool Textur2D::load(const unsigned char* fileData, size_t dataLen)
     return load(image);
 }
 
-bool Textur2D::load(Image image)
+bool Textur2D::load(const Image& image)
 {
     if(mWidth != image.getWidth() || mHeight != image.getHeight()
             || mTextureFormat != image.getFormat())
@@ -71,22 +71,22 @@ void Textur2D::unLoad()
     }
 }
 
-bool Textur2D::isLoaded()
+bool Textur2D::isLoaded() const
 {
     return mTextureID != TEXTURE_ID_INVALID;
 }
 
-void Textur2D::bind()
+void Textur2D::bind() const
 {
     glBindTexture(GL_TEXTURE_2D, mTextureID);
 }
 
-int Textur2D::getWidth()
+int Textur2D::getWidth() const
 {
     return mWidth;
 }
 
-int Textur2D::getHeight()
+int Textur2D::getHeight() const
 {
     return mHeight;
 }
@@ -97,7 +97,7 @@ void Textur2D::setWidthAndHeight(int pWidth, int pHeight)
     mHeight = pHeight;
 }
 
-GLuint Textur2D::getTextureID()
+GLuint Textur2D::getTextureID() const
 {
     return mTextureID;
 }
