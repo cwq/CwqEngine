@@ -10,19 +10,22 @@ public:
 
     bool initWithFileName(const char* filename);
     bool initWithFileData(const unsigned char* fileData, size_t dataLen);
+    bool initWithImageInfo(int pWidth, int pHeight, GLenum format);
 
-    void setPixels(void *ps, size_t size);
-    void* getPixels();
+    bool setPixels(void *ps);
+    void* getPixels() const;
 
-    int getWidth();
-    int getHeight();
-    void setWidthAndHeight(int pWidth, int pHeight);
+    int getWidth() const;
+    int getHeight() const;
 
-    GLenum getFormat();
-    void setFormat(GLenum format);
+    GLenum getFormat() const;
 
 private:
+    bool mallocPixels(size_t size);
+    void freePixels();
+
     void* pixels;
+    size_t pSize;
     int mWidth;
     int mHeight;
     GLenum mFormat;
