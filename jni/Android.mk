@@ -17,7 +17,8 @@ LOCAL_SRC_FILES     := CwqEngineJNI.cpp \
                        Image.cpp \
                        Texture2D.cpp \
                        ImageLoader.cpp \
-                       gl_code.cpp
+                       gl_code.cpp \
+                       Resource.cpp
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2

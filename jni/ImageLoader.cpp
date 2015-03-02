@@ -1,4 +1,5 @@
 #include "ImageLoader.h"
+#include "Resource.h"
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_NEON
 #include "stb_image.h"
@@ -6,19 +7,15 @@
 
 bool ImageLoader::loadImageWithFileName(Image* image, const char* filename)
 {
-    FILE *fp = fopen(filename, "r");
     bool result = false;
-    if(fp)
+    Resource resource(filename);
+    if(resource.open())
     {
-        size_t fileSize;
-        fseek(fp, 0, SEEK_END);
-        fileSize = ftell(fp);
-        fseek(fp, 0, SEEK_SET);
+        size_t fileSize = resource.getLength();
         unsigned char* data = (unsigned char*) malloc(fileSize);
         if(data)
         {
-            fileSize = fread(data, sizeof(unsigned char), fileSize, fp);
-            if(fileSize > 0)
+            if(resource.read(data, fileSize))
             {
                 result = ImageLoader::loadImageWithFileData(image, data, fileSize);
             }
@@ -32,7 +29,7 @@ bool ImageLoader::loadImageWithFileName(Image* image, const char* filename)
         {
             LOGE("loadImageWithFileName malloc(%d) error", fileSize);
         }
-        fclose(fp);
+        resource.close();
     }
     else
     {

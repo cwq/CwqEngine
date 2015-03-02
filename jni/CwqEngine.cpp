@@ -1,6 +1,7 @@
 #include "CwqEngine.h"
 #include <GLES2/gl2.h>
 #include "Texture2D.h"
+#include "Resource.h"
 #include "LogHelper.h"
 
 extern bool setupGraphics();
@@ -32,6 +33,8 @@ void CwqEngine::setAssetManager(void* assetManager)
 {
     //AAssetManager
     mAssetManager = assetManager;
+    //static Resource::setAssetManager
+    Resource::setAssetManager(mAssetManager);
 }
 
 void CwqEngine::onSurfaceCreated()
@@ -40,7 +43,8 @@ void CwqEngine::onSurfaceCreated()
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     setupGraphics();
-    texture.load("/mnt/sdcard/tou.png");
+    //texture.load("/mnt/sdcard/test.png");
+    texture.load("test.png");
     LOGE("onSurfaceCreated 2");
 }
 
