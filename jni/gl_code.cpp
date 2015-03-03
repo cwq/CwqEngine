@@ -25,6 +25,33 @@
 
 #include "LogHelper.h"
 
+struct V3F_C4B_T2F {
+    float vertices[3];
+    float colors[4];
+    float texCoords[2];
+};
+
+enum {
+    //! top left
+    TL = 0,
+    //! bottom leftS
+    BL = 1,
+    //! top right
+    TR = 2,
+    //! bottom right
+    BR = 3
+};
+
+//struct V3F_C4B_T2F_Quad {
+    V3F_C4B_T2F items[4];
+//};
+
+//V3F_C4B_T2F_Quad mQuad;
+
+GLuint gl_buffer_id;
+
+float vct[36];
+
 static void printGLString(const char *name, GLenum s) {
     const char *v = (const char *) glGetString(s);
     LOGI("GL %s = %s\n", name, v);
@@ -144,6 +171,40 @@ bool setupGraphics() {
     checkGlError("glGetAttribLocation");
     u_TextureUnit = glGetUniformLocation(gProgram, "u_TextureUnit");
     checkGlError("glGetUniformLocation");
+
+    ////////////////////////
+    // 更新相关几何信息
+    items[0].vertices[0] = vct[0] = .0f;
+    items[0].vertices[1] = vct[1] = 1.0f;
+    items[0].vertices[2] = vct[2] = .0f;
+
+    items[0].texCoords[0] = vct[7] = .0f;
+    items[0].texCoords[1] = vct[8] = 1.0f;
+
+    items[1].vertices[0] = vct[9] = .0f;
+    items[1].vertices[1] = vct[10] = .0f;
+    items[1].vertices[2] = vct[11] = .0f;
+
+    items[1].texCoords[0] = vct[16] = .0f;
+    items[1].texCoords[1] = vct[17] = .0f;
+
+    items[2].vertices[0] = vct[18] = 1.0f;
+    items[2].vertices[1] = vct[19] = 1.0f;
+    items[2].vertices[2] = vct[20] = .0f;
+
+    items[2].texCoords[0] = vct[25] = 1.0f;
+    items[2].texCoords[1] = vct[26] = 1.0f;
+
+    items[3].vertices[0] = vct[27] = 1.0f;
+    items[3].vertices[1] = vct[28] = .0f;
+    items[3].vertices[2] = vct[29] = .0f;
+
+    items[3].texCoords[0] = vct[34] = 1.0f;
+    items[3].texCoords[1] = vct[35] = .0f;
+
+    glGenBuffers(1, &gl_buffer_id);
+    checkGlError("glGenBuffers");
+
     return true;
 }
 
@@ -171,12 +232,17 @@ void renderFrame(int textureID) {
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
 
-    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
+    glBindBuffer(GL_ARRAY_BUFFER,  gl_buffer_id);
+    checkGlError("glBindBuffer");
+    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_T2F) * 4, items, GL_DYNAMIC_DRAW);
+    checkGlError("glBufferData");
+
+    glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid *)offsetof(V3F_C4B_T2F, vertices));//items
     checkGlError("glVertexAttribPointer");
     glEnableVertexAttribArray(gvPositionHandle);
     checkGlError("glEnableVertexAttribArray");
 
-    glVertexAttribPointer(a_TextureCoordinates, 2, GL_FLOAT, GL_FALSE, 0, gTextureCoordinates);
+    glVertexAttribPointer(a_TextureCoordinates, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid *)offsetof(V3F_C4B_T2F, texCoords));//items[0].texCoords
     checkGlError("glVertexAttribPointer");
     glEnableVertexAttribArray(a_TextureCoordinates);
     checkGlError("glEnableVertexAttribArray");
