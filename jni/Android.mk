@@ -18,7 +18,13 @@ LOCAL_SRC_FILES     := CwqEngineJNI.cpp \
                        Texture2D.cpp \
                        ImageLoader.cpp \
                        gl_code.cpp \
-                       Resource.cpp
+                       Resource.cpp \
+                       math/Mat4.cpp \
+                       math/MathUtil.cpp \
+                       math/Quaternion.cpp \
+                       math/Vec2.cpp \
+                       math/Vec3.cpp \
+                       math/Vec4.cpp \
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2

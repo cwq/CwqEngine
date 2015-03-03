@@ -5,7 +5,7 @@
 #include "LogHelper.h"
 
 extern bool setupGraphics();
-extern void onSurfaceChanged(int w, int h);
+extern void surfaceChanged(int w, int h);
 extern void renderFrame(int textureID);
 Texture2D texture;
 
@@ -51,7 +51,7 @@ void CwqEngine::onSurfaceCreated()
 void CwqEngine::onSurfaceChanged(int width, int height)
 {
     LOGE("onSurfaceChanged 1");
-    glViewport(0, 0, width, height);
+    surfaceChanged(width, height);
     LOGE("onSurfaceChanged 2");
 }
 

@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "math/Mat4.h"
 #include "LogHelper.h"
 
 struct V3F_C4B_T2F {
@@ -66,11 +67,12 @@ static void checkGlError(const char* op) {
 
 static const char gVertexShader[] = 
     "attribute vec4 vPosition;\n"
+    "uniform mat4 u_Matrix;\n"
     "attribute vec2 a_TextureCoordinates;\n"
     "varying vec2 v_TextureCoordinates;\n"
     "void main() {\n"
     "  v_TextureCoordinates = a_TextureCoordinates;\n"
-    "  gl_Position = vPosition;\n"
+    "  gl_Position = u_Matrix * vPosition;\n"
     "}\n";
 
 static const char gFragmentShader[] = 
@@ -149,6 +151,11 @@ GLuint gProgram;
 GLuint gvPositionHandle;
 GLuint a_TextureCoordinates;
 GLuint u_TextureUnit;
+GLuint u_Matrix;
+
+Mat4 mvpMat;
+Mat4 vMat;
+Mat4 pMat;
 
 bool setupGraphics() {
     printGLString("Version", GL_VERSION);
@@ -166,16 +173,20 @@ bool setupGraphics() {
     checkGlError("glGetAttribLocation");
     LOGI("glGetAttribLocation(\"vPosition\") = %d\n",
             gvPositionHandle);
+    u_Matrix = glGetUniformLocation(gProgram, "u_Matrix");
+    checkGlError("glGetUniformLocation");
 
     a_TextureCoordinates = glGetAttribLocation(gProgram, "a_TextureCoordinates");
     checkGlError("glGetAttribLocation");
     u_TextureUnit = glGetUniformLocation(gProgram, "u_TextureUnit");
     checkGlError("glGetUniformLocation");
 
+    Mat4::createLookAt(Vec3(0, 0, 1), Vec3(0, 0, 0), Vec3(0, 1, 0), &vMat);
+
     ////////////////////////
     // 更新相关几何信息
     items[0].vertices[0] = vct[0] = .0f;
-    items[0].vertices[1] = vct[1] = 1.0f;
+    items[0].vertices[1] = vct[1] = 500.0f;
     items[0].vertices[2] = vct[2] = .0f;
 
     items[0].texCoords[0] = vct[7] = .0f;
@@ -188,14 +199,14 @@ bool setupGraphics() {
     items[1].texCoords[0] = vct[16] = .0f;
     items[1].texCoords[1] = vct[17] = .0f;
 
-    items[2].vertices[0] = vct[18] = 1.0f;
-    items[2].vertices[1] = vct[19] = 1.0f;
+    items[2].vertices[0] = vct[18] = 500.0f;
+    items[2].vertices[1] = vct[19] = 500.0f;
     items[2].vertices[2] = vct[20] = .0f;
 
     items[2].texCoords[0] = vct[25] = 1.0f;
     items[2].texCoords[1] = vct[26] = 1.0f;
 
-    items[3].vertices[0] = vct[27] = 1.0f;
+    items[3].vertices[0] = vct[27] = 500.0f;
     items[3].vertices[1] = vct[28] = .0f;
     items[3].vertices[2] = vct[29] = .0f;
 
@@ -208,15 +219,22 @@ bool setupGraphics() {
     return true;
 }
 
-void onSurfaceChanged(int w, int h) {
+void surfaceChanged(int w, int h) {
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
+
+    Mat4::createOrthographicOffCenter(0, w, 0, h, -1, 1, &pMat);
+    Mat4::multiply(vMat, pMat, &mvpMat);
 }
 
 const GLfloat gTriangleVertices[] = { -0.5f, 0.5f, -0.5f, -0.5f,
         0.5f, 0.5f, 0.5f, -0.5f };
 const GLfloat gTextureCoordinates[] = { 0.0f, 1.0f, 0.0f, 0.0f,
         1.0f, 1.0f, 1.0f, 0.0f };
+const GLfloat mat[] = { 1.0f, 0.0f, 0.0f, 0.0f,
+                        0.0f, 1.0f, 0.0f, 0.0f,
+                        0.0f, 0.0f, 1.0f, 0.0f,
+                        0.0f, 0.0f, 0.0f, 1.0f };
 
 void renderFrame(int textureID) {
 //    static float grey;
@@ -246,6 +264,9 @@ void renderFrame(int textureID) {
     checkGlError("glVertexAttribPointer");
     glEnableVertexAttribArray(a_TextureCoordinates);
     checkGlError("glEnableVertexAttribArray");
+
+    glUniformMatrix4fv(u_Matrix, 1, GL_FALSE, mvpMat.m);
+    checkGlError("glUniformMatrix4fv");
 
     glActiveTexture(GL_TEXTURE0);
     checkGlError("glActiveTexture");
