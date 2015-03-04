@@ -250,6 +250,9 @@ void renderFrame(int textureID) {
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+
     glBindBuffer(GL_ARRAY_BUFFER,  gl_buffer_id);
     checkGlError("glBindBuffer");
     glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_T2F) * 4, items, GL_DYNAMIC_DRAW);
@@ -277,4 +280,6 @@ void renderFrame(int textureID) {
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     checkGlError("glDrawArrays");
+
+    glDisable(GL_BLEND);
 }
