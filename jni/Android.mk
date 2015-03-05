@@ -16,6 +16,7 @@ LOCAL_SRC_FILES     := CwqEngineJNI.cpp \
                        TestJNI.cpp \
                        Image.cpp \
                        Texture2D.cpp \
+                       TextureCache.cpp \
                        ImageLoader.cpp \
                        gl_code.cpp \
                        Resource.cpp \

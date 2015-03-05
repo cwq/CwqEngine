@@ -2,6 +2,8 @@
 #define TEXTURE2D_H
 #include "Image.h"
 
+class Resource;
+
 class Texture2D
 {
 public:
@@ -11,6 +13,7 @@ public:
     bool load(const char* filename);
     bool load(const unsigned char* fileData, size_t dataLen);
     bool load(const Image& image);
+
     void unLoad();
     bool isLoaded() const;
 
@@ -22,11 +25,17 @@ public:
 
     GLuint getTextureID() const;
 
+    void increaseRef();
+    void decreaseRef();
+    int getRef() const;
+
 private:
     int mWidth;
     int mHeight;
     GLuint mTextureID;
     GLenum mTextureFormat;
+
+    int mRef;
 };
 
 #endif // !TEXTURE2D_H

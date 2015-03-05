@@ -6,11 +6,13 @@
 Texture2D::Texture2D()
 {
     mTextureID = TEXTURE_ID_INVALID;
+    mRef = 1;
 }
 
 Texture2D::~Texture2D()
 {
     mTextureID = TEXTURE_ID_INVALID;
+    mRef = 0;
 }
 
 bool Texture2D::load(const char* filename)
@@ -71,6 +73,7 @@ bool Texture2D::load(const Image& image)
 
 void Texture2D::unLoad()
 {
+    mRef = 0;
     if (mTextureID != TEXTURE_ID_INVALID)
     {
         glDeleteTextures(1, &mTextureID);
@@ -107,4 +110,19 @@ void Texture2D::setWidthAndHeight(int pWidth, int pHeight)
 GLuint Texture2D::getTextureID() const
 {
     return mTextureID;
+}
+
+void Texture2D::increaseRef()
+{
+    ++mRef;
+}
+
+void Texture2D::decreaseRef()
+{
+    --mRef;
+}
+
+int Texture2D::getRef() const
+{
+    return mRef;
 }
