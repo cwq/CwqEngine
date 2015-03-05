@@ -73,7 +73,6 @@ bool Texture2D::load(const Image& image)
 
 void Texture2D::unLoad()
 {
-    mRef = 0;
     if (mTextureID != TEXTURE_ID_INVALID)
     {
         glDeleteTextures(1, &mTextureID);
