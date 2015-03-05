@@ -68,6 +68,7 @@ public class CwqEngineGLSurfaceView extends GLSurfaceView {
     @Override
     public void onResume() {
         super.onResume();
+        this.setRenderMode(RENDERMODE_CONTINUOUSLY);
         queueEvent(new Runnable() {
             @Override
             public void run() {
@@ -78,13 +79,14 @@ public class CwqEngineGLSurfaceView extends GLSurfaceView {
     
     @Override
     public void onPause() {
-        super.onPause();
         queueEvent(new Runnable() {
             @Override
             public void run() {
                 mCwqEngineRenderer.handleOnPause();
             }
         });
+        this.setRenderMode(RENDERMODE_WHEN_DIRTY);
+        super.onPause();
     }
     
     @Override
