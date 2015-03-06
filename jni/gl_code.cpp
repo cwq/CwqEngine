@@ -190,28 +190,28 @@ bool setupGraphics() {
     items[0].vertices[2] = vct[2] = .0f;
 
     items[0].texCoords[0] = vct[7] = .0f;
-    items[0].texCoords[1] = vct[8] = 1.0f;
+    items[0].texCoords[1] = vct[8] = 0.0f;
 
     items[1].vertices[0] = vct[9] = .0f;
     items[1].vertices[1] = vct[10] = .0f;
     items[1].vertices[2] = vct[11] = .0f;
 
     items[1].texCoords[0] = vct[16] = .0f;
-    items[1].texCoords[1] = vct[17] = .0f;
+    items[1].texCoords[1] = vct[17] = 1.0f;
 
     items[2].vertices[0] = vct[18] = 500.0f;
     items[2].vertices[1] = vct[19] = 500.0f;
     items[2].vertices[2] = vct[20] = .0f;
 
     items[2].texCoords[0] = vct[25] = 1.0f;
-    items[2].texCoords[1] = vct[26] = 1.0f;
+    items[2].texCoords[1] = vct[26] = 0.0f;
 
     items[3].vertices[0] = vct[27] = 500.0f;
     items[3].vertices[1] = vct[28] = .0f;
     items[3].vertices[2] = vct[29] = .0f;
 
     items[3].texCoords[0] = vct[34] = 1.0f;
-    items[3].texCoords[1] = vct[35] = .0f;
+    items[3].texCoords[1] = vct[35] = 1.0f;
 
     glGenBuffers(1, &gl_buffer_id);
     checkGlError("glGenBuffers");
