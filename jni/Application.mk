@@ -7,4 +7,7 @@ APP_ABI := armeabi-v7a
 APP_STL := c++_static
 #NDK_TOOLCHAIN_VERSION=clang
 
+# 4.8 至少才能使用c++11
+NDK_TOOLCHAIN_VERSION := 4.8
+
 APP_CPPFLAGS := -std=c++11
