@@ -51,12 +51,13 @@ public:
     bool isVisible() const { return mVisible; };
     void setVisible(bool visible) { mVisible = visible; };
 
-    float getAnimStartTime() const { return mAnimStartTime; };
-    void setAnimStartTime(float startTime);
-    float getAnimEndTime() const { return mAnimEndTime; };
-    void setAnimEndTime(float endTime);
+    //ms
+    int getAnimStartTime() const { return mAnimStartTime; };
+    void setAnimStartTime(int startTime);
+    int getAnimEndTime() const { return mAnimEndTime; };
+    void setAnimEndTime(int endTime);
 
-    void update(float currentTime);
+    void update(int currentTime);
 
     void release();
 
@@ -69,39 +70,39 @@ protected:
     void updatePosition();
     void updateUV();
 private:
-    // 纹理
+    // texture
     Texture2D*  mTexture    = nullptr;
 
-    // 精灵中心坐标、宽高
+    // sprite current info
     float mCenterX, mCenterY;
     float mWidth, mHeight;
 
-    // 精灵原始宽高
+    // sprite original w h
     float origWidth, origHeight;
 
-    // 使用纹理的UV坐标
+    // UV coordinate
     float startU, endU; //x
     float startV, endV; //y
 
-    // 旋转角度 正数为逆时针
+    // Counterclockwise
     float rotateAngle = 0;
 
-    // 坐标几何数据存储
+    // position color uv
     V3F_C4F_T2F_Quad mQuads;
 
-    // 数据是否需要更新
+    // update data
     bool needUpdatePosition = false;
     bool needUpdateUV = false;
     
-    // 绘制使用的脚本
+    // shader
     //Shader*      mShader    = nullptr;
 
-    // 是否可见
+    // is visible
     bool mVisible = true;
 
     // Animation.
     int mAnimFrameCount = 1;
-    float mAnimStartTime = 0, mAnimEndTime = 0;
+    int mAnimStartTime = 0, mAnimEndTime = 0;
     float mAnimDuration = 0;
 };
 

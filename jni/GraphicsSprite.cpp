@@ -86,13 +86,13 @@ void GraphicsSprite::setTexture(Texture2D *texture) {
     }
 
     if (texture != mTexture) {
-        // 不等
+        // delete last
         SAFE_DELETE(mTexture);
         mTexture = texture;
     }
 }
 
-void GraphicsSprite::update(float currentTime)
+void GraphicsSprite::update(int currentTime)
 {
     if((currentTime >= mAnimStartTime && currentTime < mAnimEndTime) ||
         (mAnimFrameCount == 1 && mAnimDuration == 0))
@@ -127,7 +127,6 @@ void GraphicsSprite::update(float currentTime)
 
 void GraphicsSprite::updatePosition()
 {
-    // 更新相关几何信息
     float halfW = mWidth / 2.0;
     float halfH = mHeight / 2.0;
 
@@ -266,13 +265,13 @@ bool GraphicsSprite::isInSprite(float pointX, float pointY)
     return false;
 }
 
-void GraphicsSprite::setAnimStartTime(float startTime)
+void GraphicsSprite::setAnimStartTime(int startTime)
 {
     mAnimStartTime = startTime;
     mAnimDuration = mAnimEndTime - mAnimStartTime;
 }
 
-void GraphicsSprite::setAnimEndTime(float endTime)
+void GraphicsSprite::setAnimEndTime(int endTime)
 {
     mAnimEndTime = endTime;
     mAnimDuration = mAnimEndTime - mAnimStartTime;
