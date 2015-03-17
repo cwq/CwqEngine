@@ -174,15 +174,15 @@ Texture2D* GraphicsSprite::getTexture() const
     return mTexture;
 }
 
-//void GraphicsSprite::setShader(Shader* pShader)
-//{
-//    mShader = pShader;
-//}
-//
-//Shader* GraphicsSprite::getShader()
-//{
-//    return mShader;
-//}
+void GraphicsSprite::setShader(Shader* pShader)
+{
+    mShader = pShader;
+}
+
+Shader* GraphicsSprite::getShader()
+{
+    return mShader;
+}
 
 void GraphicsSprite::setWidthAndHeight(float width, float height)
 {

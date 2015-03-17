@@ -27,6 +27,9 @@ LOCAL_SRC_FILES     := CwqEngineJNI.cpp \
                        math/Vec2.cpp \
                        math/Vec3.cpp \
                        math/Vec4.cpp \
+                       renderer/Shader.cpp \
+                       renderer/TextureShader.cpp \
+                       renderer/BasicShader.cpp \
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2

@@ -7,7 +7,7 @@
 #include "base/Types.h"
 
 class Texture2D;
-//class Shader;
+class Shader;
 
 class GraphicsSprite {
 public:
@@ -21,8 +21,8 @@ public:
     void setTexture(Texture2D* texture);
     Texture2D* getTexture() const;
 
-    //void setShader(Shader* pShader);
-    //Shader* getShader();
+    void setShader(Shader* pShader);
+    Shader* getShader();
 
     float getWidth() const { return mWidth; };
     float getHeight() const { return mHeight; };
@@ -95,7 +95,7 @@ private:
     bool needUpdateUV = false;
     
     // shader
-    //Shader*      mShader    = nullptr;
+    Shader*      mShader    = nullptr;
 
     // is visible
     bool mVisible = true;
