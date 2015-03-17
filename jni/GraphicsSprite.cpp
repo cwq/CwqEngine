@@ -63,15 +63,13 @@ bool GraphicsSprite::initWithTexture(Texture2D *texture, int frameCount)
         return false;
     }
 
+    mAnimFrameCount = frameCount;
+
     setTexture(texture);
 
-    mAnimFrameCount = frameCount;
-    float count_1 = 1.0f / frameCount;
-    origWidth = (float)mTexture->getWidth() * count_1;
-    origHeight = (float)mTexture->getHeight();
     setWidthAndHeight(origWidth, origHeight);
     moveTo(mWidth / 2.0, mHeight / 2.0);
-    setUV(0, count_1, 0, 1);
+    setUV(0, 1.0f / mAnimFrameCount, 0, 1);
     update(0);
 
     return true;
@@ -84,6 +82,9 @@ void GraphicsSprite::setTexture(Texture2D *texture) {
         // For now do nothing.
         return;
     }
+
+    origWidth = (float)texture->getWidth() / mAnimFrameCount;
+    origHeight = (float)texture->getHeight();
 
     if (texture != mTexture) {
         // delete last
