@@ -30,6 +30,7 @@ LOCAL_SRC_FILES     := CwqEngineJNI.cpp \
                        renderer/Shader.cpp \
                        renderer/TextureShader.cpp \
                        renderer/BasicShader.cpp \
+                       GraphicsService.cpp \
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2
