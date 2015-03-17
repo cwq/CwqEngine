@@ -1,6 +1,7 @@
 #include "CwqEngineJNIHelper.h"
 #include <pthread.h>
 #include <assert.h>
+#include "audio/android_audiotrack.h"
 #include "LogHelper.h"
 
 #define JNI_CLASS_HANDLER "com/cwq/cwqengine/CwqEngineHandler"
@@ -120,6 +121,10 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM * vm, void * reserved)
     CwqEngineJNIHelper::setPostEventFromNativeID((env)->GetStaticMethodID(CwqEngineJNIHelper::getJHandlerClass(),
             "postEventFromNative", "(Ljava/lang/Object;IIILjava/lang/Object;)V"));
     CHECK_RET(CwqEngineJNIHelper::getPostEventFromNativeID(), -1, "missing postEventFromNative");
+
+    int retval;
+    retval = sdl_audiotrack_global_init(env);
+    CHECK_RET(retval == 0, -1, "sdl_audiotrack_global_init error");
 
     return JNI_VERSION_1_4;
 }
