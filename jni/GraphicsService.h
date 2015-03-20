@@ -40,14 +40,14 @@ public:
     void addSprite(GraphicsSprite* pSprite);
     void removeSprite(GraphicsSprite* pSprite);
 
+protected:
+
     void registerShader(Shader* pShader);
     void removeShader(Shader* pShader);
-protected:
 
     void setupVBO();
     void mapBuffers();
     
-    void Draw(GraphicsSprite* pSprite);
     void drawBatchedQuads();
 
     void fillQuads(GraphicsSprite* &pSprite, int playedTime);

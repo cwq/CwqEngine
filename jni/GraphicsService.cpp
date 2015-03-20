@@ -192,22 +192,6 @@ void GraphicsService::mapBuffers()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void GraphicsService::Draw(GraphicsSprite *pSprite)
-{
-//    assert(pSprite);
-//    if (pSprite)
-//    {
-//        auto geometry = pSprite->getGeometry();
-//        auto pShader = pSprite->getShader();
-//        assert(pShader);
-//        if (pShader)
-//        {
-//            pShader->Setup(*pSprite);
-//            glDrawElements(GL_TRIANGLES, geometry.GetNumIndices(), GL_UNSIGNED_SHORT, geometry.GetIndexBuffer());
-//        }
-//    }
-}
-
 void GraphicsService::drawBatchedQuads()
 {
     int indexToDraw = 0;
