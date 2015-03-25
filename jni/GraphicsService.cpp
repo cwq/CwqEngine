@@ -228,8 +228,6 @@ void GraphicsService::drawBatchedQuads()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
     }
 
-    glUniformMatrix4fv(mCommonShader->m_matrixHandle, 1, GL_FALSE, mvpMat.m);
-
     Texture2D *last_material = nullptr;
     //Start drawing verties in batch
     for(const auto& pSprite : mSprites)
@@ -245,6 +243,7 @@ void GraphicsService::drawBatchedQuads()
                 }
 
                 mCommonShader->Setup(*pSprite);
+                glUniformMatrix4fv(mCommonShader->m_matrixHandle, 1, GL_FALSE, mvpMat.m);
                 last_material = pSprite->getTexture();
             }
 
