@@ -22,6 +22,7 @@ public class CwqEngineActivity extends Activity {
         synchronized(CwqEngineActivity.class) {
             if (!mIsLibLoaded) {
                 try {
+                    System.loadLibrary("ffmpeg");
                     ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
                     Bundle bundle = ai.metaData;
                     String libName = bundle.getString("android.app.lib_name");
