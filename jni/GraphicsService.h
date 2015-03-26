@@ -10,7 +10,6 @@
 #include "math/Mat4.h"
 #include "TextureCache.h"
 
-class CWQEngine;
 class GraphicsSprite;
 class Shader;
 class TextureShader;
@@ -22,7 +21,7 @@ public:
 
     typedef std::vector<GraphicsSprite*> SpriteVector;
     typedef std::vector<GraphicsSprite*>::iterator SpriteVectorIterator;
-    GraphicsService(CWQEngine* engine);
+    GraphicsService();
     ~GraphicsService();
     
     const int32_t& getHeight();
@@ -56,12 +55,7 @@ private:
     int32_t mWidth      = 0;
     int32_t mHeight     = 0;
 
-    CWQEngine* mEngine   = nullptr;
-
     TextureShader* mCommonShader;
-    // Graphics resources.
-//    GraphicsSprite*     mSprites[256]   = {0};
-    int32_t             mSpriteCount    = 0;
 
     TextureCache textureCache;
 

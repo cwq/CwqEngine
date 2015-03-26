@@ -11,8 +11,7 @@
 
 #include <cassert>
 
-GraphicsService::GraphicsService(CWQEngine* engine)
-: mEngine(engine)
+GraphicsService::GraphicsService()
 {
   
 }
@@ -57,8 +56,6 @@ void GraphicsService::start()
 
     setupVBO();
 
-    //mEngine->getApplicationAdapter()->create();
-
     mCommonShader = new TextureShader();
     registerShader(mCommonShader);
 }
@@ -66,8 +63,6 @@ void GraphicsService::start()
 void GraphicsService::stop()
 {
     //Log::info("Stopping GraphicsService.");
-
-    //mEngine->getApplicationAdapter()->dispose();
 }
 
 void GraphicsService::update(int playedTime)
@@ -83,8 +78,6 @@ void GraphicsService::update(int playedTime)
 //
     glClearColor(grey, grey, grey, 1.0f);
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-    //mEngine->getApplicationAdapter()->render();
 
     if (mSprites.size() > 0) {
         for (auto sprite : mSprites)
@@ -115,7 +108,6 @@ void GraphicsService::screenSizeChanged(int32_t &width, int32_t &height)
 
     Mat4::createOrthographicOffCenter(0, mWidth, 0, mHeight, -1, 1, &pMat);
     Mat4::multiply(vMat, pMat, &mvpMat);
-    //mEngine->getApplicationAdapter()->resize(width, height);
 }
 
 GraphicsSprite* GraphicsService::registerSprite(const std::string &filename) {
