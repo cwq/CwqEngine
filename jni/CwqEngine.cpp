@@ -1,22 +1,18 @@
 #include "CwqEngine.h"
 #include <GLES2/gl2.h>
-#include "Texture2D.h"
+#include "base/CWQMacros.h"
+#include "GraphicsService.h"
 #include "Resource.h"
 #include "LogHelper.h"
 
-extern bool setupGraphics();
-extern void surfaceChanged(int w, int h);
-extern void renderFrame(int textureID);
-Texture2D texture;
-
 CwqEngine::CwqEngine()
 {
-
+    graphicsService = new GraphicsService();
 }
 
 CwqEngine::~CwqEngine()
 {
-
+    SAFE_DELETE(graphicsService);
 }
 
 void CwqEngine::setJavaWeakEngine(void* jWeakEngine)
@@ -40,26 +36,21 @@ void CwqEngine::setAssetManager(void* assetManager)
 void CwqEngine::onSurfaceCreated()
 {
     LOGE("onSurfaceCreated 1");
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    setupGraphics();
-    //texture.load("/mnt/sdcard/test.png");
-    texture.load("test.png");
+    graphicsService->start();
+    graphicsService->registerSprite("test.png");
     LOGE("onSurfaceCreated 2");
 }
 
 void CwqEngine::onSurfaceChanged(int width, int height)
 {
     LOGE("onSurfaceChanged 1");
-    surfaceChanged(width, height);
+    graphicsService->screenSizeChanged(width, height);
     LOGE("onSurfaceChanged 2");
 }
 
 void CwqEngine::onDrawFrame()
 {
-    glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    renderFrame(texture.getTextureID());
+    graphicsService->update(0);
 }
 
 void CwqEngine::onResume()
@@ -70,6 +61,7 @@ void CwqEngine::onResume()
 void CwqEngine::onPause()
 {
     LOGE("onPause");
+    graphicsService->stop();
 }
 
 void CwqEngine::onKeyDown(int keyCode)

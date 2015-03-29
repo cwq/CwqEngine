@@ -1,6 +1,8 @@
 #ifndef CWQENGINE_H
 #define CWQENGINE_H
 
+class GraphicsService;
+
 class CwqEngine
 {
 public:
@@ -28,6 +30,8 @@ public:
 private:
     void* mJWeakEngine;
     void* mAssetManager;
+
+    GraphicsService* graphicsService;
 };
 
 #endif // !CWQENGINE_H

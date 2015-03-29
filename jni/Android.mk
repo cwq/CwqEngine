@@ -37,7 +37,6 @@ LOCAL_SRC_FILES     := CwqEngineJNI.cpp \
                        TextureCache.cpp \
                        ImageLoader.cpp \
                        GraphicsSprite.cpp \
-                       gl_code.cpp \
                        Resource.cpp \
                        math/Mat4.cpp \
                        math/MathUtil.cpp \
