@@ -24,15 +24,15 @@ public:
     GraphicsService();
     ~GraphicsService();
     
-    const int32_t& getHeight();
-    const int32_t& getWidth();
+    int getHeight() const;
+    int getWidth() const;
 
     void start();
     void stop();
     //ms
     void update(int playedTime);
 
-    void screenSizeChanged(int32_t& width, int32_t& height);
+    void screenSizeChanged(int width, int height);
 
     GraphicsSprite* registerSprite(const std::string& filename);
 
@@ -49,18 +49,18 @@ protected:
     
     void drawBatchedQuads();
 
-    void fillQuads(GraphicsSprite* &pSprite, int playedTime);
+    void fillQuads(GraphicsSprite* pSprite, int playedTime);
 
 private:
-    int32_t mWidth      = 0;
-    int32_t mHeight     = 0;
+    int mWidth;
+    int mHeight;
 
     TextureShader* mCommonShader;
 
     TextureCache textureCache;
 
     SpriteVector mSprites;
-    std::vector<Shader*> mShaders;
+    //std::vector<Shader*> mShaders;
 
     //for QuadCommand
     //sprite info

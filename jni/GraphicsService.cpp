@@ -7,26 +7,34 @@
 #include "renderer/TextureShader.h"
 #include "renderer/BasicShader.h"
 #include "CWQEngine.h"
-//#include "ApplicationAdapter.h"
 
 #include <cassert>
 
 GraphicsService::GraphicsService()
 {
-  
+    mWidth = mHeight = 0;
+    mCommonShader = NULL;
 }
 
 GraphicsService::~GraphicsService() 
 {
-  
+    SAFE_DELETE(mCommonShader);
+
+    for (SpriteVectorIterator iter = mSprites.begin(); iter != mSprites.end(); ++iter)
+    {
+        GraphicsSprite* pCurrent = *iter;
+        //SAFE_RELEASE(pCurrent);
+        SAFE_DELETE(pCurrent);
+    }
+    mSprites.clear();
 }
 
-const int32_t& GraphicsService::getHeight() 
+int GraphicsService::getHeight() const
 {
   return mHeight;
 }
 
-const int32_t& GraphicsService::getWidth() 
+int GraphicsService::getWidth() const
 {
   return mWidth;
 }
@@ -90,7 +98,7 @@ void GraphicsService::update(int playedTime)
     }
 }
 
-void GraphicsService::screenSizeChanged(int32_t &width, int32_t &height)
+void GraphicsService::screenSizeChanged(int width, int height)
 {
     if (!width || !height) {
         //Log::error("screenSizeChanged with invalid width %d, height %d", width, height);
@@ -144,9 +152,10 @@ void GraphicsService::removeSprite(GraphicsSprite* pSprite)
             break;
         }
     }
+    SAFE_DELETE(pSprite);
 }
 
-void GraphicsService::fillQuads(GraphicsSprite *&pSprite, int playedTime)
+void GraphicsService::fillQuads(GraphicsSprite* pSprite, int playedTime)
 {
 //    const Mat4& modelView = cmd->getModelView();
     pSprite->update(playedTime);
@@ -199,7 +208,7 @@ void GraphicsService::drawBatchedQuads()
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
     {
-#define kQuadSize sizeof(_quadVerts[0])
+        #define kQuadSize sizeof(_quadVerts[0])
         glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
 
         glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * _numberQuads * 4 , _quadVerts, GL_DYNAMIC_DRAW);
@@ -260,5 +269,5 @@ void GraphicsService::drawBatchedQuads()
 void GraphicsService::registerShader(Shader* pShader) {
     assert(pShader);
     pShader->Link();
-    mShaders.push_back(pShader);
+    //mShaders.push_back(pShader);
 }
