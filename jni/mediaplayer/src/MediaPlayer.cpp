@@ -4,6 +4,19 @@
 #include "audio/audio_mixer.h"
 #include "ijkutil/ijklog.h"
 
+static void copyFromAVFrame(u_char *pixels, AVFrame *frame, int width, int height) {
+    if (!frame || !pixels) {
+        return;
+    }
+
+    int y = 0;
+    int numBytes = avpicture_get_size(PIX_FMT_RGB24, width, height);
+
+    for (y = 0; y < height; y++) {
+        memcpy(pixels + (y * width * 3), frame->data[0] + y * frame->linesize[0], width * 3);
+    }
+}
+
 Callbacker::Callbacker(MediaPlayer *mediaPlayer) {
 	assert(mediaPlayer);
 	this->mediaPlayer = mediaPlayer;
