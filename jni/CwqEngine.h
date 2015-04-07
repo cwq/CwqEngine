@@ -2,6 +2,10 @@
 #define CWQENGINE_H
 
 class GraphicsService;
+class MediaPlayer;
+class Image;
+class Texture2D;
+class GraphicsSprite;
 
 class CwqEngine
 {
@@ -32,6 +36,11 @@ private:
     void* mAssetManager;
 
     GraphicsService* graphicsService;
+
+    MediaPlayer* mediaPlayer;
+    GraphicsSprite* videoSprite;
+    Texture2D* videoTexture;
+    Image* videoImage;
 };
 
 #endif // !CWQENGINE_H
