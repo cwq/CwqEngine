@@ -22,7 +22,7 @@ public class CwqEngine {
     }
 
     protected void finalize() {
-        delete();
+        //delete();
     }
 
     public synchronized void delete() {
