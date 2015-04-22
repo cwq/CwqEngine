@@ -53,7 +53,7 @@ bool Image::initWithImageInfo(int pWidth, int pHeight, GLenum format)
     return true;
 }
 
-bool Image::setPixels(void *ps)
+bool Image::setPixels(const void *ps)
 {
     if(pixels != NULL)
     {

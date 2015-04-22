@@ -20,7 +20,7 @@ public:
     virtual ~TextureShader();
 
     virtual void Link();
-    virtual void Setup(GraphicsSprite& sprite);
+    virtual void Setup(const GraphicsSprite& sprite) const;
 
 //    void			SetTexture(Texture2D* pTexture);
 //    Texture2D*		GetTexture();

@@ -9,13 +9,13 @@ class Resource
 public:
     Resource(const char* pPath);
 
-    const char* getPath();
+    const char* getPath() const;
 
     bool open();
     void close();
-    bool read(void* pBuffer, size_t pCount);
+    bool read(void* pBuffer, size_t pCount) const;
 
-    size_t getLength();
+    size_t getLength() const;
 
     static void setAssetManager(void* assetManager);
 

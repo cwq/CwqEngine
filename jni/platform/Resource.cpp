@@ -45,7 +45,7 @@ void Resource::close()
     }
 }
 
-bool Resource::read(void* pBuffer, size_t pCount)
+bool Resource::read(void* pBuffer, size_t pCount) const
 {
     size_t lReadCount = 0;
     if(mPath[0] != '/')
@@ -61,12 +61,12 @@ bool Resource::read(void* pBuffer, size_t pCount)
     return lReadCount == pCount;
 }
 
-const char* Resource::getPath()
+const char* Resource::getPath() const
 {
     return mPath;
 }
 
-size_t Resource::getLength()
+size_t Resource::getLength() const
 {
     size_t length = 0;
     if(mPath[0] != '/')

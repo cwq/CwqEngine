@@ -22,7 +22,7 @@ public:
     Texture2D* getTexture() const;
 
     void setShader(Shader* pShader);
-    Shader* getShader();
+    Shader* getShader() const;
 
     float getWidth() const { return mWidth; };
     float getHeight() const { return mHeight; };
@@ -46,7 +46,7 @@ public:
     void scaleTo(float scale);
     void scaleBy(float scale);
 
-    bool isInSprite(float pointX, float pointY);
+    bool isInSprite(float pointX, float pointY) const;
 
     bool isVisible() const { return mVisible; };
     void setVisible(bool visible) { mVisible = visible; };

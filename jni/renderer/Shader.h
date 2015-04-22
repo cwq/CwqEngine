@@ -9,7 +9,7 @@
 class Shader
 {
 private:
-    void LoadShader(GLenum shaderType, std::string& shaderCode);
+    void LoadShader(GLenum shaderType, const std::string& shaderCode);
 
 protected:
     GLuint			m_vertexShaderId;
@@ -26,9 +26,9 @@ public:
     virtual ~Shader();
 
     virtual void Link();
-    virtual void Setup(GraphicsSprite& sprite);
+    virtual void Setup(const GraphicsSprite& sprite) const;
 
-    bool IsLinked() { return m_isLinked; }
+    bool IsLinked() const { return m_isLinked; }
 };
 
 

@@ -43,7 +43,7 @@ void TextureShader::Link()
     m_matrixHandle              = glGetUniformLocation(m_programId, "u_Matrix");
 }
 
-void TextureShader::Setup(GraphicsSprite& sprite)
+void TextureShader::Setup(const GraphicsSprite& sprite) const
 {
     assert(sprite.getTexture());
     //auto geometry = sprite.getGeometry();

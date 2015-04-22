@@ -27,7 +27,7 @@ void BasicShader::Link()
     m_positionAttributeHandle = glGetAttribLocation(m_programId, "a_vPosition");
 }
 
-void BasicShader::Setup(GraphicsSprite& sprite)
+void BasicShader::Setup(const GraphicsSprite& sprite) const
 {
     Shader::Setup(sprite);
 

@@ -14,7 +14,7 @@ public:
     virtual ~BasicShader();
 
     virtual void Link();
-    virtual void Setup(GraphicsSprite& sprite);
+    virtual void Setup(const GraphicsSprite& sprite) const;
 };
 
 #endif // !RENDERER_BASICSHADER_H

@@ -14,7 +14,7 @@ Shader::~Shader()
 
 }
 
-void Shader::LoadShader(GLuint id, std::string& shaderCode)
+void Shader::LoadShader(GLuint id, const std::string& shaderCode)
 {
     static const uint32_t NUM_SHADERS = 1;
 
@@ -57,7 +57,7 @@ void Shader::Link()
     m_isLinked = true;
 }
 
-void Shader::Setup(GraphicsSprite& sprite)
+void Shader::Setup(const GraphicsSprite& sprite) const
 {
     glUseProgram(m_programId);
 }

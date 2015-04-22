@@ -180,7 +180,7 @@ void GraphicsSprite::setShader(Shader* pShader)
     mShader = pShader;
 }
 
-Shader* GraphicsSprite::getShader()
+Shader* GraphicsSprite::getShader() const
 {
     return mShader;
 }
@@ -249,7 +249,7 @@ void GraphicsSprite::scaleBy(float scale)
     setWidthAndHeight(mWidth*scale, mHeight*scale);
 }
 
-bool GraphicsSprite::isInSprite(float pointX, float pointY)
+bool GraphicsSprite::isInSprite(float pointX, float pointY) const
 {
     float tempX = pointX - mCenterX;
     float tempY = pointY - mCenterY;

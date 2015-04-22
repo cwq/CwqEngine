@@ -12,7 +12,7 @@ public:
     bool initWithFileData(const unsigned char* fileData, size_t dataLen);
     bool initWithImageInfo(int pWidth, int pHeight, GLenum format);
 
-    bool setPixels(void *ps);
+    bool setPixels(const void *ps);
     void* getPixels() const;
 
     int getWidth() const;
