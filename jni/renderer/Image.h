@@ -1,6 +1,6 @@
 #ifndef IMAGE_H
 #define IMAGE_H
-#include <GLES2/gl2.h>
+#include "platform/CwqGL.h"
 
 class Image
 {

@@ -2,7 +2,7 @@
 #include <pthread.h>
 #include <assert.h>
 #include "audio/android_audiotrack.h"
-#include "LogHelper.h"
+#include "base/LogHelper.h"
 
 #define JNI_CLASS_HANDLER "com/cwq/cwqengine/CwqEngineHandler"
 

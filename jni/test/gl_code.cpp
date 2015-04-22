@@ -24,7 +24,7 @@
 #include <math.h>
 
 #include "math/Mat4.h"
-#include "LogHelper.h"
+#include "base/LogHelper.h"
 
 struct V3F_C4B_T2F {
     float vertices[3];

@@ -1,5 +1,5 @@
 #include "Shader.h"
-#include "../LogHelper.h"
+#include "base/LogHelper.h"
 
 Shader::Shader()
 :	m_vertexShaderId(GL_INVALID_VALUE)

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <GLES2/gl2.h>
+#include "platform/CwqGL.h"
 
 #include "base/Types.h"
 #include "math/Mat4.h"

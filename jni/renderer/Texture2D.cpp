@@ -1,5 +1,5 @@
 #include "Texture2D.h"
-#include "LogHelper.h"
+#include "base/LogHelper.h"
 
 #define TEXTURE_ID_INVALID 0
 

@@ -31,7 +31,7 @@
 //extern "C" {
 #include "android_audiotrack.h"
 //}
-#include "CwqEngineJNIHelper.h"
+#include "platform/CwqEngineJNIHelper.h"
 
 typedef struct SDL_Aout_Opaque {
 	SDL_cond *wakeup_cond;

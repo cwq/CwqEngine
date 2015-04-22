@@ -1,12 +1,12 @@
 #include "GraphicsService.h"
 #include "base/CWQMacros.h"
-#include "LogHelper.h"
+#include "base/LogHelper.h"
 #include "Texture2D.h"
 #include "GraphicsSprite.h"
-#include "renderer/Shader.h"
-#include "renderer/TextureShader.h"
-#include "renderer/BasicShader.h"
-#include "CWQEngine.h"
+#include "Shader.h"
+#include "TextureShader.h"
+#include "BasicShader.h"
+#include "engine/CWQEngine.h"
 
 #include <cassert>
 

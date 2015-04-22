@@ -1,7 +1,7 @@
 #ifndef TEXTURECACHE_H
 #define TEXTURECACHE_H
 
-#include "Singleton.h"
+#include "base/Singleton.h"
 #include <string>
 #include <unordered_map>
 

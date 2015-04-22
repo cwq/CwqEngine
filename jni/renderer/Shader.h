@@ -2,9 +2,9 @@
 #define RENDERER_SHADER_H
 
 #include <string>
-#include <GLES2/gl2.h>
+#include "platform/CwqGL.h"
 
-#include "../GraphicsSprite.h"
+#include "GraphicsSprite.h"
 
 class Shader
 {

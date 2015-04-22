@@ -1,7 +1,7 @@
 #include "Image.h"
 #include <stdlib.h>
 #include "ImageLoader.h"
-#include "LogHelper.h"
+#include "base/LogHelper.h"
 
 Image::Image()
 {

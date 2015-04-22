@@ -1,12 +1,12 @@
 #include "CwqEngine.h"
-#include <GLES2/gl2.h>
+#include "platform/CwqGL.h"
 #include "base/CWQMacros.h"
-#include "GraphicsService.h"
-#include "Resource.h"
-#include "LogHelper.h"
-#include "MediaPlayer.h"
-#include "GraphicsSprite.h"
-#include "Texture2D.h"
+#include "renderer/GraphicsService.h"
+#include "platform/Resource.h"
+#include "base/LogHelper.h"
+#include "mediaplayer/MediaPlayer.h"
+#include "renderer/GraphicsSprite.h"
+#include "renderer/Texture2D.h"
 
 static void copyFromAVFrame(u_char *pixels, AVFrame *frame, int width, int height) {
     if (!frame || !pixels) {

@@ -2,7 +2,7 @@
 #define GRAPHICSSPRITE_H
 
 #include <string>
-#include <GLES2/gl2.h>
+#include "platform/CwqGL.h"
 
 #include "base/Types.h"
 

@@ -1,9 +1,9 @@
 #include "ImageLoader.h"
-#include "Resource.h"
+#include "platform/Resource.h"
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_NEON
 #include "stb_image.h"
-#include "LogHelper.h"
+#include "base/LogHelper.h"
 
 bool ImageLoader::loadImageWithFileName(Image* image, const char* filename)
 {
