@@ -113,7 +113,7 @@ static void ffp_log_callback_report(void *ptr, int level, const char *fmt,
 }
 
 void MediaPlayer::init() {
-	ALOGE("MediaPlayer init");
+	ALOGD("MediaPlayer init");
 
 	AvSyncType syncType = AV_SYNC_EXTERNAL_CLOCK;
 	avSyncType = syncType;
@@ -136,7 +136,7 @@ void MediaPlayer::init() {
 }
 
 static int video_thread(void *arg) {
-	ALOGE("video_thread pid = %u", gettid());
+	ALOGD("video_thread pid = %u", gettid());
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	bool anyOneDecode = false, allTrackDecodeEnd = true;
 
@@ -145,7 +145,7 @@ static int video_thread(void *arg) {
 	while (true) {
 		while (mediaPlayer->mediaTrackManager.isPaused()
 				&& !mediaPlayer->abort_request) {
-			ALOGE("video_thread block: paused");
+			ALOGD("video_thread block: paused");
 			usleep(10000);
 		}
 
@@ -181,7 +181,7 @@ static int video_thread(void *arg) {
 		}
 	}
 
-	ALOGE("video_thread exit.............");
+	ALOGD("video_thread exit.............");
 	return 0;
 }
 
@@ -191,7 +191,7 @@ static int decode_interrupt_cb(void *ctx) {
 }
 
 static int audio_thread(void *arg) {
-	ALOGE("pthread audio_thread pid = %u", gettid());
+	ALOGD("pthread audio_thread pid = %u", gettid());
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	bool anyOneDecode = false, allTrackDecodeEnd = true;
 
@@ -233,7 +233,7 @@ static int audio_thread(void *arg) {
 		}
 	}
 
-	ALOGE("aaaaaa audio thread exit.............");
+	ALOGD("aaaaaa audio thread exit.............");
 	return 0;
 }
 
@@ -243,7 +243,7 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len) {
 	MediaDecoder *audioDecoder = nullptr;
 	Uint8 *tempStream = (Uint8 *) malloc(len);
 	int audioNum = 0;
-	ALOGE("sdl_audio_callback now");
+
 	LIST_FOR_EACH_TRACK(mediaTrack, &mediaPlayer->mediaTrackManager)
 	{
 		if (mediaTrack->hasAudio()) {
@@ -253,12 +253,9 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len) {
 			int audio_size, len1;
 
 			while (templen > 0) {
-				ALOGE("sdl_audio_callback, %d", __LINE__);
 				if (audioDecoder->audio_buf_index
 						>= audioDecoder->audio_buf_size) {
 					audio_size = audioDecoder->audio_decode_frame();
-					ALOGE("sdl_audio_callback, %d, audio_size = %d", __LINE__,
-							audio_size);
 					if (audio_size < 0) {
 						/* if error, just output silence */
 						audioDecoder->audio_buf = audioDecoder->silence_buf;
@@ -271,7 +268,6 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len) {
 					}
 					audioDecoder->audio_buf_index = 0;
 				}
-				ALOGE("sdl_audio_callback, %d", __LINE__);
 				if (audioDecoder->auddec.pkt_serial
 						!= audioDecoder->audioq.serial) {
 					// ALOGE("aout_cb: flush\n");
@@ -283,7 +279,6 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len) {
 					mediaPlayer->audioPlayer->flush();
 					break;
 				}
-				ALOGE("sdl_audio_callback, %d", __LINE__);
 				len1 = audioDecoder->audio_buf_size
 						- audioDecoder->audio_buf_index;
 				if (len1 > templen)
@@ -291,7 +286,6 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len) {
 				memcpy(tempStream,
 						(uint8_t *) audioDecoder->audio_buf
 								+ audioDecoder->audio_buf_index, len1);
-				ALOGE("sdl_audio_callback, %d", __LINE__);
 				templen -= len1;
 				tempStream += len1;
 				audioDecoder->audio_buf_index += len1;
@@ -313,8 +307,6 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len) {
 		memset(stream, 0, len);
 
 	stream += len;
-
-	ALOGE("sdl_audio_callback now end");
 }
 
 int MediaPlayer::audio_open(int64_t wanted_channel_layout,
@@ -447,7 +439,7 @@ void MediaPlayer::addAllTracks() {
 }
 
 static int read_thread(void *arg) {
-	ALOGE("read_thread pid = %u", gettid());
+	ALOGD("read_thread pid = %u", gettid());
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	MediaTrack *mediaTrack;
 
@@ -477,7 +469,7 @@ static int read_thread(void *arg) {
 		}
 
 		if (mediaPlayer->seek_req) {
-			ALOGE("ttt process msg seek");
+			ALOGD("ttt process msg seek");
 			LIST_FOR_EACH_TRACK(mediaTrack, &mediaPlayer->mediaTrackManager)
 			{
 				mediaTrack->seekTo(mediaPlayer->seek_value,
@@ -510,11 +502,11 @@ static int read_thread(void *arg) {
 			continue;
 		}
 	}
-	ALOGE("read_thread block: wait for abort");
+	ALOGD("read_thread block: wait for abort");
 	while (!mediaPlayer->wantToExit) {
 		usleep(1000);
 	}
-	ALOGE("read_thread unblock");
+	ALOGD("read_thread unblock");
 
 	LIST_FOR_EACH_TRACK(mediaTrack, &mediaPlayer->mediaTrackManager)
 	{
@@ -529,20 +521,20 @@ static int read_thread(void *arg) {
 	SDL_CondSignal(mediaPlayer->pictq_cond);
 	SDL_UnlockMutex(mediaPlayer->pictq_mutex);
 
-	ALOGE("read_thread block: wait for video_thread exit");
+	ALOGD("read_thread block: wait for video_thread exit");
 	if(mediaPlayer->video_tid)
 	    SDL_WaitThread(mediaPlayer->video_tid, NULL);
-	ALOGE("read_thread unblock");
+	ALOGD("read_thread unblock");
 
     //deblock the audio thread
     SDL_LockMutex(mediaPlayer->frameQueueMutex);
     SDL_CondSignal(mediaPlayer->frameQueueCond);
     SDL_UnlockMutex(mediaPlayer->frameQueueMutex);
 
-	ALOGE("read_thread block: wait for audio_thread exit");
+	ALOGD("read_thread block: wait for audio_thread exit");
 	if(mediaPlayer->audio_tid)
 	    SDL_WaitThread(mediaPlayer->audio_tid, NULL);
-	ALOGE("read_thread unblock");
+	ALOGD("read_thread unblock");
 
     LIST_FOR_EACH_TRACK(mediaTrack, &mediaPlayer->mediaTrackManager)
     {
@@ -551,7 +543,7 @@ static int read_thread(void *arg) {
 
 	SDL_DestroyMutex(wait_mutex);
 
-	ALOGE("read_thread exit");
+	ALOGD("read_thread exit");
 
 	return 0;
 }
@@ -648,7 +640,7 @@ void MediaPlayer::start() {
 }
 
 void MediaPlayer::end() {
-	ALOGE("mediaplayer end");
+	ALOGD("mediaplayer end");
 	wantToExit = true;
 	SDL_WaitThread(read_tid, NULL);
 

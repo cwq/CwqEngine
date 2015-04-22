@@ -20,14 +20,14 @@ jmethodID CwqEngineJNIHelper::postEventFromNative = NULL;
 
 void CwqEngineJNIHelper::setJavaVM(JavaVM *javaVM)
 {
-    LOGE("setJavaVM thread %ld", pthread_self());
+    LOGD("setJavaVM thread %ld", pthread_self());
     mJavaVM = javaVM;
     pthread_key_create(&current_jni_env, CwqEngineJNIHelper::detachCurrentEnv);
 }
 
 JavaVM* CwqEngineJNIHelper::getJavaVM()
 {
-    LOGE("getJavaVM thread %ld", pthread_self());
+    LOGD("getJavaVM thread %ld", pthread_self());
     return mJavaVM;
 }
 
@@ -36,7 +36,7 @@ JNIEnv* CwqEngineJNIHelper::attachCurrentEnv(JavaVM* jvm)
     JNIEnv *env;
     JavaVMAttachArgs args;
 
-    LOGE("Attaching thread %ld", pthread_self());
+    LOGD("Attaching thread %ld", pthread_self());
     args.version = JNI_VERSION_1_4;
     args.name = NULL;
     args.group = NULL;
@@ -51,7 +51,7 @@ JNIEnv* CwqEngineJNIHelper::attachCurrentEnv(JavaVM* jvm)
 
 void CwqEngineJNIHelper::detachCurrentEnv(void *env)
 {
-    LOGE("Detaching thread %ld", pthread_self());
+    LOGD("Detaching thread %ld", pthread_self());
     mJavaVM->DetachCurrentThread();
 }
 
@@ -98,7 +98,7 @@ void CwqEngineJNIHelper::postEventToJava(jobject weak_this, int what, int arg1, 
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM * vm, void * reserved)
 {
-    LOGE("JNI_OnLoad");
+    LOGD("JNI_OnLoad");
     JNIEnv* env = NULL;
     jclass clazz = NULL;
     if ((vm)->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK)
@@ -131,7 +131,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM * vm, void * reserved)
 
 JNIEXPORT void JNI_OnUnload(JavaVM *jvm, void *reserved)
 {
-    LOGE("JNI_OnUnload");
+    LOGD("JNI_OnUnload");
     JNIEnv* env = NULL;
     if ((jvm)->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
         return;

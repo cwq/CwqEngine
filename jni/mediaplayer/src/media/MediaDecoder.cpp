@@ -166,14 +166,12 @@ int MediaDecoder::audio_decode_frame() {
 		else
 		    break;
 	} while (1);
-	ALOGE("audio_decode_frame, %d", __LINE__);
 
 	{
 		data_size = av_samples_get_buffer_size(NULL, af->mtAudioFrame.channels,
 				af->mtAudioFrame.nb_samples,
 				(AVSampleFormat) (af->mtAudioFrame.format), 1);
 
-		ALOGE("audio_decode_frame, %d", __LINE__);
 		dec_channel_layout =
 				(af->mtAudioFrame.channel_layout
 						&& af->mtAudioFrame.channels
@@ -184,21 +182,13 @@ int MediaDecoder::audio_decode_frame() {
 								af->mtAudioFrame.channels);
 		wanted_nb_samples = synchronize_audio(af->mtAudioFrame.nb_samples);
 
-		ALOGE("audio_decode_frame, %d", __LINE__);
 		if (af->mtAudioFrame.format != audioDecoder->audio_src.fmt
 				|| dec_channel_layout != audioDecoder->audio_src.channel_layout
 				|| af->mtAudioFrame.sample_rate != audioDecoder->audio_src.freq
 				|| (wanted_nb_samples != af->mtAudioFrame.nb_samples
 						&& !audioDecoder->swr_ctx)) {
-			ALOGE("audio_decode_frame, %d, swr = %p", __LINE__,
-					audioDecoder->swr_ctx);
+
 			swr_free(&audioDecoder->swr_ctx);
-			ALOGE(
-					"create swrctx : chanel = %lld, fmt = %d, freq = %d, decode channel = %lld, decode fmt = %d, decoder freq = %d",
-					audioDecoder->audio_tgt.channel_layout,
-					audioDecoder->audio_tgt.fmt, audioDecoder->audio_tgt.freq,
-					dec_channel_layout, af->mtAudioFrame.format,
-					af->mtAudioFrame.sample_rate);
 			audioDecoder->swr_ctx = swr_alloc_set_opts(NULL,
 					audioDecoder->audio_tgt.channel_layout,
 					audioDecoder->audio_tgt.fmt, audioDecoder->audio_tgt.freq,
@@ -222,14 +212,7 @@ int MediaDecoder::audio_decode_frame() {
 			audioDecoder->audio_src.freq = af->mtAudioFrame.sample_rate;
 			audioDecoder->audio_src.fmt =
 					(AVSampleFormat) af->mtAudioFrame.format;
-
-			ALOGE(
-					"decoder channel_layout = %lld, channels = %d, freq = %d, fmt = %d",
-					audioDecoder->audio_src.channel_layout,
-					audioDecoder->audio_src.channels,
-					audioDecoder->audio_src.freq, audioDecoder->audio_src.fmt);
 		}
-		ALOGE("audio_decode_frame, %d", __LINE__);
 
 		if (audioDecoder->swr_ctx) {
 			const uint8_t **in = (const uint8_t **) af->mtAudioFrame.data;
@@ -241,15 +224,12 @@ int MediaDecoder::audio_decode_frame() {
 					audioDecoder->audio_tgt.channels, out_count,
 					audioDecoder->audio_tgt.fmt, 0);
 			int len2;
-			ALOGE("audio_decode_frame, %d", __LINE__);
 			if (out_size < 0) {
 				av_log(NULL, AV_LOG_ERROR,
 						"av_samples_get_buffer_size() failed\n");
 				goto fail;
 			}
-			ALOGE(
-					"xxxxxxxx wanted_nb_samples = %d, af->mtAudioFrame.nb_samples = %d",
-					wanted_nb_samples, af->mtAudioFrame.nb_samples);
+
 			if (wanted_nb_samples != af->mtAudioFrame.nb_samples) {
 				if (swr_set_compensation(audioDecoder->swr_ctx,
 						(wanted_nb_samples - af->mtAudioFrame.nb_samples)
@@ -262,7 +242,7 @@ int MediaDecoder::audio_decode_frame() {
 					goto fail;
 				}
 			}
-			ALOGE("audio_decode_frame, %d", __LINE__);
+
 			av_fast_malloc(&audioDecoder->audio_buf1,
 					&audioDecoder->audio_buf1_size, out_size);
 			if (!audioDecoder->audio_buf1) {
@@ -272,37 +252,26 @@ int MediaDecoder::audio_decode_frame() {
 				goto fail;
 			}
 
-			ALOGE(
-					"audio_decode_frame,xxx %d, audioDecoder->swr_ctx = %p, out = %p, out_count = %d, in = %p, af->mtAudioFrame.nb_samples = %d",
-					__LINE__, audioDecoder->swr_ctx, out, out_count, in,
-					af->mtAudioFrame.nb_samples);
-
-			//春节放假前工作：swr_convert()卡住不动
 			len2 = swr_convert(audioDecoder->swr_ctx, out, out_count, in,
 					af->mtAudioFrame.nb_samples);
-			ALOGE("audio_decode_frame, %d", __LINE__);
 			if (len2 < 0) {
 				ALOGE("audio_decode_frame, %d", __LINE__);
 				av_log(NULL, AV_LOG_ERROR, "swr_convert() failed\n");
 				goto fail;
 			}
-			ALOGE("audio_decode_frame, %d", __LINE__);
 			if (len2 == out_count) {
 				av_log(NULL, AV_LOG_WARNING,
 						"audio buffer is probably too small\n");
 				if (swr_init(audioDecoder->swr_ctx) < 0)
 					swr_free(&audioDecoder->swr_ctx);
 			}
-			ALOGE("audio_decode_frame, %d", __LINE__);
 			audioDecoder->audio_buf = audioDecoder->audio_buf1;
 			resampled_data_size = len2 * audioDecoder->audio_tgt.channels
 					* av_get_bytes_per_sample(audioDecoder->audio_tgt.fmt);
-			ALOGE("audio_decode_frame, %d", __LINE__);
 		} else {
 			audioDecoder->audio_buf = af->mtAudioFrame.data[0];
 			resampled_data_size = data_size;
 		}
-		ALOGE("audio_decode_frame, %d", __LINE__);
 
 		audioDecoder->audio_clock_serial = af->serial;
 #ifdef FFP_SHOW_AUDIO_DELAY
@@ -355,7 +324,6 @@ int MediaDecoder::stream_component_open(int streamIndex) {
 		packet_queue_start(&videoq);
 		break;
 	case AVMEDIA_TYPE_AUDIO:
-		ALOGE("xxx find audio avcodec");
 		sample_rate = avctx->sample_rate;
 		nb_channels = avctx->channels;
 		channel_layout = avctx->channel_layout;
@@ -480,7 +448,6 @@ int MediaDecoder::open(const MediaFileInfo &mfi) {
         stream_component_open(st_index[AVMEDIA_TYPE_AUDIO]);
     }
 
-	ALOGE("xxx may wrong %d", __LINE__);
 //	if (!hasVideo()) {
 //		ALOGE("Didn't find a video stream.");
 //		av_dump_format(pFormatCtx, 0, fName, 0);
@@ -605,44 +572,7 @@ static int decoder_decode_frame(MediaDecoder *audioDecoder, Decoder *d,
 		}
 
 		switch (d->avctx->codec_type) {
-		case AVMEDIA_TYPE_VIDEO: {
-//#ifdef FFP_SHOW_VDPS
-//			int64_t start = SDL_GetTickHR();
-//#endif
-//			ret = avcodec_decode_video2(d->avctx, frame, &got_frame,
-//					&d->pkt_temp);
-//#ifdef FFP_SHOW_VDPS
-//			int64_t dur = SDL_GetTickHR() - start;
-//			g_vdps_total_time += dur;
-//			g_vdps_counter++;
-//			int64_t avg_frame_time = 0;
-//			if (g_vdps_counter > 0)
-//			avg_frame_time = g_vdps_total_time / g_vdps_counter;
-//			double fps = 0;
-//			if (avg_frame_time > 0)
-//			fps = 1.0f / avg_frame_time * 1000;
-//			if (dur >= 30) {
-//				ALOGE("vdps: [%f][%d] %"PRId64" ms/frame, vdps=%f, +%"PRId64"\n",
-//						frame->pts, g_vdps_counter, (int64_t)avg_frame_time, fps, dur);
-//			}
-//			if (g_vdps_total_time >= FFP_XPS_PERIOD) {
-//				g_vdps_total_time -= avg_frame_time;
-//				g_vdps_counter--;
-//			}
-//#endif
-//			if (got_frame) {
-//				if (ffp->decoder_reorder_pts == -1) {
-//					frame->pts = av_frame_get_best_effort_timestamp(frame);
-//				} else if (ffp->decoder_reorder_pts) {
-//					frame->pts = frame->pkt_pts;
-//				} else {
-//					frame->pts = frame->pkt_dts;
-//				}
-//			}
-		}
-			break;
 		case AVMEDIA_TYPE_AUDIO:
-			ALOGE("decoder_decode_frame ... audio decoed4");
 			ret = avcodec_decode_audio4(d->avctx, frame, &got_frame,
 					&d->pkt_temp);
 			if (got_frame) {
@@ -708,7 +638,6 @@ DecodePktStatus MediaDecoder::decodeAudio() {
 			goto the_end;
 		}
 
-		ALOGE("decode_thread, %d", __LINE__);
 		if ((got_frame = decoder_decode_frame(audioDecoder,
 				&audioDecoder->auddec, frame,
 				NULL)) < 0) {
@@ -716,7 +645,6 @@ DecodePktStatus MediaDecoder::decodeAudio() {
 			goto the_end;
 		}
 
-		ALOGE("decode_thread, %d, got_frame = %d", __LINE__, got_frame);
 		if (got_frame) {
 			tb = (AVRational ) { 1, frame->sample_rate };
 
@@ -734,13 +662,11 @@ DecodePktStatus MediaDecoder::decodeAudio() {
 											frame->sample_rate });
 
 			af->mtAudioFrame.copyFromAvFrame(frame);
-			ALOGE("decode_thread, %d, frame_queue_push!!", __LINE__);
 			frame_queue_push(&audioDecoder->sampq);
 			break;
 		}
 	} while (ret >= 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF);
 
-	ALOGE("decode_thread, %d", __LINE__);
 	the_end: av_frame_free(&frame);
 	return status;
 }
@@ -797,7 +723,7 @@ bool MediaDecoder::get_video_frame(AVFrame *frame, AVPacket *pkt, int serial) {
 
 		return 1;
 	} else {
-		ALOGE("avcodec_decode_video2 no get picture, try again");
+		//ALOGE("avcodec_decode_video2 no get picture, try again");
 	}
 	return 0;
 }
@@ -827,7 +753,7 @@ void MediaDecoder::alloc_picture(VideoPicture *vp) {
 		assert(0);
 	}
 
-	ALOGE("alloc piccture, vp->w = %d, h = %d", vp->width, vp->height);
+	ALOGD("alloc piccture, vp->w = %d, h = %d", vp->width, vp->height);
 	vp->frameBuffer = (uint8_t *) av_malloc(
 			avpicture_get_size(decodedFormat, vp->width, vp->height));
 	avpicture_fill((AVPicture *) vp->decodedFrame, vp->frameBuffer,
@@ -878,7 +804,7 @@ int MediaDecoder::queue_picture(AVFrame *src_frame, double pts, int64_t pos,
 	/* if the frame is not skipped, then display it */
 	if (vp->decodedFrame) {
 		if (img_convert_ctx == NULL) {
-			ALOGE(
+			ALOGD(
 					"sws_getContext : src->w, h =%d,%d  format = %d, target->w,h=%d,%d",
 					vp->width, vp->height, src_frame->format, vp->width,
 					vp->height);
@@ -943,7 +869,6 @@ DecodePktStatus MediaDecoder::decodeVideo() {
 	}
 
 	if (isPictqFull()) {
-		ALOGE("decodeVideo failed: pictq full");
 		return DECODE_PKT_QUEUE_FULL;
 	}
 
@@ -962,13 +887,13 @@ DecodePktStatus MediaDecoder::decodeVideo() {
 			goto END;
 		}
 		if (ret == 0) {
-			ALOGE("packet_queue_get failed: no pkt");
+			//ALOGE("packet_queue_get failed: no pkt");
 			status = DECODE_PKT_PKTQ_EMPTY;
 			goto END;
 		}
 
 		if (!get_video_frame(videoSrcFrame, &pkt, serial)) {
-			ALOGE("get_video_frame failed, try again");
+			//ALOGE("get_video_frame failed, try again");
 			continue;
 		}
 
