@@ -952,7 +952,7 @@ DecodePktStatus MediaDecoder::decodeVideo() {
 	AVPacket pkt = { 0 };
 
 	while (true) {
-		avcodec_get_frame_defaults(videoSrcFrame);
+	    av_frame_unref(videoSrcFrame);
 		av_free_packet(&pkt);
 		int ret = packet_queue_get(&videoq, &pkt, 0, &serial);
 		if (ret < 0) {

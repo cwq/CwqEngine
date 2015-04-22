@@ -359,8 +359,8 @@ int MediaPlayer::audio_open(int64_t wanted_channel_layout,
 	wanted_spec.callback = sdl_audio_callback;
 	wanted_spec.userdata = this;
 	while (audioPlayer->open(&wanted_spec, &spec) < 0) {
-		av_log(NULL, AV_LOG_WARNING, "SDL_OpenAudio (%d channels, %d Hz): %s\n",
-				wanted_spec.channels, wanted_spec.freq, NULL);
+		av_log(NULL, AV_LOG_WARNING, "SDL_OpenAudio (%d channels, %d Hz)\n",
+				wanted_spec.channels, wanted_spec.freq);
 		wanted_spec.channels = next_nb_channels[FFMIN(7, wanted_spec.channels)];
 		if (!wanted_spec.channels) {
 			wanted_spec.freq = next_sample_rates[next_sample_rate_idx--];
