@@ -154,7 +154,7 @@ int aout_thread(void *arg) {
 	JNIEnv *env = NULL;
 
 	if ((env = CwqEngineJNIHelper::getEnv()) == NULL) {
-		ALOGE("aout_thread: SDL_AndroidJni_SetupEnv: failed");
+		LOGE("aout_thread: SDL_AndroidJni_SetupEnv: failed");
 		return -1;
 	}
 
@@ -169,13 +169,13 @@ int aout_open_audio_n(JNIEnv *env, SDL_Aout *aout, SDL_AudioSpec *desired,
 	opaque->spec = *desired;
 	opaque->atrack = sdl_audiotrack_new_from_sdl_spec(env, desired);
 	if (!opaque->atrack) {
-		ALOGE("aout_open_audio_n: failed to new AudioTrcak()");
+		LOGE("aout_open_audio_n: failed to new AudioTrcak()");
 		return -1;
 	}
 
 	opaque->buffer_size = sdl_audiotrack_get_min_buffer_size(opaque->atrack);
 	if (opaque->buffer_size <= 0) {
-		ALOGE("aout_open_audio_n: failed to getMinBufferSize()");
+		LOGE("aout_open_audio_n: failed to getMinBufferSize()");
 		sdl_audiotrack_free(env, opaque->atrack);
 		opaque->atrack = NULL;
 		return -1;
@@ -183,7 +183,7 @@ int aout_open_audio_n(JNIEnv *env, SDL_Aout *aout, SDL_AudioSpec *desired,
 
 	opaque->buffer = (uint8_t*)malloc(opaque->buffer_size);
 	if (!opaque->buffer) {
-		ALOGE("aout_open_audio_n: failed to allocate buffer");
+		LOGE("aout_open_audio_n: failed to allocate buffer");
 		sdl_audiotrack_free(env, opaque->atrack);
 		opaque->atrack = NULL;
 		return -1;
@@ -191,7 +191,7 @@ int aout_open_audio_n(JNIEnv *env, SDL_Aout *aout, SDL_AudioSpec *desired,
 
 	if (obtained) {
 		sdl_audiotrack_get_target_spec(opaque->atrack, obtained);
-		SDLTRACE("audio target format fmt:0x%x, channel:0x%x",
+		LOGW("audio target format fmt:0x%x, channel:0x%x",
 				(int) obtained->format, (int) obtained->channels);
 	}
 
@@ -200,7 +200,7 @@ int aout_open_audio_n(JNIEnv *env, SDL_Aout *aout, SDL_AudioSpec *desired,
 	opaque->audio_tid = SDL_CreateThreadEx(&opaque->_audio_tid, aout_thread,
 			aout, "ff_aout_android");
 	if (!opaque->audio_tid) {
-		ALOGE("aout_open_audio_n: failed to create audio thread");
+		LOGE("aout_open_audio_n: failed to create audio thread");
 		sdl_audiotrack_free(env, opaque->atrack);
 		opaque->atrack = NULL;
 		return -1;
@@ -214,7 +214,7 @@ int aout_open_audio(SDL_Aout *aout, SDL_AudioSpec *desired,
 	// SDL_Aout_Opaque *opaque = aout->opaque;
 	JNIEnv *env = NULL;
 	if ((env = CwqEngineJNIHelper::getEnv()) == NULL) {
-		ALOGE("aout_open_audio: AttachCurrentThread: failed");
+		LOGE("aout_open_audio: AttachCurrentThread: failed");
 		return -1;
 	}
 
@@ -225,7 +225,7 @@ void aout_pause_audio(SDL_Aout *aout, int pause_on) {
 	SDL_Aout_Opaque *opaque = aout->opaque;
 
 	SDL_LockMutex(opaque->wakeup_mutex);
-	SDLTRACE("aout_pause_audio(%d)", pause_on);
+	LOGW("aout_pause_audio(%d)", pause_on);
 	opaque->pause_on = pause_on;
 	if (!pause_on)
 		SDL_CondSignal(opaque->wakeup_cond);
@@ -235,7 +235,7 @@ void aout_pause_audio(SDL_Aout *aout, int pause_on) {
 void aout_flush_audio(SDL_Aout *aout) {
 	SDL_Aout_Opaque *opaque = aout->opaque;
 	SDL_LockMutex(opaque->wakeup_mutex);
-	SDLTRACE("aout_flush_audio()");
+	LOGW("aout_flush_audio()");
 	opaque->need_flush = 1;
 	SDL_CondSignal(opaque->wakeup_cond);
 	SDL_UnlockMutex(opaque->wakeup_mutex);
@@ -244,7 +244,7 @@ void aout_flush_audio(SDL_Aout *aout) {
 void aout_set_volume(SDL_Aout *aout, float left_volume, float right_volume) {
 	SDL_Aout_Opaque *opaque = aout->opaque;
 	SDL_LockMutex(opaque->wakeup_mutex);
-	SDLTRACE("aout_flush_audio()");
+	LOGW("aout_flush_audio()");
 	opaque->left_volume = left_volume;
 	opaque->right_volume = right_volume;
 	opaque->need_set_volume = 1;

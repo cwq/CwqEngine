@@ -1,5 +1,5 @@
 #include "AudioPlayer.h"
-#include "../ijkutil/ijklog.h"
+#include "base/LogHelper.h"
 
 //extern "C" {
 #include "ijksdl_aout_android_audiotrack.h"
@@ -10,7 +10,7 @@
 AudioPlayer::AudioPlayer() {
 	aout = SDL_AoutAndroid_CreateForAudioTrack();
 	if (aout == NULL) {
-		ALOGE("Could not initialize AudioPlayer\n");
+		LOGE("Could not initialize AudioPlayer\n");
 	}
 
     channel_layout = 1;

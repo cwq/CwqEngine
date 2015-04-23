@@ -2,7 +2,7 @@
 #include <assert.h>
 #include "MediaPlayer.h"
 #include "audio/audio_mixer.h"
-#include "ijkutil/ijklog.h"
+#include "base/LogHelper.h"
 
 static void copyFromAVFrame(u_char *pixels, AVFrame *frame, int width, int height) {
     if (!frame || !pixels) {
@@ -88,32 +88,29 @@ static int lockmgr(void **mtx, enum AVLockOp op) {
 
 static void ffp_log_callback_report(void *ptr, int level, const char *fmt,
 		va_list vl) {
-	int ffplv = IJK_LOG_VERBOSE;
-	if (level <= AV_LOG_ERROR)
-		ffplv = IJK_LOG_ERROR;
-	else if (level <= AV_LOG_WARNING)
-		ffplv = IJK_LOG_WARN;
-	else if (level <= AV_LOG_INFO)
-		ffplv = IJK_LOG_INFO;
-	else if (level <= AV_LOG_VERBOSE)
-		ffplv = IJK_LOG_VERBOSE;
-	else
-		ffplv = IJK_LOG_DEBUG;
-
 	va_list vl2;
-	char line[1024];
-	static int print_prefix = 1;
+    char line[1024];
+    static int print_prefix = 1;
 
-	va_copy(vl2, vl);
-	// av_log_default_callback(ptr, level, fmt, vl);
-	av_log_format_line(ptr, level, fmt, vl2, line, sizeof(line), &print_prefix);
-	va_end(vl2);
+    va_copy(vl2, vl);
+    // av_log_default_callback(ptr, level, fmt, vl);
+    av_log_format_line(ptr, level, fmt, vl2, line, sizeof(line), &print_prefix);
+    va_end(vl2);
 
-	ALOG(ffplv, IJK_LOG_TAG, "%s", line);
+	if (level <= AV_LOG_ERROR)
+	    LOGE("%s", line);
+	else if (level <= AV_LOG_WARNING)
+	    LOGW("%s", line);
+	else if (level <= AV_LOG_INFO)
+	    LOGI("%s", line);
+	else if (level <= AV_LOG_VERBOSE)
+	    LOGV("%s", line);
+	else
+	    LOGD("%s", line);
 }
 
 void MediaPlayer::init() {
-	ALOGD("MediaPlayer init");
+	LOGD("MediaPlayer init");
 
 	AvSyncType syncType = AV_SYNC_EXTERNAL_CLOCK;
 	avSyncType = syncType;
@@ -136,7 +133,7 @@ void MediaPlayer::init() {
 }
 
 static int video_thread(void *arg) {
-	ALOGD("video_thread pid = %u", gettid());
+	LOGD("video_thread pid = %u", gettid());
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	bool anyOneDecode = false, allTrackDecodeEnd = true;
 
@@ -145,7 +142,7 @@ static int video_thread(void *arg) {
 	while (true) {
 		while (mediaPlayer->mediaTrackManager.isPaused()
 				&& !mediaPlayer->abort_request) {
-			ALOGD("video_thread block: paused");
+			LOGD("video_thread block: paused");
 			usleep(10000);
 		}
 
@@ -171,17 +168,17 @@ static int video_thread(void *arg) {
 		/* if the queue are full, no need to read more */
 		if (!anyOneDecode) {
 			/* wait 10 ms */
-//			ALOGE("video_thread block: nobody decode");
+//			LOGE("video_thread block: nobody decode");
 			SDL_LockMutex(mediaPlayer->pictq_mutex);
 			SDL_CondWaitTimeout(mediaPlayer->pictq_cond,
 					mediaPlayer->pictq_mutex, 10);
 			SDL_UnlockMutex(mediaPlayer->pictq_mutex);
-//			ALOGE("video_thread unblock");
+//			LOGE("video_thread unblock");
 			continue;
 		}
 	}
 
-	ALOGD("video_thread exit.............");
+	LOGD("video_thread exit.............");
 	return 0;
 }
 
@@ -191,7 +188,7 @@ static int decode_interrupt_cb(void *ctx) {
 }
 
 static int audio_thread(void *arg) {
-	ALOGD("pthread audio_thread pid = %u", gettid());
+	LOGD("pthread audio_thread pid = %u", gettid());
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	bool anyOneDecode = false, allTrackDecodeEnd = true;
 
@@ -223,17 +220,17 @@ static int audio_thread(void *arg) {
 		/* if the queue are full, no need to read more */
 		if (!anyOneDecode) {
 			/* wait 10 ms */
-//			ALOGE("cwq audio_thread block: nobody decode");
+//			LOGE("cwq audio_thread block: nobody decode");
 //			usleep(10000);
 			SDL_LockMutex(mediaPlayer->frameQueueMutex);
 			SDL_CondWaitTimeout(mediaPlayer->frameQueueCond, mediaPlayer->frameQueueMutex, 10);
 			SDL_UnlockMutex(mediaPlayer->frameQueueMutex);
-//			ALOGE("cwq audio_thread unblock");
+//			LOGE("cwq audio_thread unblock");
 			continue;
 		}
 	}
 
-	ALOGD("aaaaaa audio thread exit.............");
+	LOGD("aaaaaa audio thread exit.............");
 	return 0;
 }
 
@@ -270,7 +267,7 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len) {
 				}
 				if (audioDecoder->auddec.pkt_serial
 						!= audioDecoder->audioq.serial) {
-					// ALOGE("aout_cb: flush\n");
+					// LOGE("aout_cb: flush\n");
 					audioDecoder->audio_buf_index =
 							audioDecoder->audio_buf_size;
 					memset(tempStream, 0, templen);
@@ -426,7 +423,7 @@ void MediaPlayer::addAllTracks() {
         mediaDecoder->setMediaDecodeCallbacker(callbacker);
 
         if (mediaDecoder->open(*vectorFileInfo[i]) < 0) {
-            ALOGE("read_thread mediaDecoder failed");
+            LOGE("read_thread mediaDecoder failed");
             return;
         }
 
@@ -439,7 +436,7 @@ void MediaPlayer::addAllTracks() {
 }
 
 static int read_thread(void *arg) {
-	ALOGD("read_thread pid = %u", gettid());
+	LOGD("read_thread pid = %u", gettid());
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	MediaTrack *mediaTrack;
 
@@ -469,7 +466,7 @@ static int read_thread(void *arg) {
 		}
 
 		if (mediaPlayer->seek_req) {
-			ALOGD("ttt process msg seek");
+			LOGD("ttt process msg seek");
 			LIST_FOR_EACH_TRACK(mediaTrack, &mediaPlayer->mediaTrackManager)
 			{
 				mediaTrack->seekTo(mediaPlayer->seek_value,
@@ -492,21 +489,21 @@ static int read_thread(void *arg) {
 
 		/* if the queue are full, no need to read more */
 		if (!anyOneRead) {
-//			ALOGE("read_thread block: nobody read");
+//			LOGE("read_thread block: nobody read");
 			/* wait 10 ms */
 			SDL_LockMutex(wait_mutex);
 			SDL_CondWaitTimeout(mediaPlayer->continue_read_thread, wait_mutex,
 					10);
 			SDL_UnlockMutex(wait_mutex);
-//			ALOGE("read_thread unblock");
+//			LOGE("read_thread unblock");
 			continue;
 		}
 	}
-	ALOGD("read_thread block: wait for abort");
+	LOGD("read_thread block: wait for abort");
 	while (!mediaPlayer->wantToExit) {
 		usleep(1000);
 	}
-	ALOGD("read_thread unblock");
+	LOGD("read_thread unblock");
 
 	LIST_FOR_EACH_TRACK(mediaTrack, &mediaPlayer->mediaTrackManager)
 	{
@@ -521,20 +518,20 @@ static int read_thread(void *arg) {
 	SDL_CondSignal(mediaPlayer->pictq_cond);
 	SDL_UnlockMutex(mediaPlayer->pictq_mutex);
 
-	ALOGD("read_thread block: wait for video_thread exit");
+	LOGD("read_thread block: wait for video_thread exit");
 	if(mediaPlayer->video_tid)
 	    SDL_WaitThread(mediaPlayer->video_tid, NULL);
-	ALOGD("read_thread unblock");
+	LOGD("read_thread unblock");
 
     //deblock the audio thread
     SDL_LockMutex(mediaPlayer->frameQueueMutex);
     SDL_CondSignal(mediaPlayer->frameQueueCond);
     SDL_UnlockMutex(mediaPlayer->frameQueueMutex);
 
-	ALOGD("read_thread block: wait for audio_thread exit");
+	LOGD("read_thread block: wait for audio_thread exit");
 	if(mediaPlayer->audio_tid)
 	    SDL_WaitThread(mediaPlayer->audio_tid, NULL);
-	ALOGD("read_thread unblock");
+	LOGD("read_thread unblock");
 
     LIST_FOR_EACH_TRACK(mediaTrack, &mediaPlayer->mediaTrackManager)
     {
@@ -543,7 +540,7 @@ static int read_thread(void *arg) {
 
 	SDL_DestroyMutex(wait_mutex);
 
-	ALOGD("read_thread exit");
+	LOGD("read_thread exit");
 
 	return 0;
 }
@@ -598,7 +595,7 @@ const vector<VideoPicture *> &MediaPlayer::getNextFrame(int *remaingTimes) {
 
 	vectorFrame.clear();
 
-//	ALOGE("draw_thread pid = %u", gettid());
+//	LOGE("draw_thread pid = %u", gettid());
 	MediaTrack *mediaTrack;
 	LIST_FOR_EACH_TRACK(mediaTrack, &mediaTrackManager)
 	{
@@ -630,7 +627,7 @@ void MediaPlayer::start() {
     //open audio
     int ret;
     if ((ret = audio_open(audioPlayer->getChannelLayout(), audioPlayer->getChannels(), audioPlayer->getSampleRate(), audioPlayer->getAudioParams())) < 0) {
-        ALOGE("xxx audio_open error");
+        LOGE("xxx audio_open error");
     }
     //start audio
     audioPlayer->pause(0);
@@ -640,7 +637,7 @@ void MediaPlayer::start() {
 }
 
 void MediaPlayer::end() {
-	ALOGD("mediaplayer end");
+	LOGD("mediaplayer end");
 	wantToExit = true;
 	SDL_WaitThread(read_tid, NULL);
 

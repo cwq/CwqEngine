@@ -27,7 +27,8 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <unistd.h>
-#include "ijklog.h"
+#include "base/LogHelper.h"
+#include "ijkexception.h"
 
 #ifndef IJKMAX
 #define IJKMAX(a, b)    ((a) > (b) ? (a) : (b))
@@ -47,7 +48,7 @@
 
 #define IJK_CHECK_RET(condition__, retval__, ...) \
     if (!(condition__)) { \
-        ALOGE(__VA_ARGS__); \
+        LOGE(__VA_ARGS__); \
         return (retval__); \
     }
 
@@ -66,8 +67,5 @@ inline static void freep(void **mem) {
 		*mem = NULL;
 	}
 }
-
-#include "ijklog.h"
-#include "ijkexception.h"
 
 #endif

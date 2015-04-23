@@ -24,8 +24,6 @@
 #ifndef IJKUTIL__IJKUTIL_ANDROID_H
 #define IJKUTIL__IJKUTIL_ANDROID_H
 
-#include "ijklog.h"
-
 #define JNI_CHECK_GOTO(condition__, env__, exception__, msg__, label__) \
     do { \
         if (!(condition__)) { \

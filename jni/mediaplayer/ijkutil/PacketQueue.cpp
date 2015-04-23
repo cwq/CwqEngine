@@ -1,5 +1,5 @@
 #include "PacketQueue.h"
-#include "ijklog.h"
+#include "base/LogHelper.h"
 
 AVPacket flush_pkt;
 bool flush_pkt_init = false;
@@ -152,9 +152,9 @@ int packet_queue_get(PacketQueue *q, AVPacket *pkt, int block, int *serial) {
 			ret = 0;
 			break;
 		} else {
-			//ALOGE("packet_queue_get block: no pkt");
+			//LOGE("packet_queue_get block: no pkt");
 			SDL_CondWait(q->cond, q->mutex);
-			//ALOGE("packet_queue_get unblock");
+			//LOGE("packet_queue_get unblock");
 		}
 	}
 	SDL_UnlockMutex(q->mutex);

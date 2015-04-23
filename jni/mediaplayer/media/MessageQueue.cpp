@@ -3,7 +3,7 @@ extern "C" {
 }
 
 #include "MessageQueue.h"
-#include "../ijkutil/ijklog.h"
+#include "base/LogHelper.h"
 
 MessageQueue::MessageQueue() {
 	init();
@@ -33,13 +33,13 @@ int MessageQueue::put_private(AVMessage *msg) {
 #ifdef FFP_SHOW_MSG_RECYCLE
 	int total_count = recycle_count + alloc_count;
 	if (!(total_count % 10)) {
-		ALOGE("msg-recycle \t%d + \t%d = \t%d\n", recycle_count, alloc_count, total_count);
+		LOGE("msg-recycle \t%d + \t%d = \t%d\n", recycle_count, alloc_count, total_count);
 	}
 #endif
 #endif
 	if (!msg1)
 		return -1;
-	// ALOGE("msg-recycle %d, %d, %d\n", msg->what, msg->arg1, msg->arg2);
+	// LOGE("msg-recycle %d, %d, %d\n", msg->what, msg->arg1, msg->arg2);
 
 	*msg1 = *msg;
 	msg1->next = NULL;
@@ -156,7 +156,7 @@ int MessageQueue::get(AVMessage *msg, bool block) {
 
 	for (;;) {
 		if (abort_request) {
-			ALOGE("msg queue is abort");
+			LOGE("msg queue is abort");
 			ret = -1;
 			break;
 		}
@@ -197,7 +197,7 @@ void MessageQueue::remove(int what) {
 			msg = *p_msg;
 
 			if (msg->what == what) {
-				// ALOGE("remove msg %d", msg->what);
+				// LOGE("remove msg %d", msg->what);
 				*p_msg = msg->next;
 				p_msg = &msg->next;
 #ifdef FFP_MERGE
@@ -207,7 +207,7 @@ void MessageQueue::remove(int what) {
 				recycle_msg = msg;
 #endif
 			} else {
-				// ALOGE("retain msg %d", msg->what);
+				// LOGE("retain msg %d", msg->what);
 				last_msg = msg;
 				p_msg = &msg->next;
 			}

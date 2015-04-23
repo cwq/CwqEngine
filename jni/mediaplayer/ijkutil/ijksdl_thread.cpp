@@ -31,7 +31,7 @@
 // using ios implement for autorelease
 static void *SDL_RunThread(void *data) {
 	SDL_Thread *thread = (SDL_Thread *)data;
-	ALOGI("SDL_RunThread: [%d] %s\n", (int )gettid(), thread->name);
+	LOGI("SDL_RunThread: [%d] %s\n", (int )gettid(), thread->name);
 	thread->retval = thread->func(thread->data);
 	return NULL;
 }
@@ -55,7 +55,7 @@ int SDL_SetThreadPriority(SDL_ThreadPriority priority) {
 	pthread_t thread = pthread_self();
 
 	if (pthread_getschedparam(thread, &policy, &sched) < 0) {
-		ALOGE("pthread_getschedparam() failed");
+		LOGE("pthread_getschedparam() failed");
 		return -1;
 	}
 	if (priority == SDL_THREAD_PRIORITY_LOW) {
@@ -69,7 +69,7 @@ int SDL_SetThreadPriority(SDL_ThreadPriority priority) {
 				(min_priority + (max_priority - min_priority) / 2);
 	}
 	if (pthread_setschedparam(thread, policy, &sched) < 0) {
-		ALOGE("pthread_setschedparam() failed");
+		LOGE("pthread_setschedparam() failed");
 		return -1;
 	}
 	return 0;

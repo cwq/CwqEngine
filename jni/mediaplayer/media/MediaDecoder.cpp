@@ -1,6 +1,6 @@
 #include "MediaDecoder.h"
 #include <assert.h>
-#include "../ijkutil/ijklog.h"
+#include "base/LogHelper.h"
 
 extern "C" {
 #include "libswscale/swscale.h"
@@ -95,7 +95,7 @@ MediaDecoder::MediaDecoder() {
 			audio_hw_buf_size = 0;
 
 	if (frame_queue_init(&sampq, &audioq, SAMPLE_QUEUE_SIZE, 1) < 0)
-		ALOGE("frame_queue_init error");
+		LOGE("frame_queue_init error");
 	packet_queue_init(&audioq);
 
 	max_frame_duration = 10;
@@ -158,7 +158,7 @@ int MediaDecoder::audio_decode_frame() {
 
 	do {
 		if (!(af = frame_queue_peek_readable(&audioDecoder->sampq))) {
-			ALOGE("decode_thread, %d, frame_queue_push!!", __LINE__);
+			LOGE("decode_thread, %d, frame_queue_push!!", __LINE__);
 			return -1;
 		}
 		if(af->serial != audioDecoder->audioq.serial)
@@ -246,7 +246,7 @@ int MediaDecoder::audio_decode_frame() {
 			av_fast_malloc(&audioDecoder->audio_buf1,
 					&audioDecoder->audio_buf1_size, out_size);
 			if (!audioDecoder->audio_buf1) {
-				ALOGE("audio_decode_frame, %d, %p, want size = %d, return %u",
+				LOGE("audio_decode_frame, %d, %p, want size = %d, return %u",
 						__LINE__, audioDecoder->audio_buf1, out_size,
 						audioDecoder->audio_buf1_size);
 				goto fail;
@@ -255,7 +255,7 @@ int MediaDecoder::audio_decode_frame() {
 			len2 = swr_convert(audioDecoder->swr_ctx, out, out_count, in,
 					af->mtAudioFrame.nb_samples);
 			if (len2 < 0) {
-				ALOGE("audio_decode_frame, %d", __LINE__);
+				LOGE("audio_decode_frame, %d", __LINE__);
 				av_log(NULL, AV_LOG_ERROR, "swr_convert() failed\n");
 				goto fail;
 			}
@@ -299,7 +299,7 @@ int MediaDecoder::stream_component_open(int streamIndex) {
 	int ret;
 
 	if (streamIndex < 0 || streamIndex >= pFormatCtx->nb_streams) {
-		ALOGE("stream_component_open failed: streamIndex = %d", streamIndex);
+		LOGE("stream_component_open failed: streamIndex = %d", streamIndex);
 		return -1;
 	}
 	avctx = pFormatCtx->streams[streamIndex]->codec;
@@ -314,7 +314,8 @@ int MediaDecoder::stream_component_open(int streamIndex) {
 	avctx->codec_id = codec->id;
 	ret = avcodec_open2(avctx, codec, NULL);
 	if (ret < 0) {
-		ALOGE("avcodec_open2 failed, err = %s", av_err2str(ret));
+	    char errstr[AV_ERROR_MAX_STRING_SIZE] = {0};
+		LOGE("avcodec_open2 failed, err = %s", av_make_error_string(errstr, AV_ERROR_MAX_STRING_SIZE, ret));
 		return -1;
 	}
 
@@ -397,14 +398,16 @@ int MediaDecoder::open(const MediaFileInfo &mfi) {
 
 	int ret = avformat_open_input(&pFormatCtx, fName, NULL, NULL);
 	if (ret != 0) {
-		ALOGE("avformat_open_input failed, file = %s, err = %s",
-				fName, av_err2str(ret));
+	    char errstr[AV_ERROR_MAX_STRING_SIZE] = {0};
+		LOGE("avformat_open_input failed, file = %s, err = %s",
+				fName, av_make_error_string(errstr, AV_ERROR_MAX_STRING_SIZE, ret));
 		return -1;
 	}
 
 	ret = avformat_find_stream_info(pFormatCtx, NULL);
 	if (ret < 0) {
-		ALOGE("avformat_find_stream_info failed, err = %s", av_err2str(ret));
+	    char errstr[AV_ERROR_MAX_STRING_SIZE] = {0};
+		LOGE("avformat_find_stream_info failed, err = %s", av_make_error_string(errstr, AV_ERROR_MAX_STRING_SIZE, ret));
 		return -1;
 	}
 
@@ -436,7 +439,7 @@ int MediaDecoder::open(const MediaFileInfo &mfi) {
                             st_index[AVMEDIA_TYPE_VIDEO],
                             NULL, 0);
     if(st_index[AVMEDIA_TYPE_AUDIO] < 0) {
-        ALOGE("%s: could not find audio stream\n", fName);
+        LOGE("%s: could not find audio stream\n", fName);
         //return -1;
     }
 
@@ -449,7 +452,7 @@ int MediaDecoder::open(const MediaFileInfo &mfi) {
     }
 
 //	if (!hasVideo()) {
-//		ALOGE("Didn't find a video stream.");
+//		LOGE("Didn't find a video stream.");
 //		av_dump_format(pFormatCtx, 0, fName, 0);
 //		return -1;
 //	} else {
@@ -489,8 +492,8 @@ ReadPktStatus MediaDecoder::readPkt() {/* if the queue are full, no need to read
 	if (st_index[AVMEDIA_TYPE_VIDEO] > 0
 			&& (videoq.size > MAX_QUEUE_SIZE
 					|| (videoq.nb_packets > MIN_FRAMES || videoq.abort_request))) {
-//		ALOGE("%p not read pkt", this);
-//		ALOGE("xxx no read pkt for : %d, %d, %d, %d",
+//		LOGE("%p not read pkt", this);
+//		LOGE("xxx no read pkt for : %d, %d, %d, %d",
 //				videoq.size > MAX_QUEUE_SIZE, videoq.nb_packets > MIN_FRAMES,
 //				st_index[AVMEDIA_TYPE_VIDEO] < 0, videoq.abort_request);
 		return READ_PKT_QUEUE_FULL;
@@ -677,7 +680,8 @@ bool MediaDecoder::get_video_frame(AVFrame *frame, AVPacket *pkt, int serial) {
 	int ret = avcodec_decode_video2(videoStream->codec, frame, &got_picture,
 			pkt);
 	if (ret < 0) {
-		ALOGE("avcodec_decode_video2 failed：%s", av_err2str(ret));
+	    char errstr[AV_ERROR_MAX_STRING_SIZE] = {0};
+		LOGE("avcodec_decode_video2 failed:%s", av_make_error_string(errstr, AV_ERROR_MAX_STRING_SIZE, ret));
 		return 0;
 	}
 
@@ -723,7 +727,7 @@ bool MediaDecoder::get_video_frame(AVFrame *frame, AVPacket *pkt, int serial) {
 
 		return 1;
 	} else {
-		//ALOGE("avcodec_decode_video2 no get picture, try again");
+		//LOGE("avcodec_decode_video2 no get picture, try again");
 	}
 	return 0;
 }
@@ -753,7 +757,7 @@ void MediaDecoder::alloc_picture(VideoPicture *vp) {
 		assert(0);
 	}
 
-	ALOGD("alloc piccture, vp->w = %d, h = %d", vp->width, vp->height);
+	LOGD("alloc piccture, vp->w = %d, h = %d", vp->width, vp->height);
 	vp->frameBuffer = (uint8_t *) av_malloc(
 			avpicture_get_size(decodedFormat, vp->width, vp->height));
 	avpicture_fill((AVPicture *) vp->decodedFrame, vp->frameBuffer,
@@ -804,7 +808,7 @@ int MediaDecoder::queue_picture(AVFrame *src_frame, double pts, int64_t pos,
 	/* if the frame is not skipped, then display it */
 	if (vp->decodedFrame) {
 		if (img_convert_ctx == NULL) {
-			ALOGD(
+			LOGD(
 					"sws_getContext : src->w, h =%d,%d  format = %d, target->w,h=%d,%d",
 					vp->width, vp->height, src_frame->format, vp->width,
 					vp->height);
@@ -821,7 +825,7 @@ int MediaDecoder::queue_picture(AVFrame *src_frame, double pts, int64_t pos,
 				src_frame->linesize, 0, vp->height, vp->decodedFrame->data,
 				vp->decodedFrame->linesize);
 		if (ret < 0) {
-			ALOGE("sws_scale failed, ret = %d", ret);
+			LOGE("sws_scale failed, ret = %d", ret);
 			assert(0);
 		}
 //		saveFrame(vp->decodedFrame, vp->width, vp->height, decoedPictureNum);
@@ -881,19 +885,19 @@ DecodePktStatus MediaDecoder::decodeVideo() {
 		av_free_packet(&pkt);
 		int ret = packet_queue_get(&videoq, &pkt, 0, &serial);
 		if (ret < 0) {
-			ALOGE("packet_queue_get failed: abort request");
+			LOGE("packet_queue_get failed: abort request");
 			videoDecodeEnd = true;
 			status = DECODE_PKT_END;
 			goto END;
 		}
 		if (ret == 0) {
-			//ALOGE("packet_queue_get failed: no pkt");
+			//LOGE("packet_queue_get failed: no pkt");
 			status = DECODE_PKT_PKTQ_EMPTY;
 			goto END;
 		}
 
 		if (!get_video_frame(videoSrcFrame, &pkt, serial)) {
-			//ALOGE("get_video_frame failed, try again");
+			//LOGE("get_video_frame failed, try again");
 			continue;
 		}
 
@@ -907,7 +911,7 @@ DecodePktStatus MediaDecoder::decodeVideo() {
 
 		av_frame_unref(videoSrcFrame);
 		if (ret < 0) {
-			ALOGE("decodeVideo error 2");
+			LOGE("decodeVideo error 2");
 			videoDecodeEnd = true;
 			status = DECODE_PKT_END;
 			goto END;
@@ -993,7 +997,7 @@ VideoPicture *MediaDecoder::choiceNextVideoPicture(int *remaingTimes) {
 			}
 			unlock();
 			// nothing to do, no picture to display in the queue
-			ALOGE(
+			LOGE(
 					"choiceNextVideoPicture()：nothing to do, no picture to display in the queue");
 			return NULL;
 		}
@@ -1135,7 +1139,7 @@ int MediaDecoder::seekTo(int value, bool seekByTime, bool isPlaying) {
 	int64_t seek_pos, seek_rel = 0;
 
 	if (seekByTime && (pFormatCtx->duration <= 0)) {
-		ALOGE("seekTo failed: seekByTime but pFormatCtx->duration <= 0");
+		LOGE("seekTo failed: seekByTime but pFormatCtx->duration <= 0");
 		return -1;
 	}
 
