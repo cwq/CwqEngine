@@ -25,7 +25,7 @@
 #define IJKSDL__IJKSDL_AOUT_H
 
 #include "ijksdl_audio.h"
-#include "ijkutil/ijksdl_mutex.h"
+#include "../ijkutil/ijksdl_mutex.h"
 
 typedef struct SDL_Aout_Opaque SDL_Aout_Opaque;
 typedef struct SDL_Aout SDL_Aout;

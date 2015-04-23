@@ -26,7 +26,7 @@
 #include <assert.h>
 #include <sys/time.h>
 #include "ijksdl_stdinc.h"
-#include "ijkutil/ijkutil.h"
+#include "ijkutil.h"
 
 SDL_mutex *SDL_CreateMutex(void)
 {

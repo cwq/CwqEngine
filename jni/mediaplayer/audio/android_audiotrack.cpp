@@ -24,8 +24,8 @@
 #include "android_audiotrack.h"
 
 #include <assert.h>
-#include "ijkutil/ijkutil.h"
-#include "ijkutil/ijksdl_stdinc.h"
+#include "../ijkutil/ijkutil.h"
+#include "../ijkutil/ijksdl_stdinc.h"
 #include "ijksdl_audio.h"
 
 typedef struct AudioChannelMapEntry {

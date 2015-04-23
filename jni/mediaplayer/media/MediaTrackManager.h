@@ -4,7 +4,7 @@
 #include <vector>
 using std::vector;
 
-#include "ijkutil/TrackManager.h"
+#include "../ijkutil/TrackManager.h"
 
 #include "MediaTrack.h"
 class MediaTrackManager: public TrackManager<MediaTrack> {

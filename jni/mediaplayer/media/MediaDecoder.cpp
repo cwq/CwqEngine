@@ -1,6 +1,6 @@
 #include "MediaDecoder.h"
 #include <assert.h>
-#include "ijkutil/ijklog.h"
+#include "../ijkutil/ijklog.h"
 
 extern "C" {
 #include "libswscale/swscale.h"

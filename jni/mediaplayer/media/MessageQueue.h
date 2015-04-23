@@ -1,7 +1,7 @@
 #ifndef __MESSAGE_QUEUE_H__
 #define __MESSAGE_QUEUE_H__
 
-#include "ijkutil/ijksdl_mutex.h"
+#include "../ijkutil/ijksdl_mutex.h"
 
 #define FFP_MSG_FLUSH                       0
 #define FFP_REQ_PAUSE                       20002

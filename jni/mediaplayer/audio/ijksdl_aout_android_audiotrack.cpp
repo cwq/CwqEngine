@@ -26,8 +26,8 @@
 #include <stdbool.h>
 #include <assert.h>
 #include <jni.h>
-#include "ijkutil/ijkutil.h"
-#include "ijkutil/ijksdl_thread.h"
+#include "../ijkutil/ijkutil.h"
+#include "../ijkutil/ijksdl_thread.h"
 //extern "C" {
 #include "android_audiotrack.h"
 //}

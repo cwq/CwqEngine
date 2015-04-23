@@ -1,5 +1,5 @@
 #include "AudioPlayer.h"
-#include "ijkutil/ijklog.h"
+#include "../ijkutil/ijklog.h"
 
 //extern "C" {
 #include "ijksdl_aout_android_audiotrack.h"

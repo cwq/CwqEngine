@@ -23,7 +23,7 @@
 
 #include <errno.h>
 #include <assert.h>
-#include "ijkutil/ijkutil.h"
+#include "ijkutil.h"
 #include "ijksdl_stdinc.h"
 #include "ijksdl_thread.h"
 

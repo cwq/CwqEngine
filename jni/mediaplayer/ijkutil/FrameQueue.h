@@ -1,7 +1,7 @@
 #ifndef __PACKET_QUEUE_H__
 #define __PACKET_QUEUE_H__
 
-#include "audio/AudioDefine.h"
+#include "../audio/AudioDefine.h"
 #include "PacketQueue.h"
 
 class MTAudioFrame {

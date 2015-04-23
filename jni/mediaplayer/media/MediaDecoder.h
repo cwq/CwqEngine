@@ -2,10 +2,10 @@
 #define __MEDIA_DECODER_H__
 
 #include <string>
-#include "ijkutil/PacketQueue.h"
+#include "../ijkutil/PacketQueue.h"
 #include "MediaClock.h"
-#include "audio/AudioDefine.h"
-#include "ijkutil/FrameQueue.h"
+#include "../audio/AudioDefine.h"
+#include "../ijkutil/FrameQueue.h"
 
 using std::string;
 

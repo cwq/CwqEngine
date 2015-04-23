@@ -24,8 +24,8 @@
 #ifndef IJKSDL__IJKSDL_AUDIO_H
 #define IJKSDL__IJKSDL_AUDIO_H
 
-#include "ijkutil/ijksdl_stdinc.h"
-#include "ijkutil/ijksdl_endian.h"
+#include "../ijkutil/ijksdl_stdinc.h"
+#include "../ijkutil/ijksdl_endian.h"
 
 typedef uint16_t SDL_AudioFormat;
 

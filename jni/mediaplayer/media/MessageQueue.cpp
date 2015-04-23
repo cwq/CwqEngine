@@ -3,7 +3,7 @@ extern "C" {
 }
 
 #include "MessageQueue.h"
-#include "ijkutil/ijklog.h"
+#include "../ijkutil/ijklog.h"
 
 MessageQueue::MessageQueue() {
 	init();
