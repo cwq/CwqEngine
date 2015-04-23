@@ -10,13 +10,14 @@
 class AVMessage {
 public:
 	AVMessage() {
-		memset(this, 0, sizeof(AVMessage));
+	    what = arg1 = arg2 = 0;
+	    next = NULL;
 	}
 
 	int what;
 	int arg1;
 	int arg2;
-	struct AVMessage *next;
+	AVMessage *next;
 };
 
 class MessageQueue {
