@@ -138,36 +138,36 @@ void GraphicsSprite::updatePosition()
     double halfWSin = halfW * sinAngle;
     double halfHCos = halfH * cosAngle;
 
-    mQuads.tl.vertices[0] = mCenterX - halfWCos - halfHSin;
-    mQuads.tl.vertices[1] = mCenterY + halfHCos - halfWSin;
-    mQuads.tl.vertices[2] = 0.0f;
+    mQuads.tl.vertices.x = mCenterX - halfWCos - halfHSin;
+    mQuads.tl.vertices.y = mCenterY + halfHCos - halfWSin;
+    mQuads.tl.vertices.z = 0.0f;
 
-    mQuads.bl.vertices[0] = mCenterX - halfWCos + halfHSin;
-    mQuads.bl.vertices[1] = mCenterY - halfHCos - halfWSin;
-    mQuads.bl.vertices[2] = 0.0f;
+    mQuads.bl.vertices.x = mCenterX - halfWCos + halfHSin;
+    mQuads.bl.vertices.y = mCenterY - halfHCos - halfWSin;
+    mQuads.bl.vertices.z = 0.0f;
 
-    mQuads.tr.vertices[0] = mCenterX + halfWCos - halfHSin;
-    mQuads.tr.vertices[1] = mCenterY + halfHCos + halfWSin;
-    mQuads.tr.vertices[2] = 0.0f;
+    mQuads.tr.vertices.x = mCenterX + halfWCos - halfHSin;
+    mQuads.tr.vertices.y = mCenterY + halfHCos + halfWSin;
+    mQuads.tr.vertices.z = 0.0f;
 
-    mQuads.br.vertices[0] = mCenterX + halfWCos + halfHSin;
-    mQuads.br.vertices[1] = mCenterY - halfHCos + halfWSin;
-    mQuads.br.vertices[2] = 0.0f;
+    mQuads.br.vertices.x = mCenterX + halfWCos + halfHSin;
+    mQuads.br.vertices.y = mCenterY - halfHCos + halfWSin;
+    mQuads.br.vertices.z = 0.0f;
 }
 
 void GraphicsSprite::updateUV()
 {
-    mQuads.tl.texCoords[0] = startU;//startU;
-    mQuads.tl.texCoords[1] = 1 - endV;//endV;
+    mQuads.tl.texCoords.u = startU;//startU;
+    mQuads.tl.texCoords.v = 1 - endV;//endV;
 
-    mQuads.bl.texCoords[0] = startU;//startU;
-    mQuads.bl.texCoords[1] = 1 - startV;//startV;
+    mQuads.bl.texCoords.u = startU;//startU;
+    mQuads.bl.texCoords.v = 1 - startV;//startV;
 
-    mQuads.tr.texCoords[0] = endU;//endU;
-    mQuads.tr.texCoords[1] = 1 - endV;//endV;
+    mQuads.tr.texCoords.u = endU;//endU;
+    mQuads.tr.texCoords.v = 1 - endV;//endV;
 
-    mQuads.br.texCoords[0] = endU;//endU;
-    mQuads.br.texCoords[1] = 1 - startV;//startV;
+    mQuads.br.texCoords.u = endU;//endU;
+    mQuads.br.texCoords.v = 1 - startV;//startV;
 }
 
 Texture2D* GraphicsSprite::getTexture() const
