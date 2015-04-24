@@ -114,7 +114,7 @@ void GraphicsService::screenSizeChanged(int width, int height)
 
     glViewport(0, 0, mWidth, mHeight);
 
-    Mat4::createOrthographicOffCenter(0, mWidth, 0, mHeight, -1, 1, &pMat);
+    Mat4::createOrthographicOffCenter(0.0f, (float)mWidth, 0.0f, (float)mHeight, -1.0f, 1.0f, &pMat);
     Mat4::multiply(vMat, pMat, &mvpMat);
 }
 
@@ -162,7 +162,7 @@ void GraphicsService::fillQuads(GraphicsSprite* pSprite, int playedTime)
 
     if (pSprite->isVisible()) {
         const V3F_C4F_T2F* quads =  (V3F_C4F_T2F*)pSprite->getQuads();
-        for(ssize_t i=0; i< 4; ++i)
+        for(int i=0; i< 4; ++i)
         {
             _quadVerts[i + _numberQuads * 4] = quads[i];
     //        modelView.transformPoint(quads[i].vertices,&(_quadVerts[i + _numberQuads * 4].vertices));

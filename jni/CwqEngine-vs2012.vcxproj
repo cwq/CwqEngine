@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{75431427-67FE-4D35-8637-BFC9BA88760D}</ProjectGuid>
+    <RootNamespace>CwqEnginevs2012</RootNamespace>
+    <ProjectName>CwqEngine</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>.;.\thirdpart\include;.\thirdpart\include\ffmpeg;.\thirdpart\include\pthread;$(IncludePath)</IncludePath>
+    <LibraryPath>.\thirdpart\libs\win32\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>__STDC_CONSTANT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="engine\CwqEngine.cpp" />
+    <ClCompile Include="math\Mat4.cpp" />
+    <ClCompile Include="math\MathUtil.cpp" />
+    <ClCompile Include="math\Quaternion.cpp" />
+    <ClCompile Include="math\Vec2.cpp" />
+    <ClCompile Include="math\Vec3.cpp" />
+    <ClCompile Include="math\Vec4.cpp" />
+    <ClCompile Include="mediaplayer\audio\android_audiotrack.cpp" />
+    <ClCompile Include="mediaplayer\audio\AudioPlayer.cpp" />
+    <ClCompile Include="mediaplayer\audio\audio_mixer.cpp" />
+    <ClCompile Include="mediaplayer\audio\ijksdl_aout.cpp" />
+    <ClCompile Include="mediaplayer\audio\ijksdl_aout_android_audiotrack.cpp" />
+    <ClCompile Include="mediaplayer\audio\ijksdl_audio.cpp" />
+    <ClCompile Include="mediaplayer\ijkutil\FrameQueue.cpp" />
+    <ClCompile Include="mediaplayer\ijkutil\ijksdl_mutex.cpp" />
+    <ClCompile Include="mediaplayer\ijkutil\ijksdl_thread.cpp" />
+    <ClCompile Include="mediaplayer\ijkutil\PacketQueue.cpp" />
+    <ClCompile Include="mediaplayer\MediaPlayer.cpp" />
+    <ClCompile Include="mediaplayer\media\MediaClock.cpp" />
+    <ClCompile Include="mediaplayer\media\MediaDecoder.cpp" />
+    <ClCompile Include="mediaplayer\media\MediaTrack.cpp" />
+    <ClCompile Include="mediaplayer\media\MediaTrackManager.cpp" />
+    <ClCompile Include="mediaplayer\media\MessageQueue.cpp" />
+    <ClCompile Include="platform\CwqEngineJNI.cpp" />
+    <ClCompile Include="platform\CwqEngineJNIHelper.cpp" />
+    <ClCompile Include="platform\Resource.cpp" />
+    <ClCompile Include="renderer\BasicShader.cpp" />
+    <ClCompile Include="renderer\GraphicsService.cpp" />
+    <ClCompile Include="renderer\GraphicsSprite.cpp" />
+    <ClCompile Include="renderer\Image.cpp" />
+    <ClCompile Include="renderer\ImageLoader.cpp" />
+    <ClCompile Include="renderer\Shader.cpp" />
+    <ClCompile Include="renderer\Texture2D.cpp" />
+    <ClCompile Include="renderer\TextureCache.cpp" />
+    <ClCompile Include="renderer\TextureShader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="base\CWQMacros.h" />
+    <ClInclude Include="base\LogHelper.h" />
+    <ClInclude Include="base\Singleton.h" />
+    <ClInclude Include="base\Types.h" />
+    <ClInclude Include="engine\CwqEngine.h" />
+    <ClInclude Include="math\Mat4.h" />
+    <ClInclude Include="math\MathBase.h" />
+    <ClInclude Include="math\MathUtil.h" />
+    <ClInclude Include="math\Quaternion.h" />
+    <ClInclude Include="math\Vec2.h" />
+    <ClInclude Include="math\Vec3.h" />
+    <ClInclude Include="math\Vec4.h" />
+    <ClInclude Include="mediaplayer\audio\android_audiotrack.h" />
+    <ClInclude Include="mediaplayer\audio\AudioDefine.h" />
+    <ClInclude Include="mediaplayer\audio\AudioPlayer.h" />
+    <ClInclude Include="mediaplayer\audio\audio_mixer.h" />
+    <ClInclude Include="mediaplayer\audio\ijksdl_aout.h" />
+    <ClInclude Include="mediaplayer\audio\ijksdl_aout_android_audiotrack.h" />
+    <ClInclude Include="mediaplayer\audio\ijksdl_audio.h" />
+    <ClInclude Include="mediaplayer\ijkutil\cross_sleep.h" />
+    <ClInclude Include="mediaplayer\ijkutil\cross_sys_time.h" />
+    <ClInclude Include="mediaplayer\ijkutil\FrameQueue.h" />
+    <ClInclude Include="mediaplayer\ijkutil\ijkexception.h" />
+    <ClInclude Include="mediaplayer\ijkutil\ijklog.h" />
+    <ClInclude Include="mediaplayer\ijkutil\ijksdl_endian.h" />
+    <ClInclude Include="mediaplayer\ijkutil\ijksdl_mutex.h" />
+    <ClInclude Include="mediaplayer\ijkutil\ijksdl_stdinc.h" />
+    <ClInclude Include="mediaplayer\ijkutil\ijksdl_thread.h" />
+    <ClInclude Include="mediaplayer\ijkutil\ijkutil.h" />
+    <ClInclude Include="mediaplayer\ijkutil\PacketQueue.h" />
+    <ClInclude Include="mediaplayer\ijkutil\TrackManager.h" />
+    <ClInclude Include="mediaplayer\MediaPlayer.h" />
+    <ClInclude Include="mediaplayer\media\MediaClock.h" />
+    <ClInclude Include="mediaplayer\media\MediaDecoder.h" />
+    <ClInclude Include="mediaplayer\media\MediaTrack.h" />
+    <ClInclude Include="mediaplayer\media\MediaTrackManager.h" />
+    <ClInclude Include="mediaplayer\media\MessageQueue.h" />
+    <ClInclude Include="platform\CwqEngineJNIHelper.h" />
+    <ClInclude Include="platform\CwqGL.h" />
+    <ClInclude Include="platform\Resource.h" />
+    <ClInclude Include="renderer\BasicShader.h" />
+    <ClInclude Include="renderer\GraphicsService.h" />
+    <ClInclude Include="renderer\GraphicsSprite.h" />
+    <ClInclude Include="renderer\Image.h" />
+    <ClInclude Include="renderer\ImageLoader.h" />
+    <ClInclude Include="renderer\Shader.h" />
+    <ClInclude Include="renderer\stb_image.h" />
+    <ClInclude Include="renderer\Texture2D.h" />
+    <ClInclude Include="renderer\TextureCache.h" />
+    <ClInclude Include="renderer\TextureShader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="math\Mat4.inl" />
+    <None Include="math\MathUtil.inl" />
+    <None Include="math\MathUtilNeon.inl" />
+    <None Include="math\Quaternion.inl" />
+    <None Include="math\Vec2.inl" />
+    <None Include="math\Vec3.inl" />
+    <None Include="math\Vec4.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

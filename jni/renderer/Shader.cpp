@@ -16,7 +16,7 @@ Shader::~Shader()
 
 void Shader::LoadShader(GLuint id, const std::string& shaderCode)
 {
-    static const uint32_t NUM_SHADERS = 1;
+    static const int NUM_SHADERS = 1;
 
     const GLchar* pCode = shaderCode.c_str();
     GLint length = shaderCode.length();
@@ -33,9 +33,10 @@ void Shader::LoadShader(GLuint id, const std::string& shaderCode)
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 1)
         {
-            char log[logLength];
+            char *log = new char[logLength];
             glGetShaderInfoLog(id, logLength, NULL, log);
             LOGE("Error compiling shader: %s", log);
+            delete []log;
         }
     }
 

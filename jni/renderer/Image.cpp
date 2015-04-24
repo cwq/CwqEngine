@@ -1,5 +1,6 @@
 #include "Image.h"
 #include <stdlib.h>
+#include <string.h>
 #include "ImageLoader.h"
 #include "base/LogHelper.h"
 

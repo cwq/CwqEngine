@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="engine\CwqEngine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Mat4.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="math\MathUtil.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Quaternion.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vec2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vec3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vec4.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\audio\android_audiotrack.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\audio\audio_mixer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\audio\AudioPlayer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\audio\ijksdl_aout.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\audio\ijksdl_aout_android_audiotrack.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\audio\ijksdl_audio.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\ijkutil\FrameQueue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\ijkutil\ijksdl_mutex.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\ijkutil\ijksdl_thread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\ijkutil\PacketQueue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\media\MediaClock.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\media\MediaDecoder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\media\MediaTrack.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\media\MediaTrackManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\media\MessageQueue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplayer\MediaPlayer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\CwqEngineJNI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\CwqEngineJNIHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\Resource.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\BasicShader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\GraphicsService.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\GraphicsSprite.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\Image.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\ImageLoader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\Texture2D.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\TextureCache.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\TextureShader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="base\CWQMacros.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="base\LogHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Singleton.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Types.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\CwqEngine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Mat4.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\MathBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\MathUtil.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Quaternion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vec2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vec3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vec4.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\audio\android_audiotrack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\audio\audio_mixer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\audio\AudioDefine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\audio\AudioPlayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\audio\ijksdl_aout.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\audio\ijksdl_aout_android_audiotrack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\audio\ijksdl_audio.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\FrameQueue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\ijkexception.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\ijklog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\ijksdl_endian.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\ijksdl_mutex.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\ijksdl_stdinc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\ijksdl_thread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\ijkutil.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\PacketQueue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\TrackManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\media\MediaClock.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\media\MediaDecoder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\media\MediaTrack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\media\MediaTrackManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\media\MessageQueue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\MediaPlayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CwqEngineJNIHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CwqGL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\BasicShader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\GraphicsService.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\GraphicsSprite.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\ImageLoader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\stb_image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Texture2D.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\TextureCache.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\TextureShader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\cross_sys_time.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\cross_sleep.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="math\Mat4.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="math\MathUtil.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="math\MathUtilNeon.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="math\Quaternion.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="math\Vec2.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="math\Vec3.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="math\Vec4.inl">
+      <Filter>头文件</Filter>
+    </None>
+  </ItemGroup>
+</Project>

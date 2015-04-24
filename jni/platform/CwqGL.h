@@ -7,11 +7,11 @@
 
 #else // !ANDROID !__ANDROID__
 
-#ifdef WIN32
+#if defined(_WIN32) || defined(__WIN32__)
 
+#include <GL/glew.h>
 
-
-#endif // !WIN32
+#endif // !_WIN32 !__WIN32__
 
 #endif // !ANDROID !__ANDROID__
 

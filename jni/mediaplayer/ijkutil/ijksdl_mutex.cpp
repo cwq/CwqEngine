@@ -24,7 +24,7 @@
 #include "ijksdl_mutex.h"
 #include <errno.h>
 #include <assert.h>
-#include <sys/time.h>
+#include "cross_sys_time.h"
 #include "ijksdl_stdinc.h"
 #include "ijkutil.h"
 

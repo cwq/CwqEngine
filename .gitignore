@@ -2,3 +2,7 @@ bin/
 gen/
 obj/
 libs/
+jni/CwqEngine-vs2012.sdf
+jni/CwqEngine-vs2012.vcxproj.user
+jni/Debug/
+jni/CwqEngine-vs2012.v11.suo

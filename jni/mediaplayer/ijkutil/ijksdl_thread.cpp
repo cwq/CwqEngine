@@ -23,6 +23,7 @@
 
 #include <errno.h>
 #include <assert.h>
+#include <string.h>
 #include "ijkutil.h"
 #include "ijksdl_stdinc.h"
 #include "ijksdl_thread.h"
@@ -31,7 +32,7 @@
 // using ios implement for autorelease
 static void *SDL_RunThread(void *data) {
 	SDL_Thread *thread = (SDL_Thread *)data;
-	LOGI("SDL_RunThread: [%d] %s\n", (int )gettid(), thread->name);
+	//LOGI("SDL_RunThread: [%d] %s\n", (int )gettid(), thread->name);
 	thread->retval = thread->func(thread->data);
 	return NULL;
 }
@@ -40,7 +41,8 @@ SDL_Thread *SDL_CreateThreadEx(SDL_Thread *thread, int (*fn)(void *),
 		void *data, const char *name) {
 	thread->func = fn;
 	thread->data = data;
-	strlcpy(thread->name, name, sizeof(thread->name) - 1);
+	strncpy(thread->name, name, sizeof(thread->name) - 1);
+	thread->name[sizeof(thread->name) - 1] = '\0';
 	int retval = pthread_create(&thread->id, NULL, SDL_RunThread, thread);
 	if (retval)
 		return NULL;

@@ -26,7 +26,6 @@
 
 #include <stdlib.h>
 #include <memory.h>
-#include <unistd.h>
 #include "base/LogHelper.h"
 #include "ijkexception.h"
 

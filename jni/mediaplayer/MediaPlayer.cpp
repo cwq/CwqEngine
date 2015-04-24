@@ -1,5 +1,5 @@
-#include <unistd.h>
 #include <assert.h>
+#include "ijkutil/cross_sleep.h"
 #include "MediaPlayer.h"
 #include "audio/audio_mixer.h"
 #include "base/LogHelper.h"
@@ -133,7 +133,7 @@ void MediaPlayer::init() {
 }
 
 static int video_thread(void *arg) {
-	LOGD("video_thread pid = %u", gettid());
+	//LOGD("video_thread pid = %u", gettid());
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	bool anyOneDecode = false, allTrackDecodeEnd = true;
 
@@ -143,7 +143,7 @@ static int video_thread(void *arg) {
 		while (mediaPlayer->mediaTrackManager.isPaused()
 				&& !mediaPlayer->abort_request) {
 			LOGD("video_thread block: paused");
-			usleep(10000);
+			sleep_ms(10);
 		}
 
 		anyOneDecode = false;
@@ -188,7 +188,7 @@ static int decode_interrupt_cb(void *ctx) {
 }
 
 static int audio_thread(void *arg) {
-	LOGD("pthread audio_thread pid = %u", gettid());
+	//LOGD("pthread audio_thread pid = %u", gettid());
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	bool anyOneDecode = false, allTrackDecodeEnd = true;
 
@@ -221,7 +221,7 @@ static int audio_thread(void *arg) {
 		if (!anyOneDecode) {
 			/* wait 10 ms */
 //			LOGE("cwq audio_thread block: nobody decode");
-//			usleep(10000);
+//			sleep_ms(10);
 			SDL_LockMutex(mediaPlayer->frameQueueMutex);
 			SDL_CondWaitTimeout(mediaPlayer->frameQueueCond, mediaPlayer->frameQueueMutex, 10);
 			SDL_UnlockMutex(mediaPlayer->frameQueueMutex);
@@ -436,7 +436,7 @@ void MediaPlayer::addAllTracks() {
 }
 
 static int read_thread(void *arg) {
-	LOGD("read_thread pid = %u", gettid());
+	//LOGD("read_thread pid = %u", gettid());
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	MediaTrack *mediaTrack;
 
@@ -501,7 +501,7 @@ static int read_thread(void *arg) {
 	}
 	LOGD("read_thread block: wait for abort");
 	while (!mediaPlayer->wantToExit) {
-		usleep(1000);
+	    sleep_ms(1);
 	}
 	LOGD("read_thread unblock");
 
