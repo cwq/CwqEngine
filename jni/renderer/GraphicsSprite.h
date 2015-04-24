@@ -71,7 +71,9 @@ protected:
     void updateUV();
 private:
     // texture
-    Texture2D*  mTexture    = nullptr;
+    Texture2D* mTexture;
+    // shader
+    Shader* mShader;
 
     // sprite current info
     float mCenterX, mCenterY;
@@ -85,25 +87,22 @@ private:
     float startV, endV; //y
 
     // Counterclockwise
-    float rotateAngle = 0;
+    float rotateAngle;
 
     // position color uv
     V3F_C4F_T2F_Quad mQuads;
 
     // update data
-    bool needUpdatePosition = false;
-    bool needUpdateUV = false;
-    
-    // shader
-    Shader*      mShader    = nullptr;
+    bool needUpdatePosition;
+    bool needUpdateUV;
 
     // is visible
-    bool mVisible = true;
+    bool mVisible;
 
     // Animation.
-    int mAnimFrameCount = 1;
-    int mAnimStartTime = 0, mAnimEndTime = 0;
-    float mAnimDuration = 0;
+    int mAnimFrameCount;
+    int mAnimStartTime, mAnimEndTime;
+    float mAnimDuration;
 };
 
 

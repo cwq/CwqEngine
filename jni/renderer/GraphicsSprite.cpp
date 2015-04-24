@@ -9,6 +9,15 @@
 
 GraphicsSprite::GraphicsSprite()
 {
+    mTexture = NULL;
+    mShader = NULL;
+    rotateAngle = 0;
+    needUpdatePosition = needUpdateUV = false;
+    mVisible = true;
+    mAnimFrameCount = 1;
+    mAnimStartTime = mAnimEndTime = 0;
+    mAnimDuration = 0;
+
     setUV(0, 1, 0, 1);
 }
 
