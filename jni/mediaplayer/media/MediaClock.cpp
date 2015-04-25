@@ -1,5 +1,6 @@
-#include <math.h>
 #include "MediaClock.h"
+#include "../ijkutil/cross_cmath.h"
+
 extern "C" {
 #include "libavutil/time.h"
 #include "libavutil/common.h"

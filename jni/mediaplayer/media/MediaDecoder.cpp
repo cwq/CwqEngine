@@ -1,5 +1,6 @@
 #include "MediaDecoder.h"
 #include <assert.h>
+#include "../ijkutil/cross_cmath.h"
 #include "base/LogHelper.h"
 
 extern "C" {
@@ -7,8 +8,12 @@ extern "C" {
 #include "libavutil/time.h"
 }
 
+#ifndef INT64_MAX
 #define INT64_MAX 9223372036854775807LL
+#endif
+#ifndef INT64_MIN
 #define INT64_MIN  (-9223372036854775807LL - 1)
+#endif
 
 double MediaFileInfo::getMasterClock() {
 	double val;
@@ -468,6 +473,8 @@ int MediaDecoder::open(const MediaFileInfo &mfi) {
 int MediaDecoder::packetQueuAbort() {
 	packet_queue_abort(&videoq);
 	packet_queue_abort(&audioq);
+
+	return 0;
 }
 
 int MediaDecoder::close() {
@@ -579,7 +586,7 @@ static int decoder_decode_frame(MediaDecoder *audioDecoder, Decoder *d,
 			ret = avcodec_decode_audio4(d->avctx, frame, &got_frame,
 					&d->pkt_temp);
 			if (got_frame) {
-				AVRational tb = (AVRational ) { 1, frame->sample_rate };
+				AVRational tb = { 1, frame->sample_rate };
 				if (frame->pts != AV_NOPTS_VALUE)
 					frame->pts = av_rescale_q(frame->pts, d->avctx->time_base,
 							tb);
@@ -627,7 +634,6 @@ DecodePktStatus MediaDecoder::decodeAudio() {
 	AVFrame *frame = av_frame_alloc();
 	Frame *af;
 	int got_frame = 0;
-	AVRational tb;
 	int ret = 0;
 	DecodePktStatus status = DECODE_PKT_OK;
 
@@ -649,7 +655,7 @@ DecodePktStatus MediaDecoder::decodeAudio() {
 		}
 
 		if (got_frame) {
-			tb = (AVRational ) { 1, frame->sample_rate };
+		    AVRational tb = { 1, frame->sample_rate };
 
 			if (!(af = frame_queue_peek_writable(&audioDecoder->sampq)))
 				goto the_end;
@@ -659,10 +665,8 @@ DecodePktStatus MediaDecoder::decodeAudio() {
 														frame->pts * av_q2d(tb);
 			af->pos = av_frame_get_pkt_pos(frame);
 			af->serial = audioDecoder->auddec.pkt_serial;
-			af->duration =
-					av_q2d(
-							(AVRational ) { frame->nb_samples,
-											frame->sample_rate });
+			AVRational a = { frame->nb_samples, frame->sample_rate };
+			af->duration =av_q2d(a);
 
 			af->mtAudioFrame.copyFromAvFrame(frame);
 			frame_queue_push(&audioDecoder->sampq);

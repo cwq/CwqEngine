@@ -92,21 +92,22 @@ static void ffp_log_callback_report(void *ptr, int level, const char *fmt,
     char line[1024];
     static int print_prefix = 1;
 
-    va_copy(vl2, vl);
+    vl2 = vl;
+    //va_copy(vl2, vl);
     // av_log_default_callback(ptr, level, fmt, vl);
     av_log_format_line(ptr, level, fmt, vl2, line, sizeof(line), &print_prefix);
-    va_end(vl2);
+    //va_end(vl2);
 
 	if (level <= AV_LOG_ERROR)
-	    LOGE("%s", line);
+	    {LOGE("%s", line);}
 	else if (level <= AV_LOG_WARNING)
-	    LOGW("%s", line);
+	    {LOGW("%s", line);}
 	else if (level <= AV_LOG_INFO)
-	    LOGI("%s", line);
+	    {LOGI("%s", line);}
 	else if (level <= AV_LOG_VERBOSE)
-	    LOGV("%s", line);
+	    {LOGV("%s", line);}
 	else
-	    LOGD("%s", line);
+	    {LOGD("%s", line);}
 }
 
 void MediaPlayer::init() {
