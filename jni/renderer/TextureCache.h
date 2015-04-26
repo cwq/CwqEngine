@@ -1,31 +1,36 @@
 #ifndef TEXTURECACHE_H
 #define TEXTURECACHE_H
 
-#include "base/Singleton.h"
+//#include "base/Singleton.h"
 #include <string>
 #include <unordered_map>
 
 class Texture2D;
 
-class TextureCache : public Singleton<TextureCache>
+class TextureCache// : public Singleton<TextureCache>
 {
 public:
-    TextureCache();
-    ~TextureCache();
+//    TextureCache();
+//    ~TextureCache();
 
-    Texture2D* addTexture(const std::string &fileName);
+    static const int MAX_CACHE = 3;
 
-    void releaseTexture(const std::string &fileName);
-    void releaseTexture(Texture2D* texture);
+    static void setCurrentCache(int index);
 
-    bool reloadTexture(const std::string& fileName);
-    bool reloadTexture(Texture2D* texture);
-    void reloadAllTexture();
+    static Texture2D* addTexture(const std::string &fileName);
 
-    void removeAllTextures();
+    static void releaseTexture(const std::string &fileName);
+    static void releaseTexture(Texture2D* texture);
+
+    static bool reloadTexture(const std::string& fileName);
+    static bool reloadTexture(Texture2D* texture);
+    static void reloadAllTextures();
+
+    static void removeAllTextures(int cacheIndex);
 
 private:
-    std::unordered_map<std::string, Texture2D*> _textures;
+    static std::unordered_map<std::string, Texture2D*> _textures[MAX_CACHE];
+    static int currentIndex;
 };
 
 #endif // !TEXTURECACHE_H

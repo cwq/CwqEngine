@@ -8,7 +8,7 @@
 
 #include "base/Types.h"
 #include "math/Mat4.h"
-#include "TextureCache.h"
+//#include "TextureCache.h"
 
 class GraphicsSprite;
 class Shader;
@@ -27,8 +27,8 @@ public:
     int getHeight() const;
     int getWidth() const;
 
-    void start();
-    void stop();
+    bool start();
+    void end();
     //ms
     void update(int playedTime);
 
@@ -57,7 +57,7 @@ private:
 
     TextureShader* mCommonShader;
 
-    TextureCache textureCache;
+    //TextureCache textureCache;
 
     SpriteVector mSprites;
     //std::vector<Shader*> mShaders;
@@ -66,13 +66,17 @@ private:
     //sprite info
     V3F_C4F_T2F _quadVerts[VBO_SIZE];
     GLushort _quadIndices[INDEX_VBO_SIZE];
-    GLuint _quadVAO;
+    //GLuint _quadVAO;
     GLuint _quadbuffersVBO[2]; //0: vertex  1: indices
     int _numberQuads;
 
     Mat4 vMat;
     Mat4 pMat;
     Mat4 mvpMat;
+
+    //for TextureCache, must less than TextureCache::MAX_CACHE
+    static int cacheNum;
+    int cacheIndex;
 
 };
 

@@ -1,22 +1,39 @@
 #include "TextureCache.h"
 #include "base/CWQMacros.h"
 #include "Texture2D.h"
+#include "base/LogHelper.h"
 
-TextureCache::TextureCache()
+std::unordered_map<std::string, Texture2D*> TextureCache::_textures[MAX_CACHE];
+int TextureCache::currentIndex = 0;
+
+//TextureCache::TextureCache()
+//{
+//
+//}
+//
+//TextureCache::~TextureCache()
+//{
+//
+//}
+
+void TextureCache::setCurrentCache(int index)
 {
-
-}
-
-TextureCache::~TextureCache()
-{
+    if(index >=0 && index < MAX_CACHE)
+    {
+        currentIndex = index;
+    }
+    else
+    {
+        LOGE("TextureCache maxCache is %i, index is: %i", MAX_CACHE, index);
+    }
 
 }
 
 Texture2D* TextureCache::addTexture(const std::string &fileName)
 {
     Texture2D * texture = nullptr;
-    auto it = _textures.find(fileName);
-    if( it != _textures.end() )
+    auto it = _textures[currentIndex].find(fileName);
+    if( it != _textures[currentIndex].end() )
     {
         texture = it->second;
         texture->increaseRef();
@@ -26,7 +43,7 @@ Texture2D* TextureCache::addTexture(const std::string &fileName)
         texture = new Texture2D();
         if (texture && texture->load(fileName.c_str()))
         {
-            _textures.insert( std::make_pair(fileName, texture) );
+            _textures[currentIndex].insert( std::make_pair(fileName, texture) );
         }
         else
         {
@@ -40,8 +57,8 @@ void TextureCache::releaseTexture(const std::string &fileName)
 {
     Texture2D * texture = nullptr;
 
-    auto it = _textures.find(fileName);
-    if (it != _textures.end()) {
+    auto it = _textures[currentIndex].find(fileName);
+    if (it != _textures[currentIndex].end()) {
         texture = it->second;
     }
 
@@ -56,15 +73,17 @@ void TextureCache::releaseTexture(Texture2D* texture)
         if(texture->getRef() <= 0)
         {
             texture->unLoad();
-            for( auto it=_textures.cbegin(); it!=_textures.cend();)
+            for( auto it=_textures[currentIndex].cbegin(); it!=_textures[currentIndex].cend();)
             {
                 if( it->second == texture )
                 {
-                    _textures.erase(it++);
+                    _textures[currentIndex].erase(it++);
                     break;
                 } else
                     ++it;
             }
+
+            SAFE_DELETE(texture);
         }
     }
 }
@@ -73,14 +92,14 @@ bool TextureCache::reloadTexture(const std::string& fileName)
 {
     Texture2D * texture = nullptr;
 
-    auto it = _textures.find(fileName);
-    if (it != _textures.end()) {
+    auto it = _textures[currentIndex].find(fileName);
+    if (it != _textures[currentIndex].end()) {
         texture = it->second;
     }
 
     bool ret = false;
     if (! texture) {
-        texture = this->addTexture(fileName);
+        texture = TextureCache::addTexture(fileName);
         ret = (texture != nullptr);
     }
     else
@@ -103,7 +122,7 @@ bool TextureCache::reloadTexture(Texture2D* texture)
     bool ret = false;
     if(texture)
     {
-        for( auto it=_textures.cbegin(); it!=_textures.cend();)
+        for( auto it=_textures[currentIndex].cbegin(); it!=_textures[currentIndex].cend();)
         {
             if( it->second == texture )
             {
@@ -120,9 +139,9 @@ bool TextureCache::reloadTexture(Texture2D* texture)
     return ret;
 }
 
-void TextureCache::reloadAllTexture()
+void TextureCache::reloadAllTextures()
 {
-    for( auto it=_textures.begin(); it!=_textures.end(); ++it ) {
+    for( auto it=_textures[currentIndex].begin(); it!=_textures[currentIndex].end(); ++it ) {
         Image image;
         bool bRet = image.initWithFileName(it->first.c_str());
         if(bRet)
@@ -132,10 +151,12 @@ void TextureCache::reloadAllTexture()
     }
 }
 
-void TextureCache::removeAllTextures()
+void TextureCache::removeAllTextures(int cacheIndex)
 {
-    for( auto it=_textures.begin(); it!=_textures.end(); ++it ) {
-        (it->second)->unLoad();
+    for( auto it=_textures[cacheIndex].begin(); it!=_textures[cacheIndex].end(); ++it ) {
+        Texture2D* texture = it->second;
+        texture->unLoad();
+        SAFE_DELETE(texture);
     }
-    _textures.clear();
+    _textures[cacheIndex].clear();
 }

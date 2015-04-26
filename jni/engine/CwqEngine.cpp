@@ -38,7 +38,13 @@ CwqEngine::~CwqEngine()
     SAFE_DELETE(mediaPlayer);
     SAFE_DELETE(videoImage);
     SAFE_DELETE(videoTexture);
-    SAFE_DELETE(videoSprite);
+}
+
+void CwqEngine::onDestroy()
+{
+    LOGE("onDestroy");
+    graphicsService->end();
+    mediaPlayer->end();
 }
 
 void CwqEngine::setJavaWeakEngine(void* jWeakEngine)
@@ -100,12 +106,13 @@ void CwqEngine::onDrawFrame()
 void CwqEngine::onResume()
 {
     LOGE("onResume");
+    mediaPlayer->resume();
 }
 
 void CwqEngine::onPause()
 {
     LOGE("onPause");
-    graphicsService->stop();
+    mediaPlayer->pause();
 }
 
 void CwqEngine::onKeyDown(int keyCode)

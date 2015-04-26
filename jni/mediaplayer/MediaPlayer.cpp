@@ -143,7 +143,7 @@ static int video_thread(void *arg) {
 	while (true) {
 		while (mediaPlayer->mediaTrackManager.isPaused()
 				&& !mediaPlayer->abort_request) {
-			LOGD("video_thread block: paused");
+			//LOGD("video_thread block: paused");
 			sleep_ms(10);
 		}
 
@@ -686,6 +686,18 @@ void MediaPlayer::reset() {
 void MediaPlayer::togglePause() {
 	msgQueue.remove(FFP_REQ_PAUSE);
 	msgQueue.put_simple1(FFP_REQ_PAUSE);
+}
+
+void MediaPlayer::pause() {
+    if(!mediaTrackManager.isPaused()) {
+        toggle_pause();
+    }
+}
+
+void MediaPlayer::resume() {
+    if(mediaTrackManager.isPaused()) {
+        toggle_pause();
+    }
 }
 
 void MediaPlayer::seekByPercent(int percent) {

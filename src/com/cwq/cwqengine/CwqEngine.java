@@ -66,6 +66,10 @@ public class CwqEngine {
     public void onPause() {
         CwqEngineJNI.CwqEngine_onPause(swigCPtr, this);
     }
+    
+    public void onDestroy() {
+        CwqEngineJNI.CwqEngine_onDestroy(swigCPtr, this);
+    }
 
     public void onKeyDown(int keyCode) {
         CwqEngineJNI.CwqEngine_onKeyDown(swigCPtr, this, keyCode);

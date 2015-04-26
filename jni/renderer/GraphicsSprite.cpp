@@ -34,7 +34,7 @@ GraphicsSprite* GraphicsSprite::create(const std::string &filename, int frameCou
 {
     GraphicsSprite *sprite = nullptr;
 
-    Texture2D *texture = TextureCache::GetSingletonPtr()->addTexture(filename);
+    Texture2D *texture = TextureCache::addTexture(filename);
     if (texture) {
     } else {
         goto fail;
@@ -96,8 +96,8 @@ void GraphicsSprite::setTexture(Texture2D *texture) {
     origHeight = (float)texture->getHeight();
 
     if (texture != mTexture) {
-        // delete last
-        SAFE_DELETE(mTexture);
+        // release last
+        release();
         mTexture = texture;
     }
 }
@@ -290,6 +290,5 @@ void GraphicsSprite::setAnimEndTime(int endTime)
 void GraphicsSprite::release()
 {
     //TextureCache release
-    TextureCache::GetSingletonPtr()->releaseTexture(mTexture);
-    mTexture = nullptr;
+    TextureCache::releaseTexture(mTexture);
 }

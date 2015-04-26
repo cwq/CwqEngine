@@ -38,6 +38,9 @@ public:
 	//等待播放完成
 	void end();
 
+	void pause();
+	void resume();
+
 	const vector<VideoPicture *> &getNextFrame(int *remaingTimes);
 
 	bool needToDropFrame();

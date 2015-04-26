@@ -5,15 +5,18 @@
 #include "GraphicsSprite.h"
 #include "Shader.h"
 #include "TextureShader.h"
-#include "BasicShader.h"
-#include "engine/CWQEngine.h"
+#include "TextureCache.h"
 
 #include <cassert>
+
+int GraphicsService::cacheNum = 0;
 
 GraphicsService::GraphicsService()
 {
     mWidth = mHeight = 0;
     mCommonShader = NULL;
+    _numberQuads = 0;
+    cacheIndex = 0;
 }
 
 GraphicsService::~GraphicsService() 
@@ -40,13 +43,21 @@ int GraphicsService::getWidth() const
 }
 
 
-void GraphicsService::start()
+bool GraphicsService::start()
 {
     //Log::info("Starting GraphicsService");
     ////Log::info("Version  : %s", glGetString(GL_VERSION));
     //Log::info("Vendor   : %s", glGetString(GL_VENDOR));
     //Log::info("Renderer : %s", glGetString(GL_RENDERER));
     //Log::info("Viewport : %d x %d", mWidth, mHeight);
+
+    cacheIndex = cacheNum;
+    ++cacheNum;
+    if(cacheNum > TextureCache::MAX_CACHE)
+    {
+        LOGE("TextureCache maxCache is %i", TextureCache::MAX_CACHE);
+        return false;
+    }
 
     Mat4::createLookAt(Vec3(0, 0, 1), Vec3(0, 0, 0), Vec3(0, 1, 0), &vMat);
 
@@ -66,11 +77,23 @@ void GraphicsService::start()
 
     mCommonShader = new TextureShader();
     registerShader(mCommonShader);
+
+    //bind current GraphicsService to TextureCache
+    TextureCache::setCurrentCache(cacheIndex);
+    //when destory by system, restart service shoult reload all textures
+    TextureCache::reloadAllTextures();
+
+    return true;
 }
 
-void GraphicsService::stop()
+void GraphicsService::end()
 {
-    //Log::info("Stopping GraphicsService.");
+    //Log::info("Ending GraphicsService.");
+
+    --cacheNum;
+
+    //release all texture (video texture is not in textureCache)
+    TextureCache::removeAllTextures(cacheIndex);
 }
 
 void GraphicsService::update(int playedTime)
@@ -100,6 +123,9 @@ void GraphicsService::update(int playedTime)
 
 void GraphicsService::screenSizeChanged(int width, int height)
 {
+    //bind current GraphicsService to TextureCache
+    TextureCache::setCurrentCache(cacheIndex);
+
     if (!width || !height) {
         //Log::error("screenSizeChanged with invalid width %d, height %d", width, height);
         return;
