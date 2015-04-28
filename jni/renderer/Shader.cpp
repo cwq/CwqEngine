@@ -6,7 +6,7 @@ Shader::Shader()
 ,	m_fragmentShaderId(GL_INVALID_VALUE)
 ,	m_programId(GL_INVALID_VALUE)
 {
-
+    m_isLinked = false;
 }
 
 Shader::~Shader()

@@ -8,6 +8,8 @@ Image::Image()
 {
     pixels = NULL;
     pSize = 0;
+    mWidth = mHeight = 0;
+    mFormat = GL_INVALID_VALUE;
 }
 
 Image::~Image()

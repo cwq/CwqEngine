@@ -2,6 +2,8 @@
 
 BasicShader::BasicShader()
 {
+    m_positionAttributeHandle = GL_INVALID_VALUE;
+
     m_vertexShaderCode =
 				"attribute vec4 a_vPosition;        \n"
 				"void main(){                       \n"

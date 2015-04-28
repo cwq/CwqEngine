@@ -5,7 +5,9 @@
 
 Texture2D::Texture2D()
 {
+    mWidth = mHeight = 0;
     mTextureID = TEXTURE_ID_INVALID;
+    mTextureFormat = GL_INVALID_VALUE;
     mRef = 1;
 }
 

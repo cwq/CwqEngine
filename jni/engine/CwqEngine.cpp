@@ -23,6 +23,9 @@ static void copyFromAVFrame(u_char *pixels, AVFrame *frame, int width, int heigh
 
 CwqEngine::CwqEngine()
 {
+    mJWeakEngine = NULL;
+    mAssetManager = NULL;
+
     graphicsService = new GraphicsService();
 
     mediaPlayer = new MediaPlayer();

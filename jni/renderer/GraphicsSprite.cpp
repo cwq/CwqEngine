@@ -11,8 +11,11 @@ GraphicsSprite::GraphicsSprite()
 {
     mTexture = NULL;
     mShader = NULL;
+    mCenterX = mCenterY = 0;
+    mWidth = mHeight = 0;
+    origWidth = origHeight = 0;
     rotateAngle = 0;
-    needUpdatePosition = needUpdateUV = false;
+    needUpdatePosition = needUpdateUV = true;
     mVisible = true;
     mAnimFrameCount = 1;
     mAnimStartTime = mAnimEndTime = 0;

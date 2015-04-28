@@ -9,6 +9,11 @@
 TextureShader::TextureShader()
 //:	m_pTexture(NULL)
 {
+    m_positionAttributeHandle = GL_INVALID_VALUE;
+    m_texCoordAttributeHandle = GL_INVALID_VALUE;
+    m_samplerHandle = GL_INVALID_VALUE;
+    m_matrixHandle = GL_INVALID_VALUE;
+
     m_vertexShaderCode =
 				"attribute vec4 a_vPosition;        \n"
 				"attribute vec2 a_texCoord;         \n"
