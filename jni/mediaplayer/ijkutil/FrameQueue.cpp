@@ -44,7 +44,6 @@ void frame_queue_unref_item(Frame *vp) {
 
 int frame_queue_init(FrameQueue *f, PacketQueue *pktq, int max_size,
 		int keep_last) {
-	int i;
 	memset(f, 0, sizeof(FrameQueue));
 //	if (!(f->mutex = SDL_CreateMutex()))
 //		return AVERROR(ENOMEM);

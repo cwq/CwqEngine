@@ -453,7 +453,6 @@ static int read_thread(void *arg) {
 				audio_thread, mediaPlayer, "audio_decode");
 	}
 
-	int i;
 	SDL_mutex *wait_mutex = SDL_CreateMutex();
 
 	while (true) {
@@ -718,5 +717,6 @@ int MediaPlayer::getPlayedTime() {
 	{
 		return mediaTrack->getPlayedTime();
 	}
+	return -1;
 }
 

@@ -8,6 +8,7 @@ bool MediaTrackManager::hasVideo() {
 			return true;
 		}
 	}
+	return false;
 }
 
 bool MediaTrackManager::hasAudio() {
@@ -18,6 +19,7 @@ bool MediaTrackManager::hasAudio() {
 			return true;
 		}
 	}
+	return false;
 }
 
 bool MediaTrackManager::isPaused() {

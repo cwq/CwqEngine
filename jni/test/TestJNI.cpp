@@ -219,6 +219,7 @@ void* postOnThread(void* arg)
 {
     CwqEngine *arg1 = (CwqEngine *)arg;
     CwqEngineJNIHelper::postEventToJava((jobject)(arg1)->getJavaWeakEngine(), 2, 1, 1, NULL);
+    return (void *)0;
 }
 
 #ifdef __cplusplus

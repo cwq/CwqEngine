@@ -751,8 +751,6 @@ void MediaDecoder::free_picture(VideoPicture *vp) {
 /* allocate a picture (needs to do that in main thread to avoid
  potential locking problems */
 void MediaDecoder::alloc_picture(VideoPicture *vp) {
-	int64_t bufferdiff;
-
 	free_picture(vp);
 
 	vp->decodedFrame = av_frame_alloc();
@@ -1177,7 +1175,7 @@ int MediaDecoder::seekTo(int value, bool seekByTime, bool isPlaying) {
 	int64_t seek_max = seek_rel < 0 ? seek_target - seek_rel - 2 : INT64_MAX;
 	// FIXME the +-2 is due to rounding being not done in the correct direction in generation
 	//      of the seek_pos/seek_rel variables
-	seekTo(seek_target, seek_min, seek_max, isPlaying);
+	return seekTo(seek_target, seek_min, seek_max, isPlaying);
 }
 
 int MediaDecoder::seekTo(int64_t tragetPos, int64_t minPos, int64_t maxPos,
