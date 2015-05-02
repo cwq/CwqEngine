@@ -24,7 +24,7 @@ public:
     
     void onResume();
     void onPause();
-    void onDestroy();
+    void onExit();
     
     void onKeyDown(int keyCode);
     void onTouchesBegin(int pID, float pX, float pY);
@@ -33,6 +33,8 @@ public:
     void onTouchesCancel(int* pIDs, float* pXs, float* pYs, int pNum);
 
 private:
+    bool exited;
+
     void* mJWeakEngine;
     void* mAssetManager;
 

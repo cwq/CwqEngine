@@ -82,7 +82,6 @@ public class CwqEngineActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mCwqEngine.onDestroy();
         mCwqEngine.delete();
     }
     

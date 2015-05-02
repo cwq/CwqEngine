@@ -324,14 +324,14 @@ SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1onPause(J
 }
 
 
-SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1onDestroy(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1onExit(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   CwqEngine *arg1 = (CwqEngine *) 0 ;
 
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(CwqEngine **)&jarg1;
-  (arg1)->onDestroy();
+  (arg1)->onExit();
 }
 
 

@@ -68,6 +68,10 @@ public class CwqEngineRenderer implements GLSurfaceView.Renderer {
         mCwqEngine.onPause();
     }
     
+    public void handleOnExit() {
+        mCwqEngine.onExit();
+    }
+    
     public void handleKeyDown(int keyCode) {
         mCwqEngine.onKeyDown(keyCode);
     }

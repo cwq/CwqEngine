@@ -34,7 +34,7 @@ class CwqEngineJNI {
     public final static native void CwqEngine_onPause(long ptr,
             CwqEngine jengine);
     
-    public final static native void CwqEngine_onDestroy(long ptr,
+    public final static native void CwqEngine_onExit(long ptr,
             CwqEngine jengine);
 
     public final static native void CwqEngine_onKeyDown(long ptr,

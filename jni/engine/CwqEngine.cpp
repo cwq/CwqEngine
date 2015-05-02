@@ -23,6 +23,8 @@ static void copyFromAVFrame(u_char *pixels, AVFrame *frame, int width, int heigh
 
 CwqEngine::CwqEngine()
 {
+    exited = false;
+
     mJWeakEngine = NULL;
     mAssetManager = NULL;
 
@@ -43,9 +45,10 @@ CwqEngine::~CwqEngine()
     SAFE_DELETE(videoTexture);
 }
 
-void CwqEngine::onDestroy()
+void CwqEngine::onExit()
 {
-    LOGE("onDestroy");
+    LOGE("onExit");
+    exited = true;
     graphicsService->end();
     mediaPlayer->end();
 }
@@ -89,6 +92,9 @@ void CwqEngine::onSurfaceChanged(int width, int height)
 
 void CwqEngine::onDrawFrame()
 {
+    if(exited)
+        return;
+
     int remaingTimes = 0;
     vector<VideoPicture *> pictures = mediaPlayer->getNextFrame(&remaingTimes);
     if(pictures.size() > 0) {
@@ -115,6 +121,9 @@ void CwqEngine::onResume()
 void CwqEngine::onPause()
 {
     LOGE("onPause");
+    if(exited)
+        return;
+
     mediaPlayer->pause();
 }
 
