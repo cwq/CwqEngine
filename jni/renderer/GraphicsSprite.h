@@ -69,7 +69,7 @@ protected:
 
     void updatePosition();
     void updateUV();
-private:
+
     // texture
     Texture2D* mTexture;
     // shader

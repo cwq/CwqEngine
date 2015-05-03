@@ -19,7 +19,7 @@ public:
 
     static void setAssetManager(void* assetManager);
 
-private:
+protected:
     const char* mPath;
 
     FILE *fp;
