@@ -1,13 +1,7 @@
 #include "TextureShader.h"
-
-#include <cassert>
-
-#include "Shader.h"
 #include "Texture2D.h"
 
-
 TextureShader::TextureShader()
-//:	m_pTexture(NULL)
 {
     m_positionAttributeHandle = GL_INVALID_VALUE;
     m_texCoordAttributeHandle = GL_INVALID_VALUE;
@@ -38,50 +32,36 @@ TextureShader::~TextureShader()
 
 }
 
-void TextureShader::Link()
+bool TextureShader::link()
 {
-    Shader::Link();
-
-    m_positionAttributeHandle	= glGetAttribLocation(m_programId, "a_vPosition");
-    m_texCoordAttributeHandle	= glGetAttribLocation(m_programId, "a_texCoord");
-    m_samplerHandle				= glGetUniformLocation(m_programId, "s_texture");
-    m_matrixHandle              = glGetUniformLocation(m_programId, "u_Matrix");
+    if (Shader::link())
+    {
+        m_positionAttributeHandle	= glGetAttribLocation(m_programId, "a_vPosition");
+        m_texCoordAttributeHandle	= glGetAttribLocation(m_programId, "a_texCoord");
+        m_samplerHandle				= glGetUniformLocation(m_programId, "s_texture");
+        m_matrixHandle              = glGetUniformLocation(m_programId, "u_Matrix");
+        return true;
+    }
+    return false;
 }
 
-void TextureShader::Setup(const GraphicsSprite& sprite) const
+void TextureShader::setup(const GraphicsSprite& sprite, const GLfloat *mvpMatrix) const
 {
-    assert(sprite.getTexture());
-    //auto geometry = sprite.getGeometry();
+    Shader::setup(sprite, mvpMatrix);
+
+    glEnableVertexAttribArray(m_positionAttributeHandle);
+    glEnableVertexAttribArray(m_texCoordAttributeHandle);
+    // vertices
+    glVertexAttribPointer(m_positionAttributeHandle, 3, GL_FLOAT, GL_FALSE, V3F_C4F_T2F_SIZE, (GLvoid*) Vertex3F_OFFSET);
+    // tex coords
+    glVertexAttribPointer(m_texCoordAttributeHandle, 2, GL_FLOAT, GL_FALSE, V3F_C4F_T2F_SIZE, (GLvoid*) Tex2F_OFFSET);
+
+    glUniformMatrix4fv(m_matrixHandle, 1, GL_FALSE, mvpMatrix);
+
     if (sprite.getTexture())
     {
-        Shader::Setup(sprite);
-
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, sprite.getTexture()->getTextureID());
         glUniform1i(m_samplerHandle, 0);
-
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-//
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-//        glVertexAttribPointer(
-//                              m_positionAttributeHandle,
-//                              geometry.GetNumVertexPositionElements(),
-//                              GL_FLOAT,
-//                              GL_FALSE,
-//                              geometry.GetVertexStride(),
-//                              geometry.GetVertexBuffer());
-//        glEnableVertexAttribArray(m_positionAttributeHandle);
-//
-//        glVertexAttribPointer(
-//                              m_texCoordAttributeHandle,
-//                              geometry.GetNumTexCoordElements(),
-//                              GL_FLOAT,
-//                              GL_FALSE,
-//                              geometry.GetVertexStride(),
-//                              geometry.GetTexCoordVertexBuffer());
-//        glEnableVertexAttribArray(m_texCoordAttributeHandle);
     }
 }

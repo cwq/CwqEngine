@@ -6,15 +6,15 @@
 class BasicShader
 :	public Shader
 {
-public:
+protected:
     GLint	m_positionAttributeHandle;
 
 public:
     BasicShader();
     virtual ~BasicShader();
 
-    virtual void Link();
-    virtual void Setup(const GraphicsSprite& sprite) const;
+    virtual bool link();
+    virtual void setup(const GraphicsSprite& sprite, const GLfloat *mvpMatrix) const;
 };
 
 #endif // !RENDERER_BASICSHADER_H

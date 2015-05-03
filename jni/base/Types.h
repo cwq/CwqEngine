@@ -42,4 +42,10 @@ struct V3F_C4F_T2F_Quad {
     V3F_C4F_T2F    br;
 };
 
+#define V3F_C4F_T2F_SIZE sizeof(V3F_C4F_T2F)
+
+#define Vertex3F_OFFSET offsetof(V3F_C4F_T2F, vertices)
+#define Color4F_OFFSET offsetof(V3F_C4F_T2F, colors)
+#define Tex2F_OFFSET offsetof(V3F_C4F_T2F, texCoords)
+
 #endif //!BASE_TYPES_H

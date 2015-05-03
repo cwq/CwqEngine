@@ -22,25 +22,17 @@ BasicShader::~BasicShader()
 
 }
 
-void BasicShader::Link()
+bool BasicShader::link()
 {
-    Shader::Link();
-
-    m_positionAttributeHandle = glGetAttribLocation(m_programId, "a_vPosition");
+    if (Shader::link())
+    {
+        m_positionAttributeHandle = glGetAttribLocation(m_programId, "a_vPosition");
+        return true;
+    }
+    return false;
 }
 
-void BasicShader::Setup(const GraphicsSprite& sprite) const
+void BasicShader::setup(const GraphicsSprite& sprite, const GLfloat *mvpMatrix) const
 {
-    Shader::Setup(sprite);
-
-//    auto geometry = sprite.getGeometry();
-//
-//    glVertexAttribPointer(
-//                          m_positionAttributeHandle,
-//                          geometry.GetNumVertexPositionElements(),
-//                          GL_FLOAT,
-//                          GL_FALSE,
-//                          geometry.GetVertexStride(),
-//                          geometry.GetVertexBuffer());
-//    glEnableVertexAttribArray(m_positionAttributeHandle);
+    Shader::setup(sprite, mvpMatrix);
 }

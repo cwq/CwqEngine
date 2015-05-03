@@ -207,7 +207,7 @@ void GraphicsService::setupVBO()
 void GraphicsService::mapBuffers()
 {
     glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * VBO_SIZE, _quadVerts, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, V3F_C4F_T2F_SIZE * VBO_SIZE, _quadVerts, GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -233,27 +233,10 @@ void GraphicsService::drawBatchedQuads()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-    {
-        #define kQuadSize sizeof(_quadVerts[0])
-        glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
-
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * _numberQuads * 4 , _quadVerts, GL_DYNAMIC_DRAW);
-
-//        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-        glEnableVertexAttribArray(mCommonShader->m_positionAttributeHandle);
-        glEnableVertexAttribArray(mCommonShader->m_texCoordAttributeHandle);
-        ;
-        // vertices
-        glVertexAttribPointer(mCommonShader->m_positionAttributeHandle, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4F_T2F, vertices));
-
-        // colors
-//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4F_T2F, colors));
-
-        // tex coords
-        glVertexAttribPointer(mCommonShader->m_texCoordAttributeHandle, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4F_T2F, texCoords));
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
-    }
+    //bind V3F_C4F_T2F data, and index data
+    glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, V3F_C4F_T2F_SIZE * _numberQuads * 4 , _quadVerts, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
 
     Texture2D *last_material = nullptr;
     //Start drawing verties in batch
@@ -269,8 +252,7 @@ void GraphicsService::drawBatchedQuads()
                     indexToDraw = 0;
                 }
 
-                mCommonShader->Setup(*pSprite);
-                glUniformMatrix4fv(mCommonShader->m_matrixHandle, 1, GL_FALSE, mvpMat.m);
+                mCommonShader->setup(*pSprite, mvpMat.m);
                 last_material = pSprite->getTexture();
             }
 
@@ -294,6 +276,6 @@ void GraphicsService::drawBatchedQuads()
 
 void GraphicsService::registerShader(Shader* pShader) {
     assert(pShader);
-    pShader->Link();
+    pShader->link();
     //mShaders.push_back(pShader);
 }
