@@ -24,9 +24,9 @@
 #include "android_audiotrack.h"
 
 #include <assert.h>
-#include "../ijkutil/ijkutil.h"
-#include "../ijkutil/ijksdl_stdinc.h"
-#include "ijksdl_audio.h"
+#include "mediaplayer/ijkutil/ijkutil.h"
+#include "mediaplayer/ijkutil/ijksdl_stdinc.h"
+#include "../ijksdl_audio.h"
 
 typedef struct AudioChannelMapEntry {
 	Uint8 sdl_channel;

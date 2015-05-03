@@ -1,14 +1,8 @@
 #include "AudioPlayer.h"
 #include "base/LogHelper.h"
 
-//extern "C" {
-#include "ijksdl_aout_android_audiotrack.h"
-//}
-
-#include "AudioDefine.h"
-
 AudioPlayer::AudioPlayer() {
-	aout = SDL_AoutAndroid_CreateForAudioTrack();
+	aout = SDL_AoutCreate();
 	if (aout == NULL) {
 		LOGE("Could not initialize AudioPlayer\n");
 	}

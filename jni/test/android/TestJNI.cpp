@@ -212,7 +212,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 
 
 #include "engine/CwqEngine.h"
-#include "platform/CwqEngineJNIHelper.h"
+#include "platform/android/CwqEngineJNIHelper.h"
 #include <pthread.h>
 
 void* postOnThread(void* arg)

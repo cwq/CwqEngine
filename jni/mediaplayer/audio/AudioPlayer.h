@@ -2,9 +2,7 @@
 #define __AUDIO_PLAYER_H__
 
 #include "AudioDefine.h"
-//extern "C" {
 #include "ijksdl_aout.h"
-//}
 
 class AudioPlayer {
 public:

@@ -35,12 +35,14 @@ LOCAL_SRC_FILES     := $(call LS_CPP, $(LOCAL_PATH)/base) \
                        $(call LS_CPP, $(LOCAL_PATH)/engine) \
                        $(call LS_CPP, $(LOCAL_PATH)/renderer) \
                        $(call LS_CPP, $(LOCAL_PATH)/platform) \
+                       $(call LS_CPP, $(LOCAL_PATH)/platform/android) \
                        $(call LS_CPP, $(MEDIA_PLAYER_LOCAL_PATH)/media) \
                        $(call LS_CPP, $(MEDIA_PLAYER_LOCAL_PATH)/audio) \
+                       $(call LS_CPP, $(MEDIA_PLAYER_LOCAL_PATH)/audio/android) \
                        $(call LS_CPP, $(MEDIA_PLAYER_LOCAL_PATH)/video) \
                        $(call LS_CPP, $(MEDIA_PLAYER_LOCAL_PATH)/ijkutil) \
                        $(call LS_CPP, $(MEDIA_PLAYER_LOCAL_PATH)) \
-                       test/TestJNI.cpp \
+                       test/android/TestJNI.cpp \
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2

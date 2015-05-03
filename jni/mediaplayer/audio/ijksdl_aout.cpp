@@ -23,6 +23,12 @@
 
 #include "ijksdl_aout.h"
 #include <stdlib.h>
+#include "android/ijksdl_aout_android_audiotrack.h"
+
+SDL_Aout *SDL_AoutCreate()
+{
+    return SDL_AoutAndroid_CreateForAudioTrack();
+}
 
 int SDL_AoutOpenAudio(SDL_Aout *aout, SDL_AudioSpec *desired, SDL_AudioSpec *obtained)
 {

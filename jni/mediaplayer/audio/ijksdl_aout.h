@@ -42,6 +42,7 @@ typedef struct SDL_Aout {
     void (*close_audio)(SDL_Aout *aout);
 } SDL_Aout;
 
+SDL_Aout *SDL_AoutCreate();
 int SDL_AoutOpenAudio(SDL_Aout *aout, SDL_AudioSpec *desired, SDL_AudioSpec *obtained);
 void SDL_AoutPauseAudio(SDL_Aout *aout, int pause_on);
 void SDL_AoutFlushAudio(SDL_Aout *aout);

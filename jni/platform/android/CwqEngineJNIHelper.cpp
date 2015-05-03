@@ -1,7 +1,7 @@
 #include "CwqEngineJNIHelper.h"
 #include <pthread.h>
 #include <assert.h>
-#include "mediaplayer/audio/android_audiotrack.h"
+#include "mediaplayer/audio/android/android_audiotrack.h"
 #include "base/LogHelper.h"
 
 #define JNI_CLASS_HANDLER "com/cwq/cwqengine/CwqEngineHandler"

@@ -26,12 +26,12 @@
 #include <stdbool.h>
 #include <assert.h>
 #include <jni.h>
-#include "../ijkutil/ijkutil.h"
-#include "../ijkutil/ijksdl_thread.h"
+#include "mediaplayer/ijkutil/ijkutil.h"
+#include "mediaplayer/ijkutil/ijksdl_thread.h"
 //extern "C" {
 #include "android_audiotrack.h"
 //}
-#include "platform/CwqEngineJNIHelper.h"
+#include "platform/android/CwqEngineJNIHelper.h"
 
 typedef struct SDL_Aout_Opaque {
 	SDL_cond *wakeup_cond;

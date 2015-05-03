@@ -24,7 +24,7 @@
 #ifndef IJKSDL_ANDROID__IJKSDL_AOUT_ANDROID_AUDIOTRACK_H
 #define IJKSDL_ANDROID__IJKSDL_AOUT_ANDROID_AUDIOTRACK_H
 
-#include "ijksdl_aout.h"
+#include "../ijksdl_aout.h"
 
 //创建音频对象
 SDL_Aout *SDL_AoutAndroid_CreateForAudioTrack();
