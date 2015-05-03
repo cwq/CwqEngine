@@ -79,6 +79,18 @@ public class CwqEngineActivity extends Activity {
         return false;
     }
     
+    /**
+     * must call this before exited (before {@link #finish})
+     */
+    protected void onExit() {
+        runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+                mCwqEngine.onExit();
+            }
+        });
+    }
+    
     @Override
     protected void onDestroy() {
         super.onDestroy();

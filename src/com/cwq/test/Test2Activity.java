@@ -1,6 +1,7 @@
 package com.cwq.test;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -40,5 +41,14 @@ public class Test2Activity extends CwqEngineActivity {
                 });
             }
         });
+    }
+    
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking()
+                && !event.isCanceled()) {
+            onExit();
+        }
+        return super.onKeyUp(keyCode, event);
     }
 }

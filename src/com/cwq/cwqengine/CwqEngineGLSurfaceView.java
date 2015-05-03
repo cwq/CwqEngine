@@ -192,18 +192,4 @@ public class CwqEngineGLSurfaceView extends GLSurfaceView {
 //        return true;
         return super.onKeyDown(keyCode, event);
     }
-    
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking()
-                && !event.isCanceled()) {
-            queueEvent(new Runnable() {
-                @Override
-                public void run() {
-                    mCwqEngineRenderer.handleOnExit();
-                }
-            });
-        }
-        return super.onKeyUp(keyCode, event);
-    }
 }
