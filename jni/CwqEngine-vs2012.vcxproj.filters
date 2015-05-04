@@ -233,9 +233,6 @@
     <ClInclude Include="renderer\Shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="renderer\stb_image.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="renderer\Texture2D.h">
       <Filter>头文件</Filter>
     </ClInclude>

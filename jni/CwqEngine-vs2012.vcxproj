@@ -40,7 +40,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>.;.\thirdpart\include;.\thirdpart\include\ffmpeg;.\thirdpart\include\pthread;$(IncludePath)</IncludePath>
+    <IncludePath>.;.\thirdpart\include;.\thirdpart\include\stb;.\thirdpart\include\ffmpeg;.\thirdpart\include\pthread;$(IncludePath)</IncludePath>
     <LibraryPath>.\thirdpart\libs\win32\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -144,7 +144,6 @@
     <ClInclude Include="renderer\Image.h" />
     <ClInclude Include="renderer\ImageLoader.h" />
     <ClInclude Include="renderer\Shader.h" />
-    <ClInclude Include="renderer\stb_image.h" />
     <ClInclude Include="renderer\Texture2D.h" />
     <ClInclude Include="renderer\TextureCache.h" />
     <ClInclude Include="renderer\TextureShader.h" />

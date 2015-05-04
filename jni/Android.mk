@@ -14,6 +14,7 @@ include $(CLEAR_VARS)
 
 LOCAL_CFLAGS := -D__STDC_CONSTANT_MACROS
 FFMPEG_PATH := $(THIRDPART_LOCAL_PATH)/include/ffmpeg
+STB_PATH := $(THIRDPART_LOCAL_PATH)/include/stb
 
 MEDIA_PLAYER_LOCAL_PATH := $(LOCAL_PATH)/mediaplayer
 
@@ -26,7 +27,8 @@ ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
     CFLAGS += -mfpu=neon 
 endif
 
-LOCAL_C_INCLUDES := $(FFMPEG_PATH)  \
+LOCAL_C_INCLUDES := $(FFMPEG_PATH) \
+                    $(STB_PATH) \
 
 LOCAL_MODULE        := cwqengine
 
