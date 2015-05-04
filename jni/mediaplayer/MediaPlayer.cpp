@@ -3,6 +3,7 @@
 #include "MediaPlayer.h"
 #include "audio/audio_mixer.h"
 #include "base/LogHelper.h"
+#include "renderer/Image.h"
 
 static void copyFromAVFrame(u_char *pixels, AVFrame *frame, int width, int height) {
     if (!frame || !pixels) {
@@ -590,26 +591,29 @@ bool MediaPlayer::processMessage() {
 	return true;
 }
 
-const vector<VideoPicture *> &MediaPlayer::getNextFrame(int *remaingTimes) {
+void MediaPlayer::getNextFrame(int *remaingTimes, const vector<Image *> &images) {
 	processMessage();
-
-	vectorFrame.clear();
 
 //	LOGE("draw_thread pid = %u", gettid());
 	MediaTrack *mediaTrack;
+	int index = 0;
+	VideoPicture* vp = NULL;
 	LIST_FOR_EACH_TRACK(mediaTrack, &mediaTrackManager)
 	{
 		if (mediaTrack->hasVideo()) {
 			int trackRemaingTimes = *remaingTimes;
-			vectorFrame.push_back(mediaTrack->getNextFrame(&trackRemaingTimes));
+			vp = mediaTrack->getNextFrame(&trackRemaingTimes);
+			if(vp != NULL) {
+			    images[index]->initWithImageInfo(vp->width, vp->height, GL_RGB);
+			    copyFromAVFrame((u_char*)images[index]->getPixels(), vp->decodedFrame, vp->width, vp->height);
+			}
+			++index;
 			*remaingTimes = FFMIN(*remaingTimes, trackRemaingTimes);
 			SDL_CondSignal(pictq_cond);
 		}
 	}
 
 	processMessage();
-
-	return vectorFrame;
 }
 
 void MediaPlayer::start() {

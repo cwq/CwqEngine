@@ -1,6 +1,7 @@
 #ifndef CWQENGINE_H
 #define CWQENGINE_H
 
+#include <vector>
 class GraphicsService;
 class MediaPlayer;
 class Image;
@@ -41,6 +42,8 @@ private:
     GraphicsSprite* videoSprite;
     Texture2D* videoTexture;
     Image* videoImage;
+
+    std::vector<Image *> images;
 };
 
 #endif // !CWQENGINE_H

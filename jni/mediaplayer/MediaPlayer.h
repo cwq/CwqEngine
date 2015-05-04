@@ -12,6 +12,7 @@
 using std::string;
 
 class MediaPlayer;
+class Image;
 
 class Callbacker: public MediaDecodeCallbacker {
 
@@ -41,7 +42,7 @@ public:
 	void pause();
 	void resume();
 
-	const vector<VideoPicture *> &getNextFrame(int *remaingTimes);
+	void getNextFrame(int *remaingTimes, const vector<Image *> &images);
 
 	bool needToDropFrame();
 
@@ -144,8 +145,6 @@ public:
 	MessageQueue msgQueue;
 
 	bool autoExit; //播放完后自动退出，如果为true，播放完后再seek就不起作用
-
-	vector<VideoPicture *> vectorFrame;
 
 };
 
