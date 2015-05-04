@@ -2,19 +2,19 @@ LOCAL_PATH:=$(call my-dir)
 
 include $(CLEAR_VARS)
 
-THIRDPART_PATH := thirdpart
-THIRDPART_LOCAL_PATH := $(LOCAL_PATH)/thirdpart
+THIRDPARTY_PATH := thirdparty
+THIRDPARTY_LOCAL_PATH := $(LOCAL_PATH)/thirdparty
 
 LOCAL_MODULE := ffmpeg
-LOCAL_SRC_FILES := $(THIRDPART_PATH)/libs/android/libffmpeg.so
+LOCAL_SRC_FILES := $(THIRDPARTY_PATH)/libs/android/libffmpeg.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 
 include $(CLEAR_VARS)
 
 LOCAL_CFLAGS := -D__STDC_CONSTANT_MACROS
-FFMPEG_PATH := $(THIRDPART_LOCAL_PATH)/include/ffmpeg
-STB_PATH := $(THIRDPART_LOCAL_PATH)/include/stb
+FFMPEG_PATH := $(THIRDPARTY_LOCAL_PATH)/include/ffmpeg
+STB_PATH := $(THIRDPARTY_LOCAL_PATH)/include/stb
 
 MEDIA_PLAYER_LOCAL_PATH := $(LOCAL_PATH)/mediaplayer
 

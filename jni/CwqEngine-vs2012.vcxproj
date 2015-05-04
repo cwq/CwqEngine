@@ -40,8 +40,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>.;.\thirdpart\include;.\thirdpart\include\stb;.\thirdpart\include\ffmpeg;.\thirdpart\include\pthread;$(IncludePath)</IncludePath>
-    <LibraryPath>.\thirdpart\libs\win32\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>.;.\thirdparty\include;.\thirdparty\include\stb;.\thirdparty\include\ffmpeg;.\thirdparty\include\pthread;$(IncludePath)</IncludePath>
+    <LibraryPath>.\thirdparty\libs\win32\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
