@@ -36,9 +36,6 @@
     <ClCompile Include="math\Vec4.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="mediaplayer\audio\android_audiotrack.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="mediaplayer\audio\audio_mixer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -46,9 +43,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="mediaplayer\audio\ijksdl_aout.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="mediaplayer\audio\ijksdl_aout_android_audiotrack.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="mediaplayer\audio\ijksdl_audio.cpp">
@@ -82,12 +76,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="mediaplayer\MediaPlayer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\CwqEngineJNI.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\CwqEngineJNIHelper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="platform\Resource.cpp">
@@ -158,9 +146,6 @@
     <ClInclude Include="math\Vec4.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="mediaplayer\audio\android_audiotrack.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="mediaplayer\audio\audio_mixer.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -171,9 +156,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="mediaplayer\audio\ijksdl_aout.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="mediaplayer\audio\ijksdl_aout_android_audiotrack.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="mediaplayer\audio\ijksdl_audio.h">
@@ -227,9 +209,6 @@
     <ClInclude Include="mediaplayer\MediaPlayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="platform\CwqEngineJNIHelper.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="platform\CwqGL.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -270,6 +249,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="mediaplayer\ijkutil\cross_sleep.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplayer\ijkutil\cross_cmath.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

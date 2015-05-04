@@ -74,11 +74,9 @@
     <ClCompile Include="math\Vec2.cpp" />
     <ClCompile Include="math\Vec3.cpp" />
     <ClCompile Include="math\Vec4.cpp" />
-    <ClCompile Include="mediaplayer\audio\android_audiotrack.cpp" />
     <ClCompile Include="mediaplayer\audio\AudioPlayer.cpp" />
     <ClCompile Include="mediaplayer\audio\audio_mixer.cpp" />
     <ClCompile Include="mediaplayer\audio\ijksdl_aout.cpp" />
-    <ClCompile Include="mediaplayer\audio\ijksdl_aout_android_audiotrack.cpp" />
     <ClCompile Include="mediaplayer\audio\ijksdl_audio.cpp" />
     <ClCompile Include="mediaplayer\ijkutil\FrameQueue.cpp" />
     <ClCompile Include="mediaplayer\ijkutil\ijksdl_mutex.cpp" />
@@ -90,8 +88,6 @@
     <ClCompile Include="mediaplayer\media\MediaTrack.cpp" />
     <ClCompile Include="mediaplayer\media\MediaTrackManager.cpp" />
     <ClCompile Include="mediaplayer\media\MessageQueue.cpp" />
-    <ClCompile Include="platform\CwqEngineJNI.cpp" />
-    <ClCompile Include="platform\CwqEngineJNIHelper.cpp" />
     <ClCompile Include="platform\Resource.cpp" />
     <ClCompile Include="renderer\BasicShader.cpp" />
     <ClCompile Include="renderer\GraphicsService.cpp" />
@@ -116,13 +112,12 @@
     <ClInclude Include="math\Vec2.h" />
     <ClInclude Include="math\Vec3.h" />
     <ClInclude Include="math\Vec4.h" />
-    <ClInclude Include="mediaplayer\audio\android_audiotrack.h" />
     <ClInclude Include="mediaplayer\audio\AudioDefine.h" />
     <ClInclude Include="mediaplayer\audio\AudioPlayer.h" />
     <ClInclude Include="mediaplayer\audio\audio_mixer.h" />
     <ClInclude Include="mediaplayer\audio\ijksdl_aout.h" />
-    <ClInclude Include="mediaplayer\audio\ijksdl_aout_android_audiotrack.h" />
     <ClInclude Include="mediaplayer\audio\ijksdl_audio.h" />
+    <ClInclude Include="mediaplayer\ijkutil\cross_cmath.h" />
     <ClInclude Include="mediaplayer\ijkutil\cross_sleep.h" />
     <ClInclude Include="mediaplayer\ijkutil\cross_sys_time.h" />
     <ClInclude Include="mediaplayer\ijkutil\FrameQueue.h" />
@@ -141,7 +136,6 @@
     <ClInclude Include="mediaplayer\media\MediaTrack.h" />
     <ClInclude Include="mediaplayer\media\MediaTrackManager.h" />
     <ClInclude Include="mediaplayer\media\MessageQueue.h" />
-    <ClInclude Include="platform\CwqEngineJNIHelper.h" />
     <ClInclude Include="platform\CwqGL.h" />
     <ClInclude Include="platform\Resource.h" />
     <ClInclude Include="renderer\BasicShader.h" />
