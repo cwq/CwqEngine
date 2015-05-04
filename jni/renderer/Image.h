@@ -20,6 +20,9 @@ public:
 
     GLenum getFormat() const;
 
+    bool isUpdated() const;
+    void setUpdated(bool update);
+
 private:
     bool mallocPixels(size_t size);
     void freePixels();
@@ -29,6 +32,9 @@ private:
     int mWidth;
     int mHeight;
     GLenum mFormat;
+
+    //changed pixels, Texture2D need to reload
+    bool updated;
 };
 
 #endif // !IMAGE_H

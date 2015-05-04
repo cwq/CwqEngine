@@ -10,6 +10,7 @@ Image::Image()
     pSize = 0;
     mWidth = mHeight = 0;
     mFormat = GL_INVALID_VALUE;
+    updated = false;
 }
 
 Image::~Image()
@@ -84,6 +85,16 @@ int Image::getHeight() const
 GLenum Image::getFormat() const
 {
     return mFormat;
+}
+
+bool Image::isUpdated() const
+{
+    return updated;
+}
+
+void Image::setUpdated(bool update)
+{
+    updated = update;
 }
 
 bool Image::mallocPixels(size_t size)

@@ -606,6 +606,7 @@ void MediaPlayer::getNextFrame(int *remaingTimes, const vector<Image *> &images)
 			if(vp != NULL) {
 			    images[index]->initWithImageInfo(vp->width, vp->height, GL_RGB);
 			    copyFromAVFrame((u_char*)images[index]->getPixels(), vp->decodedFrame, vp->width, vp->height);
+			    images[index]->setUpdated(true);
 			}
 			++index;
 			*remaingTimes = FFMIN(*remaingTimes, trackRemaingTimes);

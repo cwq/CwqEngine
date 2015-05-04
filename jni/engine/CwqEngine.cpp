@@ -79,10 +79,13 @@ void CwqEngine::onDrawFrame()
     int remaingTimes = 0;
     mediaPlayer->getNextFrame(&remaingTimes, images);
     for(Image* image : images) {
-        videoTexture->load(*image);
-        videoSprite->setTexture(videoTexture);
-        videoSprite->moveTo(500, 500);
-        videoSprite->setWidthAndHeight(480, 480);
+        if(image->isUpdated()) {
+            videoTexture->load(*image);
+            videoSprite->setTexture(videoTexture);
+            videoSprite->moveTo(500, 500);
+            videoSprite->setWidthAndHeight(480, 480);
+            image->setUpdated(false);
+        }
     }
 
     graphicsService->update(0);
