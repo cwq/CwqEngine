@@ -2,7 +2,10 @@
 #define RESOURCE_H
 
 #include <stdio.h>
+
+#if defined(ANDROID) || defined(__ANDROID__)
 #include <android/asset_manager.h>
+#endif // !ANDROID !__ANDROID__
 
 class Resource
 {
@@ -17,15 +20,19 @@ public:
 
     size_t getLength() const;
 
-    static void setAssetManager(void* assetManager);
+    #if defined(ANDROID) || defined(__ANDROID__)
+    static void setAssetManager(AAssetManager* assetManager);
+    #endif // !ANDROID !__ANDROID__
 
 protected:
     const char* mPath;
 
     FILE *fp;
 
+    #if defined(ANDROID) || defined(__ANDROID__)
     static AAssetManager* mAssetManager;
     AAsset* mAsset;
+    #endif // !ANDROID !__ANDROID__
 };
 
 #endif // !RESOURCE_H

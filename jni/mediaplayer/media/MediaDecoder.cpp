@@ -163,7 +163,7 @@ int MediaDecoder::audio_decode_frame() {
 
 	do {
 		if (!(af = frame_queue_peek_readable(&audioDecoder->sampq))) {
-			LOGE("decode_thread, %d, frame_queue_push!!", __LINE__);
+			LOGD("decode_thread, %d, frame_queue_push!!", __LINE__);
 			return -1;
 		}
 		if(af->serial != audioDecoder->audioq.serial)

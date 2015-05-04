@@ -26,7 +26,6 @@ CwqEngine::CwqEngine()
     exited = false;
 
     mJWeakEngine = NULL;
-    mAssetManager = NULL;
 
     graphicsService = new GraphicsService();
 
@@ -61,14 +60,6 @@ void CwqEngine::setJavaWeakEngine(void* jWeakEngine)
 void* CwqEngine::getJavaWeakEngine()
 {
     return mJWeakEngine;
-}
-
-void CwqEngine::setAssetManager(void* assetManager)
-{
-    //AAssetManager
-    mAssetManager = assetManager;
-    //static Resource::setAssetManager
-    Resource::setAssetManager(mAssetManager);
 }
 
 void CwqEngine::onSurfaceCreated()

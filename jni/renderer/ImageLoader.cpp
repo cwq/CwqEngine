@@ -1,7 +1,9 @@
 #include "ImageLoader.h"
 #include "platform/Resource.h"
 #define STB_IMAGE_IMPLEMENTATION
+#if defined(ANDROID) || defined(__ANDROID__)
 #define STBI_NEON
+#endif // !ANDROID !__ANDROID__
 #include "stb_image.h"
 #include "base/LogHelper.h"
 

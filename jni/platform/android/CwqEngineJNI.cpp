@@ -210,6 +210,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 
 #include "engine/CwqEngine.h"
 #include <android/asset_manager_jni.h>
+#include "platform/Resource.h"
 
 
 #ifdef __cplusplus
@@ -261,7 +262,7 @@ SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1setAssetM
   (void)jarg1_;
   arg1 = *(CwqEngine **)&jarg1;
   arg2 = AAssetManager_fromJava(jenv, assetManager);
-  (arg1)->setAssetManager(arg2);
+  Resource::setAssetManager(arg2);
 }
 
 

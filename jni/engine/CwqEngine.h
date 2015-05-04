@@ -16,8 +16,6 @@ public:
     void setJavaWeakEngine(void* jWeakEngine);
     void* getJavaWeakEngine();
 
-    void setAssetManager(void* assetManager);
-
     void onSurfaceCreated();
     void onSurfaceChanged(int width, int height);
     void onDrawFrame();
@@ -36,7 +34,6 @@ private:
     bool exited;
 
     void* mJWeakEngine;
-    void* mAssetManager;
 
     GraphicsService* graphicsService;
 
