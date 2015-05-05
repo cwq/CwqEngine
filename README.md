@@ -1,7 +1,7 @@
 # CwqEngine
 Android/win32 C++ APP/Game Engine.
 
-##Third-Party
+## Third-Party
 uses the following third-party libraries:
 - FFmpeg 2.2.+ (http://ffmpeg.org/)
 - GLEW 1.12.0 (http://glew.sourceforge.net/)
