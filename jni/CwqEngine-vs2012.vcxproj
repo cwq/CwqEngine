@@ -79,6 +79,7 @@
     <ClCompile Include="mediaplayer\audio\audio_mixer.cpp" />
     <ClCompile Include="mediaplayer\audio\ijksdl_aout.cpp" />
     <ClCompile Include="mediaplayer\audio\ijksdl_audio.cpp" />
+    <ClCompile Include="mediaplayer\audio\win32\aout_win32_waveout.cpp" />
     <ClCompile Include="mediaplayer\ijkutil\FrameQueue.cpp" />
     <ClCompile Include="mediaplayer\ijkutil\ijksdl_mutex.cpp" />
     <ClCompile Include="mediaplayer\ijkutil\ijksdl_thread.cpp" />
