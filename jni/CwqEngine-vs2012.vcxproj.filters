@@ -108,6 +108,9 @@
     <ClCompile Include="renderer\TextureShader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="platform\win32\Application.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\CWQMacros.h">

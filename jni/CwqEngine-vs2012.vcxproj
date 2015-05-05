@@ -51,6 +51,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>pthreadVC2.lib;opengl32.lib;glfw3.lib;glew32.lib;avcodec.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -89,6 +90,7 @@
     <ClCompile Include="mediaplayer\media\MediaTrackManager.cpp" />
     <ClCompile Include="mediaplayer\media\MessageQueue.cpp" />
     <ClCompile Include="platform\Resource.cpp" />
+    <ClCompile Include="platform\win32\Application.cpp" />
     <ClCompile Include="renderer\BasicShader.cpp" />
     <ClCompile Include="renderer\GraphicsService.cpp" />
     <ClCompile Include="renderer\GraphicsSprite.cpp" />
