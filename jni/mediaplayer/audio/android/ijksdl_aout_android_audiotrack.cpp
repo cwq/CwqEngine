@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#include "ijksdl_aout_android_audiotrack.h"
+#include "../ijksdl_aout.h"
 
 #include <stdbool.h>
 #include <assert.h>
@@ -284,7 +284,7 @@ void aout_free_l(SDL_Aout *aout) {
 	SDL_Aout_FreeInternal(aout);
 }
 
-SDL_Aout *SDL_AoutAndroid_CreateForAudioTrack() {
+SDL_Aout *SDL_AoutCreate() {
 	SDL_Aout *aout = SDL_Aout_CreateInternal(sizeof(SDL_Aout_Opaque));
 	if (!aout)
 		return NULL;
@@ -301,8 +301,4 @@ SDL_Aout *SDL_AoutAndroid_CreateForAudioTrack() {
 	aout->close_audio = aout_close_audio;
 
 	return aout;
-}
-
-void SDL_Init_AoutAndroid(JNIEnv *env) {
-
 }
