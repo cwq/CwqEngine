@@ -34,7 +34,7 @@ bool Resource::open()
     #endif // !ANDROID !__ANDROID__
 
     //android sdcard or other platforms
-    fp = fopen(mPath, "r");
+    fp = fopen(mPath, "rb");
     ret = fp != NULL;
     return ret;
 }
