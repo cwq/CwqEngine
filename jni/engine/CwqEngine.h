@@ -13,9 +13,8 @@ class CwqEngine
 public:
     CwqEngine();
     ~CwqEngine();
-    
-    void setJavaWeakEngine(void* jWeakEngine);
-    void* getJavaWeakEngine();
+
+    void postEventToEngine(bool handleOnGLThread, int what, int arg1, int arg2, void* obj);
 
     void onSurfaceCreated();
     void onSurfaceChanged(int width, int height);
@@ -31,10 +30,18 @@ public:
     void onTouchesMove(int* pIDs, float* pXs, float* pYs, int pNum);
     void onTouchesCancel(int* pIDs, float* pXs, float* pYs, int pNum);
 
+    #if defined(ANDROID) || defined(__ANDROID__)
+    void setJavaWeakEngine(void* jWeakEngine);
+    void* getJavaWeakEngine();
+    void postEventToJava(int what, int arg1, int arg2, void* obj);
+    #endif // !ANDROID !__ANDROID__
+
 private:
     bool exited;
 
+    #if defined(ANDROID) || defined(__ANDROID__)
     void* mJWeakEngine;
+    #endif // !ANDROID !__ANDROID__
 
     GraphicsService* graphicsService;
 

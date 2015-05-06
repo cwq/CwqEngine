@@ -8,7 +8,7 @@ package com.cwq.cwqengine;
 
 import android.content.res.AssetManager;
 
-public class CwqEngine {
+class CwqEngine {
     private long swigCPtr;
     private boolean swigCMemOwn;
 
@@ -45,6 +45,10 @@ public class CwqEngine {
 
     public void setAssetManager(final AssetManager pAssetManager) {
         CwqEngineJNI.CwqEngine_setAssetManager(swigCPtr, this, pAssetManager);
+    }
+    
+    public void postEventToEngine(boolean handleOnGLThread, int what, int arg1, int arg2, Object obj) {
+        CwqEngineJNI.CwqEngine_postEventToEngine(swigCPtr, this, handleOnGLThread, what, arg1, arg2, obj);
     }
 
     public void onSurfaceCreated() {

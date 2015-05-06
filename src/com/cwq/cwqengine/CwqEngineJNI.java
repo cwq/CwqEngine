@@ -18,6 +18,9 @@ class CwqEngineJNI {
 
     public final static native void CwqEngine_setAssetManager(long ptr,
             CwqEngine jengine, final AssetManager pAssetManager);
+    
+    public final static native void CwqEngine_postEventToEngine(long ptr,
+            CwqEngine jengine, boolean handleOnGLThread, int what, int arg1, int arg2, Object obj);
 
     public final static native void CwqEngine_onSurfaceCreated(long ptr,
             CwqEngine jengine);

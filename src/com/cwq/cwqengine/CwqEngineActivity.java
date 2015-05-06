@@ -12,8 +12,9 @@ public class CwqEngineActivity extends Activity {
     private final static String TAG = CwqEngineActivity.class.getSimpleName();
     
     private CwqEngineGLSurfaceView mGlSurfaceView;
+    private CwqEngineRenderer mRenderer;
     
-    protected CwqEngine mCwqEngine;
+    private CwqEngine mCwqEngine;
     
     protected CwqEngineHandler mHandler;
     
@@ -58,7 +59,7 @@ public class CwqEngineActivity extends Activity {
         mCwqEngine.setAssetManager(getAssets());
         
         //new handle
-        mHandler = new CwqEngineHandler(this);
+        //mHandler = new CwqEngineHandler(this);
         
         //init glsurfaceview
         if (useLayout) {
@@ -69,7 +70,8 @@ public class CwqEngineActivity extends Activity {
             setContentView(mGlSurfaceView);
         }
         //set renderer
-        mGlSurfaceView.setCwqEngineRenderer(new CwqEngineRenderer(mCwqEngine));
+        mRenderer = new CwqEngineRenderer(mCwqEngine);
+        mGlSurfaceView.setCwqEngineRenderer(mRenderer);
     }
     
     public boolean isEngineOK() {
@@ -111,5 +113,17 @@ public class CwqEngineActivity extends Activity {
     
     public void runOnGLThread(final Runnable runnable) {
         mGlSurfaceView.queueEvent(runnable);
+    }
+    
+    public void postEventToEngine(boolean handleOnGLThread, int what, int arg1, int arg2, Object obj) {
+        mCwqEngine.postEventToEngine(handleOnGLThread, what, arg1, arg2, obj);
+    }
+    
+    public void setControlFPS(boolean isControl) {
+        mRenderer.setControlFPS(isControl);
+    }
+    
+    public void setFPS(int fps) {
+        mRenderer.setFPS(fps);
     }
 }

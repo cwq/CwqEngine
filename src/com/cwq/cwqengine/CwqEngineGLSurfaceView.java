@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-public class CwqEngineGLSurfaceView extends GLSurfaceView {
+class CwqEngineGLSurfaceView extends GLSurfaceView {
 
     private final static String TAG = CwqEngineGLSurfaceView.class.getSimpleName();
     

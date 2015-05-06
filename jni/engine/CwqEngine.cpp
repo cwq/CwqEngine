@@ -8,11 +8,13 @@
 #include "renderer/GraphicsSprite.h"
 #include "renderer/Texture2D.h"
 
+#if defined(ANDROID) || defined(__ANDROID__)
+#include "platform/android/CwqEngineJNIHelper.h"
+#endif // !ANDROID !__ANDROID__
+
 CwqEngine::CwqEngine()
 {
     exited = false;
-
-    mJWeakEngine = NULL;
 
     graphicsService = new GraphicsService();
 
@@ -42,14 +44,9 @@ void CwqEngine::onExit()
     mediaPlayer->end();
 }
 
-void CwqEngine::setJavaWeakEngine(void* jWeakEngine)
+void CwqEngine::postEventToEngine(bool handleOnGLThread, int what, int arg1, int arg2, void* obj)
 {
-    mJWeakEngine = jWeakEngine;
-}
-
-void* CwqEngine::getJavaWeakEngine()
-{
-    return mJWeakEngine;
+    LOGE("postEventToEngine:%d, %d, %d, %d", handleOnGLThread, what, arg1, arg2);
 }
 
 void CwqEngine::onSurfaceCreated()
@@ -130,3 +127,20 @@ void CwqEngine::onTouchesCancel(int* pIDs, float* pXs, float* pYs, int pNum)
 {
 
 }
+
+#if defined(ANDROID) || defined(__ANDROID__)
+void CwqEngine::setJavaWeakEngine(void* jWeakEngine)
+{
+    mJWeakEngine = jWeakEngine;
+}
+
+void* CwqEngine::getJavaWeakEngine()
+{
+    return mJWeakEngine;
+}
+
+void CwqEngine::postEventToJava(int what, int arg1, int arg2, void* obj)
+{
+    CwqEngineJNIHelper::postEventToJava((jobject)mJWeakEngine, what, arg1, arg2, (jobject)obj);
+}
+#endif // !ANDROID !__ANDROID__

@@ -266,6 +266,17 @@ SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1setAssetM
 }
 
 
+SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1postEventToEngine(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean onGL, jint ewhat, jint earg1, jint earg2, jobject eobj) {
+  CwqEngine *arg1 = (CwqEngine *) 0 ;
+
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(CwqEngine **)&jarg1;
+  (arg1)->postEventToEngine(onGL, ewhat, earg1, earg2, eobj);
+}
+
+
 SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1onSurfaceCreated(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   CwqEngine *arg1 = (CwqEngine *) 0 ;
   

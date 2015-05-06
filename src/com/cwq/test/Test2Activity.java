@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.cwq.cwqengine.CwqEngine;
 import com.cwq.cwqengine.CwqEngineActivity;
 import com.cwq.cwqengine.R;
 
@@ -24,7 +23,7 @@ public class Test2Activity extends CwqEngineActivity {
             
             @Override
             public void onClick(View v) {
-                Test.clickButton1(CwqEngine.getCPtr(mCwqEngine));
+                postEventToEngine(false, 1, 1, 1, null);
             }
         });
         
@@ -36,7 +35,7 @@ public class Test2Activity extends CwqEngineActivity {
                 runOnGLThread(new Runnable() {
                     @Override
                     public void run() {
-                        Test.clickButton2(CwqEngine.getCPtr(mCwqEngine));
+                        postEventToEngine(false, 2, 2, 2, null);
                     }
                 });
             }

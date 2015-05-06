@@ -5,7 +5,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView;
 
-public class CwqEngineRenderer implements GLSurfaceView.Renderer {
+class CwqEngineRenderer implements GLSurfaceView.Renderer {
     
     private final static String TAG = CwqEngineRenderer.class.getSimpleName();
 
