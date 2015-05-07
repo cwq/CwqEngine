@@ -17,6 +17,7 @@ GraphicsService::GraphicsService()
     mCommonShader = NULL;
     _numberQuads = 0;
     cacheIndex = 0;
+    started = false;
 }
 
 GraphicsService::~GraphicsService() 
@@ -51,37 +52,48 @@ bool GraphicsService::start()
     //Log::info("Renderer : %s", glGetString(GL_RENDERER));
     //Log::info("Viewport : %d x %d", mWidth, mHeight);
 
-    cacheIndex = cacheNum;
-    ++cacheNum;
-    if(cacheNum > TextureCache::MAX_CACHE)
+    if (!started)
     {
-        LOGE("TextureCache maxCache is %i", TextureCache::MAX_CACHE);
-        return false;
+        cacheIndex = cacheNum;
+        ++cacheNum;
+        if(cacheNum > TextureCache::MAX_CACHE)
+        {
+            LOGE("TextureCache maxCache is %i", TextureCache::MAX_CACHE);
+            return false;
+        }
+
+        Mat4::createLookAt(Vec3(0, 0, 1), Vec3(0, 0, 0), Vec3(0, 1, 0), &vMat);
+
+        //setup index data for quads
+        for( int i=0; i < VBO_SIZE/4; i++)
+        {
+            _quadIndices[i*6+0] = (GLushort) (i*4+0);
+            _quadIndices[i*6+1] = (GLushort) (i*4+1);
+            _quadIndices[i*6+2] = (GLushort) (i*4+2);
+            _quadIndices[i*6+3] = (GLushort) (i*4+3);
+            _quadIndices[i*6+4] = (GLushort) (i*4+2);
+            _quadIndices[i*6+5] = (GLushort) (i*4+1);
+        }
+
+        mCommonShader = new TextureShader();
+
+        //bind current GraphicsService to TextureCache
+        TextureCache::setCurrentCache(cacheIndex);
+
+        started = true;
+    }
+    else
+    {
+        //bind current GraphicsService to TextureCache
+        TextureCache::setCurrentCache(cacheIndex);
+        //when destory by system, restart service shoult reload all textures
+        TextureCache::reloadAllTextures();
     }
 
-    Mat4::createLookAt(Vec3(0, 0, 1), Vec3(0, 0, 0), Vec3(0, 1, 0), &vMat);
-
-    //setup index data for quads
-
-    for( int i=0; i < VBO_SIZE/4; i++)
-    {
-        _quadIndices[i*6+0] = (GLushort) (i*4+0);
-        _quadIndices[i*6+1] = (GLushort) (i*4+1);
-        _quadIndices[i*6+2] = (GLushort) (i*4+2);
-        _quadIndices[i*6+3] = (GLushort) (i*4+3);
-        _quadIndices[i*6+4] = (GLushort) (i*4+2);
-        _quadIndices[i*6+5] = (GLushort) (i*4+1);
-    }
-
+    //if started, should reload all gl resources
     setupVBO();
 
-    mCommonShader = new TextureShader();
     registerShader(mCommonShader);
-
-    //bind current GraphicsService to TextureCache
-    TextureCache::setCurrentCache(cacheIndex);
-    //when destory by system, restart service shoult reload all textures
-    TextureCache::reloadAllTextures();
 
     return true;
 }

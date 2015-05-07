@@ -78,6 +78,8 @@ private:
     static int cacheNum;
     int cacheIndex;
 
+    bool started;
+
 };
 
 #endif // !GRAPHICSSERVICE_H
