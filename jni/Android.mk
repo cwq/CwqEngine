@@ -44,6 +44,7 @@ LOCAL_SRC_FILES     := $(call LS_CPP, $(LOCAL_PATH)/base) \
                        $(call LS_CPP, $(MEDIA_PLAYER_LOCAL_PATH)/video) \
                        $(call LS_CPP, $(MEDIA_PLAYER_LOCAL_PATH)/ijkutil) \
                        $(call LS_CPP, $(MEDIA_PLAYER_LOCAL_PATH)) \
+                       $(call LS_CPP, $(LOCAL_PATH)/test) \
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2

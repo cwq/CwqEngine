@@ -12,9 +12,19 @@
 #include "platform/android/CwqEngineJNIHelper.h"
 #endif // !ANDROID !__ANDROID__
 
+int CwqEngine::engineNum = 0;
+
+extern void CwqEngineInit();
+
 CwqEngine::CwqEngine()
 {
     exited = false;
+
+    if (engineNum == 0)
+    {
+        CwqEngineInit();
+    }
+    ++engineNum;
 
     graphicsService = new GraphicsService();
 
@@ -40,6 +50,7 @@ void CwqEngine::onExit()
 {
     LOGE("onExit");
     exited = true;
+    --engineNum;
     graphicsService->end();
     mediaPlayer->end();
 }

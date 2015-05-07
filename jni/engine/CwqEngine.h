@@ -37,6 +37,8 @@ public:
     #endif // !ANDROID !__ANDROID__
 
 private:
+    static int engineNum;
+
     bool exited;
 
     #if defined(ANDROID) || defined(__ANDROID__)
