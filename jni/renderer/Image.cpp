@@ -101,23 +101,32 @@ bool Image::mallocPixels(size_t size)
 {
     if(pixels != NULL)
     {
-        //use last
-        if(pSize >= size)
+        //if size is bigger than last, realloc
+        if(pSize < size)
         {
-            return true;
-        }
-        else
-        {
-            freePixels();
+            void* p = realloc(pixels, size);
+            if(p == NULL)
+            {
+                LOGE("Error realloc(%p, %d)", pixels, size);
+                return false;
+            }
+            else
+            {
+                pixels = p;
+            }
         }
     }
-    //malloc
-    pixels = malloc(size);
-    if(pixels == NULL)
+    else
     {
-        LOGE("Error malloc(%d)", size);
-        return false;
+        //malloc
+        pixels = malloc(size);
+        if(pixels == NULL)
+        {
+            LOGE("Error malloc(%d)", size);
+            return false;
+        }
     }
+
     return true;
 }
 
