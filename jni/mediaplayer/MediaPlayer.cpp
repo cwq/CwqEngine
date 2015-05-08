@@ -42,7 +42,6 @@ MediaPlayer::MediaPlayer() {
 	frameQueueCond = SDL_CreateCond();
 
 	callbacker = new Callbacker(this);
-	autoExit = false;
 }
 
 MediaPlayer::~MediaPlayer() {
@@ -114,6 +113,10 @@ static void ffp_log_callback_report(void *ptr, int level, const char *fmt,
 void MediaPlayer::init() {
 	LOGD("MediaPlayer init");
 
+	read_tid = NULL;
+	video_tid = NULL;
+	audio_tid = NULL;
+
 	AvSyncType syncType = AV_SYNC_EXTERNAL_CLOCK;
 	avSyncType = syncType;
 	wantToExit = false;
@@ -125,6 +128,8 @@ void MediaPlayer::init() {
 	int seekByBytes = -1;
 	this->seekByBytes = seekByBytes;
 	seek_req = false;
+
+	autoExit = false;
 
 	/* register all codecs, demux and protocols */
 	avcodec_register_all();
@@ -644,7 +649,8 @@ void MediaPlayer::start() {
 void MediaPlayer::end() {
 	LOGD("mediaplayer end");
 	wantToExit = true;
-	SDL_WaitThread(read_tid, NULL);
+	if (read_tid)
+	    SDL_WaitThread(read_tid, NULL);
 
     //clear vectorFileInfo
     vectorFileInfo.clear();
