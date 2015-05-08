@@ -29,7 +29,13 @@ public:
     void decreaseRef();
     int getRef() const;
 
+    static void initMaxTextureSize();
+    static GLint getMaxTextureSize();
+
 private:
+    //Depending on GPU
+    static GLint maxTextureSize;
+
     int mWidth;
     int mHeight;
     GLuint mTextureID;

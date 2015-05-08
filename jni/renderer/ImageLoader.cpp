@@ -1,11 +1,13 @@
 #include "ImageLoader.h"
 #include "platform/Resource.h"
-#define STB_IMAGE_IMPLEMENTATION
-#if defined(ANDROID) || defined(__ANDROID__)
-#define STBI_NEON
-#endif // !ANDROID !__ANDROID__
-#include "stb_image.h"
 #include "base/LogHelper.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+//HAVE_NEON is defined in Android.mk !
+#ifdef HAVE_NEON
+#define STBI_NEON
+#endif // !HAVE_NEON
+#include "stb_image.h"
 
 bool ImageLoader::loadImageWithFileName(Image* image, const char* filename)
 {
@@ -44,6 +46,8 @@ bool ImageLoader::loadImageWithFileData(Image* image, const unsigned char* fileD
 {
     bool result = false;
     int w, h, n;
+    //req_comp=4, for 3 comp jpeg, use 4 is faster (neon)
+    //for some png images, use comp will get wrong data (comp may be wrong)
     unsigned char* pixels = stbi_load_from_memory(fileData, dataLen, &w, &h, &n, 4);
     if(pixels)
     {

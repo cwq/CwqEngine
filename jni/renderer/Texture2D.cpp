@@ -1,6 +1,8 @@
 #include "Texture2D.h"
 #include "base/LogHelper.h"
 
+GLint Texture2D::maxTextureSize = 0;
+
 #define TEXTURE_ID_INVALID 0
 
 Texture2D::Texture2D()
@@ -40,7 +42,16 @@ bool Texture2D::load(const Image& image)
         return false;
     }
 
-    if(mWidth != image.getWidth() || mHeight != image.getHeight()
+    int imageWidth = image.getWidth();
+    int imageHeight = image.getHeight();
+
+    if (imageWidth > maxTextureSize || imageHeight > maxTextureSize)
+    {
+        LOGE("Image (%d x %d) is bigger than the supported (%d x %d)", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
+        return false;
+    }
+
+    if(mWidth != imageWidth || mHeight != imageHeight
             || mTextureFormat != image.getFormat())
     {
         unLoad();
@@ -49,7 +60,7 @@ bool Texture2D::load(const Image& image)
         if(textures[0] != 0 )
         {
             mTextureFormat = image.getFormat();
-            setWidthAndHeight(image.getWidth(), image.getHeight());
+            setWidthAndHeight(imageWidth, imageHeight);
             glBindTexture(GL_TEXTURE_2D, textures[0]);
             glTexImage2D(GL_TEXTURE_2D, 0, mTextureFormat, mWidth, mHeight, 0, mTextureFormat, GL_UNSIGNED_BYTE, image.getPixels());
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -126,4 +137,14 @@ void Texture2D::decreaseRef()
 int Texture2D::getRef() const
 {
     return mRef;
+}
+
+void Texture2D::initMaxTextureSize()
+{
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+}
+
+GLint Texture2D::getMaxTextureSize()
+{
+    return maxTextureSize;
 }

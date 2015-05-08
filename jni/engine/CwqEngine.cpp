@@ -63,6 +63,9 @@ void CwqEngine::postEventToEngine(bool handleOnGLThread, int what, int arg1, int
 void CwqEngine::onSurfaceCreated()
 {
     LOGE("onSurfaceCreated 1");
+    if (engineNum == 1)
+        Texture2D::initMaxTextureSize();
+
     graphicsService->start();
     graphicsService->registerSprite("test.png");
 
