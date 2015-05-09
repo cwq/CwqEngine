@@ -51,19 +51,19 @@ bool ImageLoader::loadImageWithFileData(Image* image, const unsigned char* fileD
     unsigned char* pixels = stbi_load_from_memory(fileData, dataLen, &w, &h, &n, 4);
     if(pixels)
     {
-        if(n != 3 && n != 4)
-        {
-            LOGE("%d byte per pixel", n);
-        }
-        else
-        {
+//        if(n != 3 && n != 4)
+//        {
+//            LOGE("%d byte per pixel", n);
+//        }
+//        else
+//        {
             GLenum format = GL_RGBA;
             if(image->initWithImageInfo(w, h, format))
             {
                 image->setPixels(pixels);
                 result = true;
             }
-        }
+//        }
         stbi_image_free(pixels);
     }
     else
