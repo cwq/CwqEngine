@@ -20,11 +20,11 @@
 #if defined(_WIN32) || defined(__WIN32__)
 
 #include <stdio.h>
-#define  LOGI(...)  printf("INFO: ");printf(__VA_ARGS__);printf("\n")
-#define  LOGV(...)  printf("VERBOSE: ");printf(__VA_ARGS__);printf("\n")
-#define  LOGD(...)  printf("DEBUG: ");printf(__VA_ARGS__);printf("\n")
-#define  LOGW(...)  printf("WARN: ");printf(__VA_ARGS__);printf("\n")
-#define  LOGE(...)  printf("ERROR: ");printf(__VA_ARGS__);printf("\n")
+#define  LOGI(...)  do { printf("INFO: ");printf(__VA_ARGS__);printf("\n"); } while(0)
+#define  LOGV(...)  do { printf("VERBOSE: ");printf(__VA_ARGS__);printf("\n"); } while(0)
+#define  LOGD(...)  do { printf("DEBUG: ");printf(__VA_ARGS__);printf("\n"); } while(0)
+#define  LOGW(...)  do { printf("WARN: ");printf(__VA_ARGS__);printf("\n"); } while(0)
+#define  LOGE(...)  do { printf("ERROR: ");printf(__VA_ARGS__);printf("\n"); } while(0)
 
 #endif // !_WIN32 !__WIN32__
 
