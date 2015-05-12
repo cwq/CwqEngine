@@ -260,7 +260,8 @@ void aout_close_audio(SDL_Aout *aout) {
 	SDL_CondSignal(opaque->wakeup_cond);
 	SDL_UnlockMutex(opaque->wakeup_mutex);
 
-	SDL_WaitThread(opaque->audio_tid, NULL);
+	if (opaque->audio_tid)
+	    SDL_WaitThread(opaque->audio_tid, NULL);
 
 	opaque->audio_tid = NULL;
 }
