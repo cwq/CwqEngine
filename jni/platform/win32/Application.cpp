@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include "platform/CwqGL.h"
 #include "base/LogHelper.h"
+#include "engine/CwqEngine.h"
 
 static const int WIDTH = 768;
 static const int HEIGHT = 1024;
@@ -34,7 +35,7 @@ static void mouse_button_callback(GLFWwindow* window, int button, int action, in
 
 static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    LOGE("move: (%f,%f)", xpos, ypos);
+    LOGD("move: (%f,%f)", xpos, ypos);
 }
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -79,12 +80,16 @@ int main()
         return -1;
     }
 
-    //onSurfaceCreated();
+    CwqEngine engine;
+    engine.onSurfaceChanged(WIDTH, HEIGHT);
+    engine.onSurfaceCreated();
+    engine.onResume();
 
     /* Loop until the user closes the window */
     while(!glfwWindowShouldClose(window))
     {
         /* Render here */
+        engine.onDrawFrame();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
@@ -92,6 +97,8 @@ int main()
         /* Poll for and process events */
         glfwPollEvents();
     }
+
+    engine.onExit();
 
     glfwDestroyWindow(window);
     glfwTerminate();

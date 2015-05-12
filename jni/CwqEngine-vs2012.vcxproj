@@ -51,7 +51,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>pthreadVC2.lib;opengl32.lib;glfw3.lib;glew32.lib;avcodec.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>pthreadVC2.lib;opengl32.lib;glfw3.lib;glew32.lib;avcodec.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -101,6 +101,7 @@
     <ClCompile Include="renderer\Texture2D.cpp" />
     <ClCompile Include="renderer\TextureCache.cpp" />
     <ClCompile Include="renderer\TextureShader.cpp" />
+    <ClCompile Include="test\CwqEngineInit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\CWQMacros.h" />

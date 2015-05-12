@@ -114,6 +114,9 @@
     <ClCompile Include="mediaplayer\audio\win32\aout_win32_waveout.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="test\CwqEngineInit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\CWQMacros.h">
