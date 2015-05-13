@@ -309,8 +309,6 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len) {
 	//no audio
 	if (audioNum == 0)
 		memset(stream, 0, len);
-
-	stream += len;
 }
 
 int MediaPlayer::audio_open(int64_t wanted_channel_layout,
@@ -447,7 +445,7 @@ static int read_thread(void *arg) {
 	MediaPlayer *mediaPlayer = (MediaPlayer *) arg;
 	MediaTrack *mediaTrack;
 
-    mediaPlayer->addAllTracks();
+    //mediaPlayer->addAllTracks();
 
 	if (mediaPlayer->mediaTrackManager.hasVideo()) {
 		mediaPlayer->video_tid = SDL_CreateThreadEx(&mediaPlayer->_video_tid,
@@ -642,6 +640,7 @@ void MediaPlayer::start() {
     //start audio
     audioPlayer->pause(0);
 
+    addAllTracks();
 	read_tid = SDL_CreateThreadEx(&_read_tid, read_thread, this, "video_read");
 	assert(read_tid);
 }
@@ -651,6 +650,9 @@ void MediaPlayer::end() {
 	wantToExit = true;
 	if (read_tid)
 	    SDL_WaitThread(read_tid, NULL);
+
+    //stop audio
+    audioPlayer->close();
 
     //clear vectorFileInfo
     vectorFileInfo.clear();
@@ -662,9 +664,6 @@ void MediaPlayer::end() {
         delete mediaTrack;
     }
     mediaTrackManager.clearTracks();
-
-	//stop audio
-	audioPlayer->close();
 
 	av_lockmgr_register(NULL);
 	avformat_network_deinit();
