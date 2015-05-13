@@ -41,6 +41,28 @@ static void cursor_position_callback(GLFWwindow* window, double xpos, double ypo
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     LOGD("key: %d, action: %d", key, action);
+    CwqEngine* engine = (CwqEngine*)glfwGetWindowUserPointer(window);
+    if (engine)
+    {
+        if (key == GLFW_KEY_P)
+        {
+            engine->onPause();
+        }
+        if (key == GLFW_KEY_R)
+        {
+            engine->onResume();
+        }
+    }
+
+}
+
+static void close_callback(GLFWwindow* window)
+{
+    CwqEngine* engine = (CwqEngine*)glfwGetWindowUserPointer(window);
+    if (engine)
+    {
+        engine->onExit();
+    }
 }
 
 int main()
@@ -71,6 +93,7 @@ int main()
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);
     glfwSetKeyCallback(window, key_callback);
+    glfwSetWindowCloseCallback(window, close_callback);
 
     /* in win32 to use opengl hight level must call glewInit */
     GLenum err = glewInit();
@@ -81,6 +104,9 @@ int main()
     }
 
     CwqEngine engine;
+
+    glfwSetWindowUserPointer(window, &engine);
+
     engine.onSurfaceChanged(WIDTH, HEIGHT);
     engine.onSurfaceCreated();
     engine.onResume();
@@ -97,8 +123,6 @@ int main()
         /* Poll for and process events */
         glfwPollEvents();
     }
-
-    engine.onExit();
 
     glfwDestroyWindow(window);
     glfwTerminate();

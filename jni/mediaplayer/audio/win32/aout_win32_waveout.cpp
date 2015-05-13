@@ -5,6 +5,11 @@
 #include "mediaplayer/ijkutil/ijksdl_thread.h"
 #include <windows.h>
 
+static const float MAX_VOLUME = 1;
+static const float MIN_VOLUME = 0;
+static const DWORD FULL_VOLUME = 0xFFFF;
+static const int VOLUME_BIT = 16;
+
 typedef struct SDL_Aout_Opaque {
     SDL_cond *wakeup_cond;
     SDL_mutex *wakeup_mutex;
@@ -28,8 +33,7 @@ typedef struct SDL_Aout_Opaque {
     volatile bool abort_request;
 
     volatile bool need_set_volume;
-    volatile float left_volume;
-    volatile float right_volume;
+    volatile DWORD dwVolume;
 
     SDL_Thread *audio_tid;
     SDL_Thread _audio_tid;
@@ -101,7 +105,6 @@ int aout_thread(void *arg) {
 
     assert(buffer);
 
-    HWAVEOUT* hWaveOut = &(opaque->hWaveOut);
     WAVEHDR* wh1 = &(opaque->wheader1);
     WAVEHDR* wh2 = &(opaque->wheader2);
 
@@ -117,23 +120,23 @@ int aout_thread(void *arg) {
     waveOutPrepareHeader(opaque->hWaveOut, wh2, sizeof(WAVEHDR));
     waveOutWrite(opaque->hWaveOut, wh2, sizeof(WAVEHDR));
 
+    waveOutSetVolume(opaque->hWaveOut, (FULL_VOLUME << VOLUME_BIT) + FULL_VOLUME);
+
     SDL_SetThreadPriority(SDL_THREAD_PRIORITY_HIGH);
 
     if (!opaque->abort_request && !opaque->pause_on)
-        ;
-/*        sdl_audiotrack_play(env, atrack);*/
+        waveOutRestart(opaque->hWaveOut);
 
     while (!opaque->abort_request) {
         SDL_LockMutex(opaque->wakeup_mutex);
         if (!opaque->abort_request && opaque->pause_on) {
-/*            sdl_audiotrack_pause(env, atrack);*/
+            waveOutPause(opaque->hWaveOut);
             while (!opaque->abort_request && opaque->pause_on) {
                 SDL_CondWaitTimeout(opaque->wakeup_cond, opaque->wakeup_mutex,
                     1000);
             }
             if (!opaque->abort_request && !opaque->pause_on)
-                ;
-/*                sdl_audiotrack_play(env, atrack);*/
+                waveOutRestart(opaque->hWaveOut);
         }
         if (opaque->need_flush) {
             opaque->need_flush = 0;
@@ -141,12 +144,10 @@ int aout_thread(void *arg) {
         }
         if (opaque->need_set_volume) {
             opaque->need_set_volume = 0;
-//             sdl_audiotrack_set_volume(env, atrack, opaque->left_volume,
-//                 opaque->right_volume);
+            waveOutSetVolume(opaque->hWaveOut, opaque->dwVolume);
         }
         SDL_UnlockMutex(opaque->wakeup_mutex);
 
-        //audio_cblk(userdata, buffer, copy_size);
         if (opaque->need_flush) {
 /*            sdl_audiotrack_flush(env, atrack);*/
             opaque->need_flush = false;
@@ -160,27 +161,27 @@ int aout_thread(void *arg) {
             {
                 wh1->dwBufferLength = copy_size;
                 audio_cblk(userdata, (Uint8 *)(wh1->lpData), wh1->dwBufferLength);
-                waveOutPrepareHeader(*hWaveOut, wh1, sizeof(WAVEHDR));
-                waveOutWrite(*hWaveOut, wh1, sizeof(WAVEHDR));
+                waveOutPrepareHeader(opaque->hWaveOut, wh1, sizeof(WAVEHDR));
+                waveOutWrite(opaque->hWaveOut, wh1, sizeof(WAVEHDR));
             }
             if (wh2->dwBufferLength == 0)
             {
                 wh2->dwBufferLength = copy_size;
                 audio_cblk(userdata, (Uint8 *)(wh2->lpData), wh2->dwBufferLength);
-                waveOutPrepareHeader(*hWaveOut, wh2, sizeof(WAVEHDR));
-                waveOutWrite(*hWaveOut, wh2, sizeof(WAVEHDR));
+                waveOutPrepareHeader(opaque->hWaveOut, wh2, sizeof(WAVEHDR));
+                waveOutWrite(opaque->hWaveOut, wh2, sizeof(WAVEHDR));
             }
         }
 
         // TODO: 1 if callback return -1 or 0
     }
 
-    waveOutReset(*hWaveOut);
+    waveOutReset(opaque->hWaveOut);
 
-    waveOutUnprepareHeader(*hWaveOut, wh1, sizeof(WAVEHDR));
-    waveOutUnprepareHeader(*hWaveOut, wh2, sizeof(WAVEHDR));
+    waveOutUnprepareHeader(opaque->hWaveOut, wh1, sizeof(WAVEHDR));
+    waveOutUnprepareHeader(opaque->hWaveOut, wh2, sizeof(WAVEHDR));
 
-    waveOutClose(*hWaveOut);
+    waveOutClose(opaque->hWaveOut);
     return 0;
 }
 
@@ -258,10 +259,28 @@ void aout_flush_audio(SDL_Aout *aout) {
 
 void aout_set_volume(SDL_Aout *aout, float left_volume, float right_volume) {
     SDL_Aout_Opaque *opaque = aout->opaque;
+
+    if (left_volume < MIN_VOLUME)
+    {
+        left_volume = MIN_VOLUME;
+    }
+    if (left_volume > MAX_VOLUME)
+    {
+        left_volume = MAX_VOLUME;
+    }
+    if (right_volume < MIN_VOLUME)
+    {
+        right_volume = MIN_VOLUME;
+    }
+    if (right_volume > MAX_VOLUME)
+    {
+        right_volume = MAX_VOLUME;
+    }
+
     SDL_LockMutex(opaque->wakeup_mutex);
-    LOGW("aout_flush_audio()");
-    opaque->left_volume = left_volume;
-    opaque->right_volume = right_volume;
+    LOGW("aout_set_volume(%f, %f)", left_volume, right_volume);
+    //high-order word contains the right-channel setting
+    opaque->dwVolume = ((DWORD)(right_volume * FULL_VOLUME) << VOLUME_BIT) + (DWORD)(left_volume * FULL_VOLUME);
     opaque->need_set_volume = 1;
     SDL_CondSignal(opaque->wakeup_cond);
     SDL_UnlockMutex(opaque->wakeup_mutex);

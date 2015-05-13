@@ -19,6 +19,7 @@ public:
 	void flush();
 
 	//设置声道音量
+    //A value of 0.0f is silence, a value of 1.0f is no attenuation.
 	void setStereoVolume(float left_volume, float right_volume);
 
 	//关闭硬件

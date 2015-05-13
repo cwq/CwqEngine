@@ -244,7 +244,7 @@ void aout_flush_audio(SDL_Aout *aout) {
 void aout_set_volume(SDL_Aout *aout, float left_volume, float right_volume) {
 	SDL_Aout_Opaque *opaque = aout->opaque;
 	SDL_LockMutex(opaque->wakeup_mutex);
-	LOGW("aout_flush_audio()");
+	LOGW("aout_set_volume(%f, %f)", left_volume, right_volume);
 	opaque->left_volume = left_volume;
 	opaque->right_volume = right_volume;
 	opaque->need_set_volume = 1;
