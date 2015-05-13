@@ -81,17 +81,7 @@ void CALLBACK waveOutProc(HWAVEOUT hWave, UINT uMsg, DWORD dwInstance, DWORD dw1
         LPWAVEHDR pWaveHeader = (LPWAVEHDR)dw1;
         if (!opaque->abort_request)
         {
-            audio_cblk(userdata, (Uint8 *)(pWaveHeader->lpData), pWaveHeader->dwBufferLength);
-            waveOutPrepareHeader(opaque->hWaveOut, pWaveHeader, sizeof(WAVEHDR));
-            waveOutWrite(opaque->hWaveOut, pWaveHeader, sizeof(WAVEHDR));
-        } else {
-//             LOGE("abort_request");
-//             waveOutUnprepareHeader(opaque->hWaveOut, pWaveHeader, sizeof(WAVEHDR));
-//             pWaveHeader->dwBufferLength = 0;
-//             if (opaque->wheader1.dwBufferLength == 0 && opaque->wheader2.dwBufferLength == 0)
-//             {
-//                 waveOutClose(opaque->hWaveOut);
-//             }
+            pWaveHeader->dwBufferLength = 0;
         }
         break;
     }  
@@ -127,7 +117,7 @@ int aout_thread(void *arg) {
     waveOutPrepareHeader(opaque->hWaveOut, wh2, sizeof(WAVEHDR));
     waveOutWrite(opaque->hWaveOut, wh2, sizeof(WAVEHDR));
 
-    //SDL_SetThreadPriority(SDL_THREAD_PRIORITY_HIGH);
+    SDL_SetThreadPriority(SDL_THREAD_PRIORITY_HIGH);
 
     if (!opaque->abort_request && !opaque->pause_on)
         ;
@@ -166,23 +156,29 @@ int aout_thread(void *arg) {
             opaque->need_flush = 0;
 /*            sdl_audiotrack_flush(env, atrack);*/
         } else {
-//             header->lpData = (LPSTR)buffer;
-//             header->dwBufferLength = copy_size;
-//             waveOutPrepareHeader(*hWaveOut, header, sizeof(WAVEHDR));
-//             waveOutWrite(*hWaveOut, header, sizeof(WAVEHDR));
+            if (wh1->dwBufferLength == 0)
+            {
+                wh1->dwBufferLength = copy_size;
+                audio_cblk(userdata, (Uint8 *)(wh1->lpData), wh1->dwBufferLength);
+                waveOutPrepareHeader(*hWaveOut, wh1, sizeof(WAVEHDR));
+                waveOutWrite(*hWaveOut, wh1, sizeof(WAVEHDR));
+            }
+            if (wh2->dwBufferLength == 0)
+            {
+                wh2->dwBufferLength = copy_size;
+                audio_cblk(userdata, (Uint8 *)(wh2->lpData), wh2->dwBufferLength);
+                waveOutPrepareHeader(*hWaveOut, wh2, sizeof(WAVEHDR));
+                waveOutWrite(*hWaveOut, wh2, sizeof(WAVEHDR));
+            }
         }
 
         // TODO: 1 if callback return -1 or 0
     }
 
-    //while
-    while(waveOutUnprepareHeader(*hWaveOut, wh1, sizeof(WAVEHDR)) == WAVERR_STILLPLAYING) {
-        Sleep(500);
-    }
-    //while
-    while(waveOutUnprepareHeader(*hWaveOut, wh2, sizeof(WAVEHDR)) == WAVERR_STILLPLAYING) {
-        Sleep(500);
-    }
+    waveOutReset(*hWaveOut);
+
+    waveOutUnprepareHeader(*hWaveOut, wh1, sizeof(WAVEHDR));
+    waveOutUnprepareHeader(*hWaveOut, wh2, sizeof(WAVEHDR));
 
     waveOutClose(*hWaveOut);
     return 0;
