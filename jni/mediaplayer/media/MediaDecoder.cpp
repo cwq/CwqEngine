@@ -759,7 +759,7 @@ void MediaDecoder::alloc_picture(VideoPicture *vp) {
 		assert(0);
 	}
 
-	LOGD("alloc piccture, vp->w = %d, h = %d", vp->width, vp->height);
+	LOGD("alloc picture, vp->w = %d, h = %d", vp->width, vp->height);
 	vp->frameBuffer = (uint8_t *) av_malloc(
 			avpicture_get_size(decodedFormat, vp->width, vp->height));
 	avpicture_fill((AVPicture *) vp->decodedFrame, vp->frameBuffer,
