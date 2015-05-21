@@ -48,11 +48,12 @@ private:
     GraphicsService* graphicsService;
 
     MediaPlayer* mediaPlayer;
-    GraphicsSprite* videoSprite;
-    Texture2D* videoTexture;
-    Image* videoImage;
 
     std::vector<Image *> images;
+    std::vector<GraphicsSprite *> sprites;
+    std::vector<Texture2D *> videoTextures;
+
+    GraphicsSprite* selectedSprit;
 };
 
 #endif // !CWQENGINE_H

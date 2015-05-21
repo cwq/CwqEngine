@@ -4,8 +4,10 @@
 #include "base/LogHelper.h"
 #include "engine/CwqEngine.h"
 
-static const int WIDTH = 768;
-static const int HEIGHT = 1024;
+//Window size must be smaller screen resolution
+//if not glfwGetCursorPos will get wrong position
+static const int WIDTH = 800;
+static const int HEIGHT = 600;
 
 static void error_callback(int error, const char* description)
 {
@@ -14,6 +16,7 @@ static void error_callback(int error, const char* description)
 
 static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
+    CwqEngine* engine = (CwqEngine*)glfwGetWindowUserPointer(window);
     if(button == GLFW_MOUSE_BUTTON_LEFT) {
         //left mouse button
         double xpos, ypos;
@@ -21,11 +24,17 @@ static void mouse_button_callback(GLFWwindow* window, int button, int action, in
         {
         case GLFW_PRESS:
             glfwGetCursorPos(window, &xpos, &ypos);
-            LOGD("press: (%f,%f)", xpos, ypos);
+            if (engine)
+            {
+                engine->onTouchesBegin(button, xpos, ypos);
+            }
             break;;
         case GLFW_RELEASE:
             glfwGetCursorPos(window, &xpos, &ypos);
-            LOGD("release: (%f,%f)", xpos, ypos);
+            if (engine)
+            {
+                engine->onTouchesEnd(button, xpos, ypos);
+            }
             break;
         default:
             break;
@@ -35,7 +44,15 @@ static void mouse_button_callback(GLFWwindow* window, int button, int action, in
 
 static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    LOGD("move: (%f,%f)", xpos, ypos);
+    int num = 1;
+    int pIDs[1] = {0};
+    float pXs[1] = {xpos};
+    float pYs[1] = {ypos};
+    CwqEngine* engine = (CwqEngine*)glfwGetWindowUserPointer(window);
+    if (engine)
+    {
+        engine->onTouchesMove(pIDs, pXs, pYs, num);
+    }
 }
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
