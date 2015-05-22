@@ -27,7 +27,7 @@ public:
     int getHeight() const;
     int getWidth() const;
 
-    bool start();
+    bool start(int width, int height);
     void end();
     //ms
     void update(int playedTime);

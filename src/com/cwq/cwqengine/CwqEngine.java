@@ -51,8 +51,8 @@ class CwqEngine {
         CwqEngineJNI.CwqEngine_postEventToEngine(swigCPtr, this, handleOnGLThread, what, arg1, arg2, obj);
     }
 
-    public void onSurfaceCreated() {
-        CwqEngineJNI.CwqEngine_onSurfaceCreated(swigCPtr, this);
+    public void onSurfaceCreated(int width, int height) {
+        CwqEngineJNI.CwqEngine_onSurfaceCreated(swigCPtr, this, width, height);
     }
 
     public void onSurfaceChanged(int width, int height) {

@@ -44,7 +44,7 @@ int GraphicsService::getWidth() const
 }
 
 
-bool GraphicsService::start()
+bool GraphicsService::start(int width, int height)
 {
     //Log::info("Starting GraphicsService");
     ////Log::info("Version  : %s", glGetString(GL_VERSION));
@@ -94,6 +94,8 @@ bool GraphicsService::start()
     setupVBO();
 
     registerShader(mCommonShader);
+
+    screenSizeChanged(width, height);
 
     return true;
 }

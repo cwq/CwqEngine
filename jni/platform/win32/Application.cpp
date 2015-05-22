@@ -124,8 +124,8 @@ int main()
 
     glfwSetWindowUserPointer(window, &engine);
 
+    engine.onSurfaceCreated(WIDTH, HEIGHT);
     engine.onSurfaceChanged(WIDTH, HEIGHT);
-    engine.onSurfaceCreated();
     engine.onResume();
 
     /* Loop until the user closes the window */

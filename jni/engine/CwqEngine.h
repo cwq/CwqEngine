@@ -16,7 +16,7 @@ public:
 
     void postEventToEngine(bool handleOnGLThread, int what, int arg1, int arg2, void* obj);
 
-    void onSurfaceCreated();
+    void onSurfaceCreated(int width, int height);
     void onSurfaceChanged(int width, int height);
     void onDrawFrame();
     

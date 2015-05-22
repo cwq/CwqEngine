@@ -75,13 +75,13 @@ void CwqEngine::postEventToEngine(bool handleOnGLThread, int what, int arg1, int
     LOGE("postEventToEngine:%d, %d, %d, %d", handleOnGLThread, what, arg1, arg2);
 }
 
-void CwqEngine::onSurfaceCreated()
+void CwqEngine::onSurfaceCreated(int width, int height)
 {
-    LOGE("onSurfaceCreated 1");
+    LOGE("onSurfaceCreated(%i,%i) 1", width, height);
     if (engineNum == 1)
         Texture2D::initMaxTextureSize();
 
-    graphicsService->start();
+    graphicsService->start(width, height);
     GraphicsSprite* sprite = GraphicsSprite::create("test.png");
 //    GraphicsSprite* sprite = GraphicsSprite::create("C:/Users/DELL/Desktop/test.png");
     sprite->moveTo(60, 60);

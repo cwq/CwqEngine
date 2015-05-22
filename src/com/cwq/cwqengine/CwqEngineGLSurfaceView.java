@@ -66,6 +66,13 @@ class CwqEngineGLSurfaceView extends GLSurfaceView {
     }
     
     @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        if(!this.isInEditMode()) {
+            mCwqEngineRenderer.setScreenWidthAndHeight(w, h);
+        }
+    }
+    
+    @Override
     public void onResume() {
         super.onResume();
         this.setRenderMode(RENDERMODE_CONTINUOUSLY);

@@ -27,13 +27,21 @@ class CwqEngineRenderer implements GLSurfaceView.Renderer {
     
     private CwqEngine mCwqEngine;
     
+    private int mScreenWidth;
+    private int mScreenHeight;
+    
     public CwqEngineRenderer(CwqEngine cwqEngine) {
         mCwqEngine = cwqEngine;
     }
     
+    public void setScreenWidthAndHeight(final int surfaceWidth, final int surfaceHeight) {
+        this.mScreenWidth = surfaceWidth;
+        this.mScreenHeight = surfaceHeight;
+    }
+    
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        mCwqEngine.onSurfaceCreated();
+        mCwqEngine.onSurfaceCreated(mScreenWidth, mScreenHeight);
         mLastTickInNanoSeconds = System.nanoTime();
     }
 

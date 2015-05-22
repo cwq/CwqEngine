@@ -277,14 +277,18 @@ SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1postEvent
 }
 
 
-SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1onSurfaceCreated(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT void JNICALL Java_com_cwq_cwqengine_CwqEngineJNI_CwqEngine_1onSurfaceCreated(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
   CwqEngine *arg1 = (CwqEngine *) 0 ;
+  int arg2 ;
+  int arg3 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(CwqEngine **)&jarg1; 
-  (arg1)->onSurfaceCreated();
+  arg2 = (int)jarg2;
+  arg3 = (int)jarg3;
+  (arg1)->onSurfaceCreated(arg2,arg3);
 }
 
 

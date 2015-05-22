@@ -23,7 +23,7 @@ class CwqEngineJNI {
             CwqEngine jengine, boolean handleOnGLThread, int what, int arg1, int arg2, Object obj);
 
     public final static native void CwqEngine_onSurfaceCreated(long ptr,
-            CwqEngine jengine);
+            CwqEngine jengine, int jarg2, int jarg3);
 
     public final static native void CwqEngine_onSurfaceChanged(long ptr,
             CwqEngine jengine, int jarg2, int jarg3);
