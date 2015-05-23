@@ -73,6 +73,15 @@ void CwqEngine::onExit()
 void CwqEngine::postEventToEngine(bool handleOnGLThread, int what, int arg1, int arg2, void* obj)
 {
     LOGE("postEventToEngine:%d, %d, %d, %d", handleOnGLThread, what, arg1, arg2);
+    if (what == 100)
+    {
+        GraphicsSprite* sprite = GraphicsSprite::create("test.png");
+//        GraphicsSprite* sprite = GraphicsSprite::create("C:/Users/DELL/Desktop/test.png");
+        sprite->moveTo(60, 60);
+        sprite->setWidthAndHeight(120, 120);
+        sprites.push_back(sprite);
+        graphicsService->addSprite(sprite);
+    }
 }
 
 void CwqEngine::onSurfaceCreated(int width, int height)
@@ -82,11 +91,6 @@ void CwqEngine::onSurfaceCreated(int width, int height)
         Texture2D::initMaxTextureSize();
 
     graphicsService->start(width, height);
-    GraphicsSprite* sprite = GraphicsSprite::create("test.png");
-//    GraphicsSprite* sprite = GraphicsSprite::create("C:/Users/DELL/Desktop/test.png");
-    sprite->moveTo(60, 60);
-    sprite->setWidthAndHeight(120, 120);
-    sprites.push_back(sprite);
 
     sprites[0]->moveTo(240, 240);
     sprites[0]->setWidthAndHeight(480, 480);
@@ -94,8 +98,6 @@ void CwqEngine::onSurfaceCreated(int width, int height)
     sprites[1]->setWidthAndHeight(240, 240);
     graphicsService->addSprite(sprites[0]);
     graphicsService->addSprite(sprites[1]);
-
-    graphicsService->addSprite(sprite);
 
     mediaPlayer->addMvTrack("/mnt/sdcard/test.mp4", 0, 0, 0, false);
     mediaPlayer->addMvTrack("/mnt/sdcard/test2.mp4", 0, 0, 0, false);

@@ -69,7 +69,7 @@ public class Test1Activity extends CwqEngineActivity {
                 runOnGLThread(new Runnable() {
                     @Override
                     public void run() {
-                        postEventToEngine(false, 2, 2, 2, null);
+                        postEventToEngine(true, 100, 0, 0, null);
                     }
                 });
             }

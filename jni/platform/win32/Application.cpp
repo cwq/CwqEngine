@@ -6,7 +6,7 @@
 
 //Window size must be smaller screen resolution
 //if not glfwGetCursorPos will get wrong position
-static const int WIDTH = 800;
+static const int WIDTH = 600;
 static const int HEIGHT = 600;
 
 static void error_callback(int error, const char* description)
@@ -59,7 +59,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
     LOGD("key: %d, action: %d", key, action);
     CwqEngine* engine = (CwqEngine*)glfwGetWindowUserPointer(window);
-    if (engine)
+    if (engine && action == GLFW_PRESS)
     {
         if (key == GLFW_KEY_P)
         {
@@ -68,6 +68,10 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         if (key == GLFW_KEY_R)
         {
             engine->onResume();
+        }
+        if (key == GLFW_KEY_A)
+        {
+            engine->postEventToEngine(true, 100, 0, 0, NULL);
         }
     }
 
