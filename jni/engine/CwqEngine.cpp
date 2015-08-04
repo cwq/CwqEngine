@@ -68,6 +68,10 @@ void CwqEngine::onExit()
     --engineNum;
     graphicsService->end();
     mediaPlayer->end();
+    // release video texture
+    for(int i = 0; i < videoTextures.size(); ++i) {
+        videoTextures[i]->unLoad();
+    }
 }
 
 void CwqEngine::postEventToEngine(bool handleOnGLThread, int what, int arg1, int arg2, void* obj)

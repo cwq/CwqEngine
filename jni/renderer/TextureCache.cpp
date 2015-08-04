@@ -62,7 +62,17 @@ void TextureCache::releaseTexture(const std::string &fileName)
         texture = it->second;
     }
 
-    releaseTexture(texture);
+    if(texture)
+    {
+        texture->decreaseRef();
+        if(texture->getRef() <= 0)
+        {
+            texture->unLoad();
+            _textures[currentIndex].erase(it);
+
+            SAFE_DELETE(texture);
+        }
+    }
 }
 
 void TextureCache::releaseTexture(Texture2D* texture)
@@ -77,7 +87,7 @@ void TextureCache::releaseTexture(Texture2D* texture)
             {
                 if( it->second == texture )
                 {
-                    _textures[currentIndex].erase(it++);
+                    _textures[currentIndex].erase(it);
                     break;
                 } else
                     ++it;
