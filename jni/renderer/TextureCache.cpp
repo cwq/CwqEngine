@@ -60,6 +60,7 @@ void TextureCache::releaseTexture(const std::string &fileName)
     auto it = _textures[currentIndex].find(fileName);
     if (it != _textures[currentIndex].end()) {
         texture = it->second;
+        _textures[currentIndex].erase(it);
     }
 
     if(texture)
@@ -68,8 +69,6 @@ void TextureCache::releaseTexture(const std::string &fileName)
         if(texture->getRef() <= 0)
         {
             texture->unLoad();
-            _textures[currentIndex].erase(it);
-
             SAFE_DELETE(texture);
         }
     }
