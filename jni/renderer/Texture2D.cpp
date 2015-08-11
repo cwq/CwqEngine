@@ -52,7 +52,7 @@ bool Texture2D::load(const Image& image)
     }
 
     if(mWidth != imageWidth || mHeight != imageHeight
-            || mTextureFormat != image.getFormat())
+            || mTextureFormat != image.getFormat() || mTextureID == TEXTURE_ID_INVALID)
     {
         unLoad();
         GLuint textures[1];
