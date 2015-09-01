@@ -5,16 +5,14 @@
 #include "base/LogHelper.h"
 #include "renderer/Image.h"
 
-static void copyFromAVFrame(u_char *pixels, AVFrame *frame, int width, int height) {
+static void copyFromAVFrame(const Image* image, AVFrame *frame, int width, int height) {
+    u_char *pixels = (u_char *)image->getPixels();
     if (!frame || !pixels) {
         return;
     }
 
-    int y = 0;
-    int numBytes = avpicture_get_size(PIX_FMT_RGB24, width, height);
-
-    for (y = 0; y < height; y++) {
-        memcpy(pixels + (y * width * 3), frame->data[0] + y * frame->linesize[0], width * 3);
+    for (int y = 0; y < height; y++) {
+        memcpy(pixels + (y * image->getLineSize()), frame->data[0] + y * frame->linesize[0], frame->linesize[0]);
     }
 }
 
@@ -608,7 +606,7 @@ void MediaPlayer::getNextFrame(int *remaingTimes, const vector<Image *> &images)
 			vp = mediaTrack->getNextFrame(&trackRemaingTimes);
 			if(vp != NULL) {
 			    images[index]->initWithImageInfo(vp->width, vp->height, GL_RGB);
-			    copyFromAVFrame((u_char*)images[index]->getPixels(), vp->decodedFrame, vp->width, vp->height);
+			    copyFromAVFrame(images[index], vp->decodedFrame, vp->width, vp->height);
 			    images[index]->setUpdated(true);
 			}
 			++index;

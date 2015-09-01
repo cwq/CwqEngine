@@ -17,6 +17,8 @@ public:
 
     int getWidth() const;
     int getHeight() const;
+    
+    int getLineSize() const;
 
     GLenum getFormat() const;
 
@@ -32,6 +34,9 @@ private:
     int mWidth;
     int mHeight;
     GLenum mFormat;
+    
+    // number of bytes per line
+    int lineSize;
 
     //changed pixels, Texture2D need to reload
     bool updated;

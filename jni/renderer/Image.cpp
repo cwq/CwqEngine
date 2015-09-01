@@ -34,14 +34,20 @@ bool Image::initWithImageInfo(int pWidth, int pHeight, GLenum format)
     mWidth = pWidth;
     mHeight = pHeight;
 
-    size_t size = mWidth * mHeight;
+    size_t size;
     if(format == GL_RGBA)
     {
-        size *= 4;
+        lineSize = mWidth * 4;
+        size = lineSize * mHeight;
     }
     else if(format == GL_RGB)
     {
-        size *= 3;
+        lineSize = mWidth * 3;
+        int ret = lineSize % 4;
+        if (ret) {
+            lineSize += (4 - ret);
+        }
+        size = lineSize * mHeight;
     }
     else
     {
@@ -80,6 +86,11 @@ int Image::getWidth() const
 int Image::getHeight() const
 {
     return mHeight;
+}
+
+int Image::getLineSize() const
+{
+    return lineSize;
 }
 
 GLenum Image::getFormat() const

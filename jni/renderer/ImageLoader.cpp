@@ -47,7 +47,6 @@ bool ImageLoader::loadImageWithFileData(Image* image, const unsigned char* fileD
     bool result = false;
     int w, h, n;
     //req_comp=4, for 3 comp jpeg, use 4 is faster (neon)
-    //for some png images, use comp will get wrong data (comp may be wrong)
     unsigned char* pixels = stbi_load_from_memory(fileData, dataLen, &w, &h, &n, 4);
     if(pixels)
     {
